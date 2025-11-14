@@ -104,6 +104,13 @@
       color: #6b7280;
     }
 
+    .place {
+      font-size: 0.78rem;
+      text-align: center;
+      margin-bottom: 16px;
+      color: #374151;
+    }
+
     label {
       display: block;
       font-size: 0.85rem;
@@ -181,6 +188,13 @@
       font-weight: 600;
     }
 
+    .creator {
+      margin-top: 6px;
+      font-size: 0.7rem;
+      text-align: center;
+      color: #7f8c9d;
+    }
+
     .error {
       margin-top: 10px;
       color: #b91c1c;
@@ -190,7 +204,6 @@
   </style>
 </head>
 <body>
-  <!-- Copos de nieve -->
   <div class="snow" id="snow"></div>
 
   <div class="card">
@@ -199,7 +212,19 @@
     </div>
 
     <h1>Santa Secreto Familiar</h1>
-    <p class="tagline">Familia & amigos · Sorpresas · Buen ambiente 🎁</p>
+
+    <p class="tagline">
+      Familia Villa · Unidos · Tradición · Buenos Momentos 🎁
+    </p>
+
+    <p class="place">
+      📍 <strong>Casa de Sergio Villa</strong><br>
+      Calle Guamúchil #52 · Colonia El Tizate · Zapopan, Jalisco<br>
+      <a href="https://maps.app.goo.gl/PkwVp3p2bp2CBwY8A" target="_blank">
+        👉 Ver ubicación en Google Maps
+      </a>
+    </p>
+
     <p class="subtitle">
       Selecciona tu nombre para saber a quién le vas a regalar.
     </p>
@@ -208,7 +233,6 @@
       <label for="nameSelect">¿Quién eres?</label>
       <select id="nameSelect">
         <option value="">-- Selecciona tu nombre --</option>
-        <!-- Los nombres se llenan desde JavaScript -->
       </select>
 
       <button id="drawBtn">
@@ -225,15 +249,15 @@
     </div>
 
     <div class="footer">
-      <span>Intercambio navideño familiar</span> · 2025
+      Intercambio navideño familiar · 2025
+    </div>
+
+    <div class="creator">
+      Creado por <strong>Paulo Cesar Villa Ibarra</strong>
     </div>
   </div>
 
   <script>
-    // ============================
-    //   CONFIGURACIÓN PARTICIPANTES
-    // ============================
-
     const PARTICIPANTS = [
       "Paulo Cesar",
       "Naydelin Fernanda",
@@ -254,14 +278,8 @@
       "Beto"
     ];
 
-    // Cambia esto si quieres un sorteo diferente
     const SEED = "intercambio-navideno-familiar-2025";
 
-    // ============================
-    //        LÓGICA DEL SORTEO
-    // ============================
-
-    // Random determinístico a partir de un texto (seed)
     function xmur3(str) {
       let h = 1779033703 ^ str.length;
       for (let i = 0; i < str.length; i++) {
@@ -306,9 +324,7 @@
             break;
           }
         }
-        if (valid) {
-          return shuffled;
-        }
+        if (valid) return shuffled;
       }
       throw new Error("No se pudo generar un sorteo válido. Revisa la lista de participantes.");
     }
@@ -350,7 +366,6 @@
     }
 
     function init() {
-      // Llenar el selector
       PARTICIPANTS.forEach(name => {
         const opt = document.createElement("option");
         opt.value = name;
@@ -358,7 +373,6 @@
         nameSelect.appendChild(opt);
       });
 
-      // Crear el mapa de asignaciones
       try {
         assignment = buildAssignmentMap(PARTICIPANTS, SEED);
       } catch (err) {
@@ -377,12 +391,11 @@
         }
 
         if (!assignment || !assignment[selected]) {
-          errorBox.textContent = "Hubo un problema con el sorteo. Avísale al organizador.";
+          errorBox.textContent = "Hubo un problema con el sorteo.";
           return;
         }
 
         const target = assignment[selected];
-
         resultBox.innerHTML = `
           👋 Hola, <strong>${selected}</strong><br/>
           Tú le vas a regalar a:<br/>
