@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Intercambio Navideño Familiar 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #ffffff 0, #ffe6ec 25%, #5b0b12 70%, #111827 100%);
+      color: #1f2933;
+      overflow: hidden;
+    }
+
+    /* Copos de nieve */
+    .snow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .snow span {
+      position: absolute;
+      top: -10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      animation: fall linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(110vh);
+      }
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: 20px;
+      padding: 24px 20px;
+      max-width: 430px;
+      width: calc(100% - 32px);
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(248, 250, 252, 0.9);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #b91c1c, #065f46);
+      color: #fefce8;
+      margin: 0 auto 10px;
+    }
+
+    .badge span {
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin: 0 0 4px;
+      text-align: center;
+      color: #111827;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      text-align: center;
+      margin-bottom: 16px;
+      color: #4b5563;
+    }
+
+    .tagline {
+      font-size: 0.8rem;
+      text-align: center;
+      margin-top: -4px;
+      margin-bottom: 14px;
+      color: #6b7280;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      color: #111827;
+    }
+
+    select,
+    button {
+      width: 100%;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    select {
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      margin-bottom: 14px;
+    }
+
+    select:focus {
+      border-color: #16a34a;
+      box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+    }
+
+    button {
+      border: none;
+      background: linear-gradient(135deg, #b91c1c, #16a34a);
+      color: #fefce8;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .result {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #f1f5f9;
+      font-size: 0.92rem;
+      display: none;
+      border: 1px dashed #9ca3af;
+    }
+
+    .result strong {
+      color: #111827;
+    }
+
+    .note {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: #6b7280;
+      text-align: center;
+    }
+
+    .footer {
+      margin-top: 16px;
+      font-size: 0.7rem;
+      text-align: center;
+      color: #9ca3af;
+    }
+
+    .footer span {
+      font-weight: 600;
+    }
+
+    .error {
+      margin-top: 10px;
+      color: #b91c1c;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Copos de nieve -->
+  <div class="snow" id="snow"></div>
+
+  <div class="card">
+    <div class="badge">
+      🎄 <span>Intercambio Navideño 2025</span>
+    </div>
+
+    <h1>Santa Secreto Familiar</h1>
+    <p class="tagline">Familia & amigos · Sorpresas · Buen ambiente 🎁</p>
+    <p class="subtitle">
+      Selecciona tu nombre para saber a quién le vas a regalar.
+    </p>
+
+    <div>
+      <label for="nameSelect">¿Quién eres?</label>
+      <select id="nameSelect">
+        <option value="">-- Selecciona tu nombre --</option>
+        <!-- Los nombres se llenan desde JavaScript -->
+      </select>
+
+      <button id="drawBtn">
+        Ver a quién le regalo 🎁
+      </button>
+
+      <div id="result" class="result"></div>
+      <div id="error" class="error"></div>
+
+      <p class="note">
+        💡 Sólo verás el resultado de tu propio nombre.<br />
+        No recargues la página para espiar, confía en la magia navideña 😜
+      </p>
+    </div>
+
+    <div class="footer">
+      <span>Intercambio navideño familiar</span> · 2025
+    </div>
+  </div>
+
+  <script>
+    // ============================
+    //   CONFIGURACIÓN PARTICIPANTES
+    // ============================
+
+    const PARTICIPANTS = [
+      "Paulo Cesar",
+      "Naydelin Fernanda",
+      "Sergio Villa",
+      "Julia Ibarra",
+      "Daniel Villa",
+      "Oscar Padilla",
+      "Mayra Villa",
+      "Leonardo Matías",
+      "Papa Chava",
+      "Mama Tere",
+      "Tania Villa",
+      "Novio de Tania",
+      "Mayte Villa",
+      "Marichuy",
+      "Omar Junior",
+      "Fernanda Quiñones",
+      "Beto"
+    ];
+
+    // Cambia esto si quieres un sorteo diferente
+    const SEED = "intercambio-navideno-familiar-2025";
+
+    // ============================
+    //        LÓGICA DEL SORTEO
+    // ============================
+
+    // Random determinístico a partir de un texto (seed)
+    function xmur3(str) {
+      let h = 1779033703 ^ str.length;
+      for (let i = 0; i < str.length; i++) {
+        h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+        h = (h << 13) | (h >>> 19);
+      }
+      return function () {
+        h = Math.imul(h ^ (h >>> 16), 2246822507);
+        h = Math.imul(h ^ (h >>> 13), 3266489909);
+        h ^= h >>> 16;
+        return h >>> 0;
+      };
+    }
+
+    function mulberry32(a) {
+      return function () {
+        let t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t = t ^ (t + Math.imul(t ^ (t >>> 7), t | 61));
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    function seededShuffle(array, seedStr) {
+      const seedFn = xmur3(seedStr);
+      const rng = mulberry32(seedFn());
+      const a = array.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function generateDerangement(names, seedStr, maxTries = 1000) {
+      for (let attempt = 0; attempt < maxTries; attempt++) {
+        const shuffled = seededShuffle(names, seedStr + "#" + attempt);
+        let valid = true;
+        for (let i = 0; i < names.length; i++) {
+          if (names[i] === shuffled[i]) {
+            valid = false;
+            break;
+          }
+        }
+        if (valid) {
+          return shuffled;
+        }
+      }
+      throw new Error("No se pudo generar un sorteo válido. Revisa la lista de participantes.");
+    }
+
+    function buildAssignmentMap(names, seedStr) {
+      if (names.length < 2) {
+        throw new Error("Se necesitan al menos 2 participantes.");
+      }
+      const derangement = generateDerangement(names, seedStr);
+      const map = {};
+      names.forEach((name, idx) => {
+        map[name] = derangement[idx];
+      });
+      return map;
+    }
+
+    const nameSelect = document.getElementById("nameSelect");
+    const drawBtn = document.getElementById("drawBtn");
+    const resultBox = document.getElementById("result");
+    const errorBox = document.getElementById("error");
+    const snowContainer = document.getElementById("snow");
+
+    let assignment = null;
+
+    function initSnow() {
+      const flakes = 60;
+      for (let i = 0; i < flakes; i++) {
+        const span = document.createElement("span");
+        const size = Math.random() * 6 + 3;
+        span.style.left = Math.random() * 100 + "vw";
+        span.style.width = size + "px";
+        span.style.height = size + "px";
+        const duration = Math.random() * 10 + 8;
+        const delay = Math.random() * -20;
+        span.style.animationDuration = duration + "s";
+        span.style.animationDelay = delay + "s";
+        snowContainer.appendChild(span);
+      }
+    }
+
+    function init() {
+      // Llenar el selector
+      PARTICIPANTS.forEach(name => {
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        nameSelect.appendChild(opt);
+      });
+
+      // Crear el mapa de asignaciones
+      try {
+        assignment = buildAssignmentMap(PARTICIPANTS, SEED);
+      } catch (err) {
+        errorBox.textContent = err.message;
+        drawBtn.disabled = true;
+      }
+
+      drawBtn.addEventListener("click", () => {
+        errorBox.textContent = "";
+        resultBox.style.display = "none";
+
+        const selected = nameSelect.value;
+        if (!selected) {
+          errorBox.textContent = "Por favor, selecciona tu nombre.";
+          return;
+        }
+
+        if (!assignment || !assignment[selected]) {
+          errorBox.textContent = "Hubo un problema con el sorteo. Avísale al organizador.";
+          return;
+        }
+
+        const target = assignment[selected];
+
+        resultBox.innerHTML = `
+          👋 Hola, <strong>${selected}</strong><br/>
+          Tú le vas a regalar a:<br/>
+          🎁 <strong>${target}</strong>
+        `;
+        resultBox.style.display = "block";
+      });
+
+      initSnow();
+    }
+
+    init();
+  </script>
+</body>
+</html>
