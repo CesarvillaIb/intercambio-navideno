@@ -17,7 +17,7 @@
       align-items: center;
       justify-content: center;
       padding: 16px;
-      background: radial-gradient(circle at top, #ffffff 0, #ffe6ec 25%, #5b0b12 70%, #050816 100%);
+      background: radial-gradient(circle at top, #ffffff 0, #ffe6ec 25%, #5b0b12 70%, #030712 100%);
       color: #1f2933;
       overflow: hidden;
     }
@@ -46,41 +46,49 @@
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(-10px);
-      }
-      100% {
-        transform: translateY(110vh);
-      }
+      0% { transform: translateY(-10px); }
+      100% { transform: translateY(110vh); }
     }
 
     .card {
       position: relative;
       z-index: 1;
-      background: rgba(255, 255, 255, 0.96);
-      border-radius: 24px;
-      padding: 20px 18px;
+      background: rgba(255, 255, 255, 0.97);
+      border-radius: 26px;
+      padding: 22px 18px 20px;
       max-width: 420px;
       width: 100%;
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(12px);
       border: 1px solid rgba(248, 250, 252, 0.95);
+      animation: cardIn 0.45s ease-out;
     }
 
-    /* Borde brillante extra para que luzca más en celulares */
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Borde glow */
     .card::before {
       content: "";
       position: absolute;
       inset: -2px;
-      border-radius: 26px;
+      border-radius: 28px;
       padding: 1px;
-      background: linear-gradient(135deg, rgba(239,68,68,0.7), rgba(34,197,94,0.7));
+      background: linear-gradient(135deg, rgba(239,68,68,0.9), rgba(34,197,94,0.9));
       -webkit-mask:
         linear-gradient(#000 0 0) content-box,
         linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
-      opacity: 0.75;
+      opacity: 0.7;
       pointer-events: none;
     }
 
@@ -89,7 +97,7 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       padding: 4px 12px;
       border-radius: 999px;
       background: linear-gradient(135deg, #b91c1c, #065f46);
@@ -102,14 +110,14 @@
     }
 
     h1 {
-      font-size: 1.5rem;
-      margin: 0 0 4px;
+      font-size: 1.55rem;
+      margin: 2px 0 4px;
       text-align: center;
       color: #111827;
     }
 
     .tagline {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       text-align: center;
       margin-top: -2px;
       margin-bottom: 10px;
@@ -117,7 +125,7 @@
     }
 
     .place {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       text-align: center;
       margin-bottom: 12px;
       color: #374151;
@@ -135,7 +143,7 @@
     }
 
     .subtitle {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       text-align: center;
       margin-bottom: 16px;
       color: #4b5563;
@@ -143,7 +151,7 @@
 
     label {
       display: block;
-      font-size: 0.85rem;
+      font-size: 0.86rem;
       margin-bottom: 6px;
       color: #111827;
     }
@@ -152,7 +160,7 @@
     button {
       width: 100%;
       border-radius: 999px;
-      padding: 12px 14px;
+      padding: 12px 16px;
       font-size: 0.95rem;
       outline: none;
     }
@@ -165,7 +173,7 @@
 
     select:focus {
       border-color: #16a34a;
-      box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+      box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.22);
     }
 
     button {
@@ -180,12 +188,12 @@
       gap: 8px;
       margin-top: 4px;
       transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.08s ease;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.28);
     }
 
     button:active {
       transform: scale(0.97) translateY(1px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      box-shadow: 0 5px 12px rgba(0,0,0,0.3);
       filter: brightness(0.97);
     }
 
@@ -200,9 +208,19 @@
       padding: 12px 14px;
       border-radius: 14px;
       background: #f1f5f9;
-      font-size: 0.95rem;
+      font-size: 0.96rem;
       display: none;
       border: 1px dashed #9ca3af;
+      animation: resultIn 0.25s ease-out;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    @keyframes resultIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     .result strong {
@@ -241,11 +259,11 @@
       text-align: center;
     }
 
-    /* Ajustes específicos para teléfonos */
+    /* Ajustes para teléfonos */
     @media (max-width: 600px) {
       body {
         align-items: flex-start;
-        padding-top: 24px;
+        padding-top: 26px;
       }
 
       .card {
@@ -254,17 +272,21 @@
       }
 
       h1 {
-        font-size: 1.35rem;
+        font-size: 1.4rem;
+      }
+
+      .tagline {
+        font-size: 0.8rem;
       }
 
       .result {
-        font-size: 0.92rem;
+        font-size: 0.94rem;
       }
 
       select,
       button {
         font-size: 0.9rem;
-        padding: 11px 12px;
+        padding: 11px 14px;
       }
     }
   </style>
@@ -446,7 +468,7 @@
 
       drawBtn.addEventListener("click", () => {
         errorBox.textContent = "";
-        resultBox.style.display = "none";
+        resultBox.classList.remove("show");
 
         const selected = nameSelect.value;
         if (!selected) {
@@ -465,7 +487,9 @@
           Tú le vas a regalar a:<br/>
           🎁 <strong>${target}</strong>
         `;
-        resultBox.style.display = "block";
+        // pequeño truco para reiniciar la animación
+        void resultBox.offsetWidth;
+        resultBox.classList.add("show");
       });
 
       initSnow();
