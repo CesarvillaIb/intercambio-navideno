@@ -204,6 +204,7 @@
       💡 Solo verás tu propio resultado.<br>
       No recargues la página para espiar, confía en la magia navideña 😜
     </p>
+    <p id="deviceNote" class="note" style="display:none;"></p>
 
     <div id="adminPanel" class="admin-panel">
       <h2>🔐 Panel administrador</h2>
@@ -230,7 +231,7 @@
       "Tania Villa",
       "Novio de Tania Diego",
       "Mayte Villa",
-      "Omar Grande",
+    
       "Marichuy",
       "Omar Junior",
       "Fernanda Quiñones",
@@ -242,6 +243,9 @@
     ];
 
     const SEED = "intercambio-navideno-familiar-2025";
+    const STORAGE_KEY = "intercambio_navideno_2025_nombre";
+    const params  = new URLSearchParams(window.location.search);
+    const isAdmin = params.get("admin") === "paulo2025";
 
     function xmur3(str){
       let h = 1779033703 ^ str.length;
@@ -303,8 +307,10 @@
     const snowContainer = document.getElementById("snow");
     const adminPanel    = document.getElementById("adminPanel");
     const adminList     = document.getElementById("adminList");
+    const deviceNote    = document.getElementById("deviceNote");
 
     let assignment = null;
+    let storedName = null;
 
     function initSnow(){
       const flakes = 60;
@@ -320,6 +326,13 @@
       }
     }
 
+    function showDeviceNote() {
+      if (storedName) {
+        deviceNote.textContent = "📱 Este dispositivo está registrado para: " + storedName;
+        deviceNote.style.display = "block";
+      }
+    }
+
     function init(){
       PARTICIPANTS.forEach(name => {
         const opt = document.createElement("option");
@@ -328,16 +341,18 @@
         nameSelect.appendChild(opt);
       });
 
+      storedName = localStorage.getItem(STORAGE_KEY);
+      if (storedName && PARTICIPANTS.includes(storedName)) {
+        nameSelect.value = storedName;
+        showDeviceNote();
+      }
+
       try {
         assignment = buildAssignmentMap(PARTICIPANTS, SEED);
       } catch (err) {
         errorBox.textContent = err.message;
         drawBtn.disabled = true;
       }
-
-      // Modo admin: ?admin=paulo2025
-      const params  = new URLSearchParams(window.location.search);
-      const isAdmin = params.get("admin") === "paulo2025";
 
       if (isAdmin && assignment) {
         adminPanel.style.display = "block";
@@ -357,6 +372,20 @@
           errorBox.textContent = "Por favor, selecciona tu nombre.";
           resultBox.style.display = "none";
           return;
+        }
+
+        // 🔒 Bloqueo por dispositivo (excepto admin)
+        if (!isAdmin) {
+          if (storedName && selected !== storedName) {
+            errorBox.textContent = `Este dispositivo ya está asociado al nombre: "${storedName}". Solo puedes ver tu propio resultado.`;
+            resultBox.style.display = "none";
+            return;
+          }
+          if (!storedName) {
+            storedName = selected;
+            localStorage.setItem(STORAGE_KEY, storedName);
+            showDeviceNote();
+          }
         }
 
         if (!assignment || !assignment[selected]) {
@@ -381,3 +410,4 @@
   </script>
 </body>
 </html>
+
