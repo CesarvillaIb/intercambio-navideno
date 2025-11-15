@@ -84,7 +84,7 @@
       pointer-events: none;
     }
 
-    /* Santa Claus bailando (más rápido) */
+    /* Santa Claus bailando (rápido) */
     .santa-mini {
       position: absolute;
       top: -30px;
@@ -269,6 +269,49 @@
       color: #7f8c9d;
     }
 
+    /* Panel admin (solo para ti) */
+    .admin-panel {
+      margin-top: 20px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      font-size: 0.78rem;
+    }
+
+    .admin-panel h2 {
+      margin: 0 0 6px;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .admin-panel p {
+      margin: 0 0 8px;
+      text-align: center;
+      color: #9ca3af;
+    }
+
+    .admin-panel ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .admin-panel li {
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(148,163,184,0.3);
+    }
+
+    .admin-panel li:last-child {
+      border-bottom: none;
+    }
+
+    .admin-panel strong {
+      color: #facc15;
+    }
+
     @media (max-width: 600px) {
       .card { padding: 18px 14px; }
       h1 { font-size: 1.4rem; }
@@ -316,6 +359,12 @@
       💡 Solo verás tu propio resultado.<br>
       No recargues la página para espiar, confía en la magia navideña 😜
     </p>
+
+    <div id="adminPanel" class="admin-panel" style="display:none;">
+      <h2>🔐 Panel administrador</h2>
+      <p>Solo visible con el enlace especial.</p>
+      <ul id="adminList"></ul>
+    </div>
 
     <div class="footer">Intercambio navideño familiar · 2025</div>
     <div class="creator">Creado por <strong>Paulo Cesar Villa Ibarra</strong></div>
@@ -407,11 +456,13 @@
       return map;
     }
 
-    const nameSelect = document.getElementById("nameSelect");
-    const drawBtn    = document.getElementById("drawBtn");
-    const resultBox  = document.getElementById("result");
-    const errorBox   = document.getElementById("error");
-    const snowContainer = document.getElementById("snow");
+    const nameSelect     = document.getElementById("nameSelect");
+    const drawBtn        = document.getElementById("drawBtn");
+    const resultBox      = document.getElementById("result");
+    const errorBox       = document.getElementById("error");
+    const snowContainer  = document.getElementById("snow");
+    const adminPanel     = document.getElementById("adminPanel");
+    const adminList      = document.getElementById("adminList");
 
     let assignment = null;
 
@@ -430,6 +481,7 @@
     }
 
     function init(){
+      // Llenar select
       PARTICIPANTS.forEach(name => {
         const opt = document.createElement("option");
         opt.value = name;
@@ -437,6 +489,7 @@
         nameSelect.appendChild(opt);
       });
 
+      // Construir asignaciones
       try {
         assignment = buildAssignmentMap(PARTICIPANTS, SEED);
       } catch (err) {
@@ -444,6 +497,20 @@
         drawBtn.disabled = true;
       }
 
+      // Modo admin por query ?admin=paulo2025
+      const params  = new URLSearchParams(window.location.search);
+      const isAdmin = params.get("admin") === "paulo2025";
+
+      if (isAdmin && assignment) {
+        adminPanel.style.display = "block";
+        PARTICIPANTS.forEach(giver => {
+          const li = document.createElement("li");
+          li.innerHTML = `<strong>${giver}</strong> → ${assignment[giver]}`;
+          adminList.appendChild(li);
+        });
+      }
+
+      // Evento botón
       drawBtn.addEventListener("click", () => {
         errorBox.textContent = "";
         resultBox.classList.remove("show");
