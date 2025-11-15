@@ -5,10 +5,7 @@
   <title>Intercambio Navideño Familiar 2025</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
 
     body {
       margin: 0;
@@ -22,254 +19,134 @@
       overflow: hidden;
     }
 
-    /* Fondo nieve */
     .snow {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; overflow: hidden; z-index: 0;
     }
-
     .snow span {
-      position: absolute;
-      top: -10px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.9);
-      animation: fall linear infinite;
-      opacity: 0.8;
+      position: absolute; top: -10px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.9); animation: fall linear infinite; opacity: .8;
     }
-
     @keyframes fall {
       0% { transform: translateY(-10px); }
       100% { transform: translateY(110vh); }
     }
 
     .card {
-      position: relative;
-      z-index: 2;
-      background: rgba(255, 255, 255, 0.96);
+      position: relative; z-index: 2;
+      background: rgba(255,255,255,0.96);
       border-radius: 24px;
       padding: 22px 18px;
-      max-width: 420px;
-      width: 100%;
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
+      max-width: 420px; width: 100%;
+      box-shadow: 0 18px 45px rgba(0,0,0,.4);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(248, 250, 252, 0.95);
-      animation: cardIn 0.45s ease-out;
+      border: 1px solid rgba(248,250,252,.95);
+      animation: cardIn .45s ease-out;
     }
-
     @keyframes cardIn {
-      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      from { opacity: 0; transform: translateY(20px) scale(.98); }
       to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* Borde brillo elegante */
     .card::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      border-radius: 26px;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(239,68,68,0.7), rgba(34,197,94,0.7));
+      content: ""; position: absolute; inset: -2px;
+      border-radius: 26px; padding: 1px;
+      background: linear-gradient(135deg, rgba(239,68,68,.7), rgba(34,197,94,.7));
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0.75;
-      pointer-events: none;
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      opacity: .75; pointer-events: none;
     }
 
-    /* Santa Claus bailando (rápido) */
     .santa-mini {
-      position: absolute;
-      top: -30px;
-      left: 50%;
+      position: absolute; top: -30px; left: 50%;
       transform: translateX(-50%);
-      font-size: 40px;
-      z-index: 3;
+      font-size: 40px; z-index: 3;
       animation: danceSanta 1s infinite ease-in-out;
     }
-
     @keyframes danceSanta {
       0% { transform: translateX(-50%) rotate(-10deg); }
       50% { transform: translateX(-50%) rotate(10deg); }
       100% { transform: translateX(-50%) rotate(-10deg); }
     }
 
-    /* Reno caminando */
     .reindeer {
-      position: fixed;
-      bottom: 18px;
-      left: -60px;
-      font-size: 34px;
-      z-index: 1;
-      animation: walkReindeer 14s linear infinite;
-      opacity: 0.9;
+      position: fixed; bottom: 18px; left: -60px;
+      font-size: 34px; z-index: 1;
+      animation: walkReindeer 14s linear infinite; opacity: .9;
     }
-
     @keyframes walkReindeer {
       0% { transform: translateX(0); }
       100% { transform: translateX(120vw); }
     }
 
     .badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-size: 0.85rem;
-      padding: 5px 14px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #b91c1c, #065f46);
-      color: #fefce8;
-      margin: 20px auto 12px;
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 6px; font-size: .85rem;
+      padding: 5px 14px; border-radius: 999px;
+      background: linear-gradient(135deg,#b91c1c,#065f46);
+      color: #fefce8; margin: 20px auto 12px;
     }
 
-    h1 {
-      font-size: 1.5rem;
-      text-align: center;
-      margin-bottom: 4px;
-      color: #111827;
-    }
+    h1 { font-size: 1.5rem; text-align: center; margin-bottom: 4px; color:#111827; }
 
-    .tagline {
-      font-size: 0.85rem;
-      text-align: center;
-      color: #6b7280;
-      margin-bottom: 4px;
-    }
+    .tagline { font-size: .85rem; text-align:center; color:#6b7280; margin-bottom:4px; }
 
-    .price {
-      font-size: 0.95rem;
-      text-align: center;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #b91c1c;
-    }
+    .price { font-size: .95rem; text-align:center; font-weight:600; margin-bottom:10px; color:#b91c1c; }
 
     .place {
-      font-size: 0.82rem;
-      text-align: center;
-      margin-bottom: 16px;
-      color: #374151;
-      line-height: 1.4;
+      font-size: .82rem; text-align:center; margin-bottom:16px;
+      color:#374151; line-height:1.4;
     }
+    .place a { color:#16a34a; font-weight:600; text-decoration:none; }
 
-    .place a {
-      color: #16a34a;
-      font-weight: 600;
-      text-decoration: none;
-    }
+    .subtitle { font-size:.9rem; text-align:center; color:#4b5563; margin-bottom:14px; }
 
-    .subtitle {
-      font-size: 0.9rem;
-      text-align: center;
-      color: #4b5563;
-      margin-bottom: 14px;
-    }
-
-    label {
-      font-size: 0.85rem;
-      margin-bottom: 6px;
-      color: #111827;
-    }
+    label { font-size:.85rem; margin-bottom:6px; color:#111827; display:block; }
 
     select, button {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 999px;
-      font-size: 1rem;
-      outline: none;
+      width:100%; padding:12px 14px; border-radius:999px;
+      font-size:1rem; outline:none;
     }
-
-    select {
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      margin-bottom: 14px;
-    }
-
-    select:focus {
-      border-color: #16a34a;
-      box-shadow: 0 0 0 2px rgba(22,163,74,0.25);
-    }
+    select { background:#f9fafb; border:1px solid #e5e7eb; margin-bottom:14px; }
+    select:focus { border-color:#16a34a; box-shadow:0 0 0 2px rgba(22,163,74,.25); }
 
     button {
-      background: linear-gradient(135deg, #b91c1c, #16a34a);
-      color: white;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      background: linear-gradient(135deg,#b91c1c,#16a34a); color:white;
+      border:none; font-weight:600; cursor:pointer;
+      box-shadow:0 8px 20px rgba(0,0,0,.3);
+      transition: transform .1s ease, box-shadow .1s ease;
       animation: buttonGlow 1.8s infinite ease-in-out;
     }
-
     @keyframes buttonGlow {
-      0%   { box-shadow: 0 0 12px rgba(34,197,94,0.4), 0 8px 18px rgba(0,0,0,0.3); }
-      50%  { box-shadow: 0 0 22px rgba(34,197,94,0.8), 0 10px 22px rgba(0,0,0,0.35); }
-      100% { box-shadow: 0 0 12px rgba(34,197,94,0.4), 0 8px 18px rgba(0,0,0,0.3); }
+      0% { box-shadow:0 0 12px rgba(34,197,94,.4),0 8px 18px rgba(0,0,0,.3); }
+      50%{ box-shadow:0 0 22px rgba(34,197,94,.8),0 10px 22px rgba(0,0,0,.35);}
+      100%{ box-shadow:0 0 12px rgba(34,197,94,.4),0 8px 18px rgba(0,0,0,.3);}
     }
-
-    button:active {
-      transform: scale(0.97);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
-    }
+    button:active { transform:scale(.97); box-shadow:0 4px 12px rgba(0,0,0,.35); }
 
     .result {
-      display: none;
-      margin-top: 18px;
-      padding: 14px;
-      border-radius: 14px;
-      background: #f1f5f9;
-      border: 1px dashed #9ca3af;
-      font-size: 0.95rem;
-      transform-origin: center;
+      display:none; margin-top:18px; padding:14px;
+      border-radius:14px; background:#f1f5f9;
+      border:1px dashed #9ca3af; font-size:.95rem;
+      transform-origin:center;
     }
-
-    .result.show {
-      display: block;
-      animation: resultPop 0.28s ease-out;
-    }
-
+    .result.show { display:block; animation: resultPop .28s ease-out; }
     @keyframes resultPop {
-      0%   { opacity: 0; transform: scale(0.9) translateY(6px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
+      0% { opacity:0; transform:scale(.9) translateY(6px); }
+      100%{ opacity:1; transform:scale(1) translateY(0); }
     }
 
-    .error {
-      margin-top: 10px;
-      font-size: 0.8rem;
-      color: #b91c1c;
-      text-align: center;
-    }
+    .error { margin-top:10px; font-size:.8rem; color:#b91c1c; text-align:center; }
 
     .note {
-      font-size: 0.8rem;
-      margin-top: 12px;
-      text-align: center;
-      color: #6b7280;
+      font-size:.8rem; margin-top:12px; text-align:center; color:#6b7280;
     }
 
-    .footer {
-      font-size: 0.7rem;
-      text-align: center;
-      margin-top: 18px;
-      color: #9ca3af;
-    }
+    .footer { font-size:.7rem; text-align:center; margin-top:18px; color:#9ca3af; }
 
-    .creator {
-      font-size: 0.7rem;
-      text-align: center;
-      margin-top: 4px;
-      color: #7f8c9d;
-    }
+    .creator { font-size:.7rem; text-align:center; margin-top:4px; color:#7f8c9d; }
 
-    /* Panel admin (solo para ti) */
     .admin-panel {
       margin-top: 20px;
       padding: 12px 14px;
@@ -277,64 +154,32 @@
       background: rgba(15,23,42,0.9);
       color: #e5e7eb;
       font-size: 0.78rem;
+      display:none;
     }
+    .admin-panel h2 { margin:0 0 6px; font-size:.9rem; text-align:center; }
+    .admin-panel p { margin:0 0 8px; text-align:center; color:#9ca3af; }
+    .admin-panel ul { list-style:none; padding:0; margin:0; max-height:220px; overflow-y:auto; }
+    .admin-panel li { padding:4px 0; border-bottom:1px solid rgba(148,163,184,.3); }
+    .admin-panel li:last-child { border-bottom:none; }
+    .admin-panel strong { color:#facc15; }
 
-    .admin-panel h2 {
-      margin: 0 0 6px;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    .admin-panel p {
-      margin: 0 0 8px;
-      text-align: center;
-      color: #9ca3af;
-    }
-
-    .admin-panel ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      max-height: 220px;
-      overflow-y: auto;
-    }
-
-    .admin-panel li {
-      padding: 4px 0;
-      border-bottom: 1px solid rgba(148,163,184,0.3);
-    }
-
-    .admin-panel li:last-child {
-      border-bottom: none;
-    }
-
-    .admin-panel strong {
-      color: #facc15;
-    }
-
-    @media (max-width: 600px) {
-      .card { padding: 18px 14px; }
-      h1 { font-size: 1.4rem; }
+    @media (max-width:600px){
+      .card{ padding:18px 14px; }
+      h1{ font-size:1.4rem; }
     }
   </style>
 </head>
-
 <body>
   <div class="snow" id="snow"></div>
-
-  <!-- Reno caminando -->
   <div class="reindeer">🦌</div>
 
   <div class="card">
-    <!-- Santa bailando -->
     <div class="santa-mini">🎅</div>
 
     <div class="badge">Intercambio Navideño 2025</div>
 
     <h1>Santa Secreto Familiar</h1>
-
     <p class="tagline">Familia Villa · Unidos · Tradición · Buenos Momentos 🎁</p>
-
     <p class="price">💰 Monto del intercambio: <strong>$500 MXN</strong></p>
 
     <p class="place">
@@ -360,7 +205,7 @@
       No recargues la página para espiar, confía en la magia navideña 😜
     </p>
 
-    <div id="adminPanel" class="admin-panel" style="display:none;">
+    <div id="adminPanel" class="admin-panel">
       <h2>🔐 Panel administrador</h2>
       <p>Solo visible con el enlace especial.</p>
       <ul id="adminList"></ul>
@@ -437,10 +282,7 @@
         const shuffled = seededShuffle(names, seedStr + "#" + attempt);
         let valid = true;
         for (let i = 0; i < names.length; i++) {
-          if (names[i] === shuffled[i]) {
-            valid = false;
-            break;
-          }
+          if (names[i] === shuffled[i]) { valid = false; break; }
         }
         if (valid) return shuffled;
       }
@@ -450,19 +292,17 @@
     function buildAssignmentMap(names, seedStr){
       const derangement = generateDerangement(names, seedStr);
       const map = {};
-      names.forEach((name, idx) => {
-        map[name] = derangement[idx];
-      });
+      names.forEach((name, idx) => { map[name] = derangement[idx]; });
       return map;
     }
 
-    const nameSelect     = document.getElementById("nameSelect");
-    const drawBtn        = document.getElementById("drawBtn");
-    const resultBox      = document.getElementById("result");
-    const errorBox       = document.getElementById("error");
-    const snowContainer  = document.getElementById("snow");
-    const adminPanel     = document.getElementById("adminPanel");
-    const adminList      = document.getElementById("adminList");
+    const nameSelect    = document.getElementById("nameSelect");
+    const drawBtn       = document.getElementById("drawBtn");
+    const resultBox     = document.getElementById("result");
+    const errorBox      = document.getElementById("error");
+    const snowContainer = document.getElementById("snow");
+    const adminPanel    = document.getElementById("adminPanel");
+    const adminList     = document.getElementById("adminList");
 
     let assignment = null;
 
@@ -472,7 +312,7 @@
         const span = document.createElement("span");
         const size = Math.random() * 6 + 3;
         span.style.left = Math.random() * 100 + "vw";
-        span.style.width  = size + "px";
+        span.style.width = size + "px";
         span.style.height = size + "px";
         span.style.animationDuration = (Math.random() * 10 + 8) + "s";
         span.style.animationDelay    = (Math.random() * -20) + "s";
@@ -481,7 +321,6 @@
     }
 
     function init(){
-      // Llenar select
       PARTICIPANTS.forEach(name => {
         const opt = document.createElement("option");
         opt.value = name;
@@ -489,7 +328,6 @@
         nameSelect.appendChild(opt);
       });
 
-      // Construir asignaciones
       try {
         assignment = buildAssignmentMap(PARTICIPANTS, SEED);
       } catch (err) {
@@ -497,7 +335,7 @@
         drawBtn.disabled = true;
       }
 
-      // Modo admin por query ?admin=paulo2025
+      // Modo admin: ?admin=paulo2025
       const params  = new URLSearchParams(window.location.search);
       const isAdmin = params.get("admin") === "paulo2025";
 
@@ -510,7 +348,6 @@
         });
       }
 
-      // Evento botón
       drawBtn.addEventListener("click", () => {
         errorBox.textContent = "";
         resultBox.classList.remove("show");
