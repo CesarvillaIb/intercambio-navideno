@@ -163,6 +163,31 @@
     .admin-panel li:last-child { border-bottom:none; }
     .admin-panel strong { color:#facc15; }
 
+    .admin-actions {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(148,163,184,0.4);
+      font-size: 0.76rem;
+    }
+
+    .admin-actions button {
+      margin-top: 8px;
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 0.8rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg,#0369a1,#0ea5e9);
+      box-shadow: 0 4px 12px rgba(15,118,178,0.5);
+    }
+
+    .admin-actions small {
+      display: block;
+      margin-top: 6px;
+      color: #cbd5f5;
+      text-align: center;
+      word-break: break-all;
+    }
+
     @media (max-width:600px){
       .card{ padding:18px 14px; }
       h1{ font-size:1.4rem; }
@@ -208,8 +233,13 @@
 
     <div id="adminPanel" class="admin-panel">
       <h2>🔐 Panel administrador</h2>
-      <p>Solo visible con el enlace especial.</p>
+      <p id="editionLabel"></p>
       <ul id="adminList"></ul>
+
+      <div class="admin-actions">
+        <button id="resetEditionBtn">🔁 Crear nueva edición del sorteo</button>
+        <small id="nextLinks"></small>
+      </div>
     </div>
 
     <div class="footer">Intercambio navideño familiar · 2025</div>
@@ -231,7 +261,7 @@
       "Tania Villa",
       "Novio de Tania Diego",
       "Mayte Villa",
-    
+      "Omar Grande",
       "Marichuy",
       "Omar Junior",
       "Fernanda Quiñones",
@@ -242,10 +272,12 @@
       "Irene Salazar"
     ];
 
-    const SEED = "intercambio-navideno-familiar-2025";
-    const STORAGE_KEY = "intercambio_navideno_2025_nombre";
     const params  = new URLSearchParams(window.location.search);
+    const edition = params.get("edicion") || "1";
     const isAdmin = params.get("admin") === "paulo2025";
+
+    const SEED = "intercambio-navideno-familiar-2025-edicion-" + edition;
+    const STORAGE_KEY = "intercambio_navideno_2025_nombre_edicion_" + edition;
 
     function xmur3(str){
       let h = 1779033703 ^ str.length;
@@ -300,14 +332,17 @@
       return map;
     }
 
-    const nameSelect    = document.getElementById("nameSelect");
-    const drawBtn       = document.getElementById("drawBtn");
-    const resultBox     = document.getElementById("result");
-    const errorBox      = document.getElementById("error");
-    const snowContainer = document.getElementById("snow");
-    const adminPanel    = document.getElementById("adminPanel");
-    const adminList     = document.getElementById("adminList");
-    const deviceNote    = document.getElementById("deviceNote");
+    const nameSelect      = document.getElementById("nameSelect");
+    const drawBtn         = document.getElementById("drawBtn");
+    const resultBox       = document.getElementById("result");
+    const errorBox        = document.getElementById("error");
+    const snowContainer   = document.getElementById("snow");
+    const adminPanel      = document.getElementById("adminPanel");
+    const adminList       = document.getElementById("adminList");
+    const deviceNote      = document.getElementById("deviceNote");
+    const editionLabel    = document.getElementById("editionLabel");
+    const resetEditionBtn = document.getElementById("resetEditionBtn");
+    const nextLinks       = document.getElementById("nextLinks");
 
     let assignment = null;
     let storedName = null;
@@ -328,7 +363,7 @@
 
     function showDeviceNote() {
       if (storedName) {
-        deviceNote.textContent = "📱 Este dispositivo está registrado para: " + storedName;
+        deviceNote.textContent = "📱 Este dispositivo está registrado para: " + storedName + " (Edición " + edition + ")";
         deviceNote.style.display = "block";
       }
     }
@@ -356,10 +391,28 @@
 
       if (isAdmin && assignment) {
         adminPanel.style.display = "block";
+        editionLabel.textContent = "Edición actual del sorteo: " + edition;
+        adminList.innerHTML = "";
         PARTICIPANTS.forEach(giver => {
           const li = document.createElement("li");
           li.innerHTML = `<strong>${giver}</strong> → ${assignment[giver]}`;
           adminList.appendChild(li);
+        });
+
+        resetEditionBtn.addEventListener("click", () => {
+          const current = parseInt(edition, 10) || 1;
+          const next = String(current + 1);
+          const baseUrl = window.location.origin + window.location.pathname;
+          const publicUrl = `${baseUrl}?edicion=${next}`;
+          const adminUrl  = `${baseUrl}?admin=paulo2025&edicion=${next}`;
+
+          nextLinks.innerHTML =
+            `Siguiente edición creada: <br>` +
+            `🔗 Público: ${publicUrl}<br>` +
+            `🛡️ Admin: ${adminUrl}`;
+
+          // Te manda directo a la nueva edición como admin
+          window.location.href = adminUrl;
         });
       }
 
@@ -374,7 +427,6 @@
           return;
         }
 
-        // 🔒 Bloqueo por dispositivo (excepto admin)
         if (!isAdmin) {
           if (storedName && selected !== storedName) {
             errorBox.textContent = `Este dispositivo ya está asociado al nombre: "${storedName}". Solo puedes ver tu propio resultado.`;
@@ -410,4 +462,5 @@
   </script>
 </body>
 </html>
+
 
