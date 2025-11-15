@@ -159,7 +159,7 @@
     .admin-panel h2 { margin:0 0 6px; font-size:.9rem; text-align:center; }
     .admin-panel p { margin:0 0 8px; text-align:center; color:#9ca3af; }
     .admin-panel ul { list-style:none; padding:0; margin:6px 0 0; max-height:220px; overflow-y:auto; }
-    .admin-panel li { padding:4px 0; border-bottom:1px solid rgba(148,163,184,.3); }
+    .admin-panel li { padding:4px 0; border-bottom:1px solid rgba(148,163,184,.3); display:flex; justify-content:space-between; align-items:center; gap:8px;}
     .admin-panel li:last-child { border-bottom:none; }
     .admin-panel strong { color:#facc15; }
 
@@ -186,6 +186,21 @@
       color: #cbd5f5;
       text-align: center;
       word-break: break-all;
+    }
+
+    .admin-tag {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.8);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .admin-tag.done {
+      background: rgba(34,197,94,0.2);
+      border-color: rgba(34,197,94,0.8);
+      color: #bbf7d0;
     }
 
     @media (max-width:600px){
@@ -238,7 +253,7 @@
 
       <div class="admin-actions">
         <button id="showResultsBtn">👀 Ver resultados de esta edición</button>
-        <button id="resetEditionBtn">🔁 Crear nueva edición del sorteo</button>
+        <button id="resetEditionBtn">🔁 Reiniciar sorteo (nueva edición)</button>
         <small id="nextLinks"></small>
       </div>
     </div>
@@ -262,7 +277,7 @@
       "Tania Villa",
       "Novio de Tania Diego",
       "Mayte Villa",
-     
+    
       "Marichuy",
       "Omar Junior",
       "Fernanda Quiñones",
@@ -279,6 +294,7 @@
 
     const SEED = "intercambio-navideno-familiar-2025-edicion-" + edition;
     const STORAGE_KEY = "intercambio_navideno_2025_nombre_edicion_" + edition;
+    const ADMIN_DONE_KEY = "intercambio_navideno_2025_vistos_edicion_" + edition;
 
     function xmur3(str){
       let h = 1779033703 ^ str.length;
@@ -349,6 +365,20 @@
     let assignment = null;
     let storedName = null;
     let resultsShown = false;
+    let adminDone = {};
+
+    function loadAdminDone(){
+      try {
+        const raw = localStorage.getItem(ADMIN_DONE_KEY);
+        if (raw) adminDone = JSON.parse(raw) || {};
+      } catch(e){
+        adminDone = {};
+      }
+    }
+
+    function saveAdminDone(){
+      localStorage.setItem(ADMIN_DONE_KEY, JSON.stringify(adminDone));
+    }
 
     function initSnow(){
       const flakes = 60;
@@ -376,7 +406,38 @@
       adminList.innerHTML = "";
       PARTICIPANTS.forEach(giver => {
         const li = document.createElement("li");
-        li.innerHTML = `<strong>${giver}</strong> → ${assignment[giver]}`;
+        const leftSpan = document.createElement("span");
+        leftSpan.innerHTML = `<strong>${giver}</strong> → ${assignment[giver]}`;
+
+        const tag = document.createElement("button");
+        tag.type = "button";
+        tag.className = "admin-tag";
+        const key = giver;
+        const isDone = !!adminDone[key];
+        if (isDone) {
+          tag.classList.add("done");
+          tag.textContent = "✅ Ya revisó";
+        } else {
+          tag.textContent = "❌ Pendiente";
+        }
+
+        tag.addEventListener("click", () => {
+          const nowDone = !adminDone[key];
+          adminDone[key] = nowDone;
+          if (!nowDone) delete adminDone[key];
+          saveAdminDone();
+
+          if (nowDone) {
+            tag.classList.add("done");
+            tag.textContent = "✅ Ya revisó";
+          } else {
+            tag.classList.remove("done");
+            tag.textContent = "❌ Pendiente";
+          }
+        });
+
+        li.appendChild(leftSpan);
+        li.appendChild(tag);
         adminList.appendChild(li);
       });
       resultsShown = true;
@@ -395,6 +456,8 @@
         nameSelect.value = storedName;
         showDeviceNote();
       }
+
+      loadAdminDone();
 
       try {
         assignment = buildAssignmentMap(PARTICIPANTS, SEED);
@@ -419,9 +482,12 @@
           const adminUrl  = `${baseUrl}?admin=paulo2025&edicion=${next}`;
 
           nextLinks.innerHTML =
-            `Siguiente edición creada: <br>` +
+            `Nueva edición creada (Edición ${next}): <br>` +
             `🔗 Público: ${publicUrl}<br>` +
             `🛡️ Admin: ${adminUrl}`;
+
+          // Limpia estado de admin para la nueva edición en este navegador
+          localStorage.removeItem("intercambio_navideno_2025_vistos_edicion_" + next);
 
           window.location.href = adminUrl;
         });
@@ -473,4 +539,3 @@
   </script>
 </body>
 </html>
-
