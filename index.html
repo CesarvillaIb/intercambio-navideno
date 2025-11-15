@@ -158,7 +158,7 @@
     }
     .admin-panel h2 { margin:0 0 6px; font-size:.9rem; text-align:center; }
     .admin-panel p { margin:0 0 8px; text-align:center; color:#9ca3af; }
-    .admin-panel ul { list-style:none; padding:0; margin:0; max-height:220px; overflow-y:auto; }
+    .admin-panel ul { list-style:none; padding:0; margin:6px 0 0; max-height:220px; overflow-y:auto; }
     .admin-panel li { padding:4px 0; border-bottom:1px solid rgba(148,163,184,.3); }
     .admin-panel li:last-child { border-bottom:none; }
     .admin-panel strong { color:#facc15; }
@@ -237,6 +237,7 @@
       <ul id="adminList"></ul>
 
       <div class="admin-actions">
+        <button id="showResultsBtn">👀 Ver resultados de esta edición</button>
         <button id="resetEditionBtn">🔁 Crear nueva edición del sorteo</button>
         <small id="nextLinks"></small>
       </div>
@@ -261,7 +262,7 @@
       "Tania Villa",
       "Novio de Tania Diego",
       "Mayte Villa",
-
+      "Omar Grande",
       "Marichuy",
       "Omar Junior",
       "Fernanda Quiñones",
@@ -343,9 +344,11 @@
     const editionLabel    = document.getElementById("editionLabel");
     const resetEditionBtn = document.getElementById("resetEditionBtn");
     const nextLinks       = document.getElementById("nextLinks");
+    const showResultsBtn  = document.getElementById("showResultsBtn");
 
     let assignment = null;
     let storedName = null;
+    let resultsShown = false;
 
     function initSnow(){
       const flakes = 60;
@@ -366,6 +369,17 @@
         deviceNote.textContent = "📱 Este dispositivo está registrado para: " + storedName + " (Edición " + edition + ")";
         deviceNote.style.display = "block";
       }
+    }
+
+    function fillAdminList() {
+      if (!assignment || resultsShown) return;
+      adminList.innerHTML = "";
+      PARTICIPANTS.forEach(giver => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${giver}</strong> → ${assignment[giver]}`;
+        adminList.appendChild(li);
+      });
+      resultsShown = true;
     }
 
     function init(){
@@ -392,11 +406,9 @@
       if (isAdmin && assignment) {
         adminPanel.style.display = "block";
         editionLabel.textContent = "Edición actual del sorteo: " + edition;
-        adminList.innerHTML = "";
-        PARTICIPANTS.forEach(giver => {
-          const li = document.createElement("li");
-          li.innerHTML = `<strong>${giver}</strong> → ${assignment[giver]}`;
-          adminList.appendChild(li);
+
+        showResultsBtn.addEventListener("click", () => {
+          fillAdminList();
         });
 
         resetEditionBtn.addEventListener("click", () => {
@@ -411,7 +423,6 @@
             `🔗 Público: ${publicUrl}<br>` +
             `🛡️ Admin: ${adminUrl}`;
 
-          // Te manda directo a la nueva edición como admin
           window.location.href = adminUrl;
         });
       }
@@ -462,6 +473,3 @@
   </script>
 </body>
 </html>
-
-
-
