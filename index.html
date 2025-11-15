@@ -17,12 +17,12 @@
       align-items: center;
       justify-content: center;
       padding: 16px;
-      background: radial-gradient(circle at top, #ffffff 0, #ffe6ec 25%, #5b0b12 70%, #030712 100%);
+      background: radial-gradient(circle at top, #ffffff 0, #ffe6ec 25%, #5b0b12 70%, #050816 100%);
       color: #1f2933;
       overflow: hidden;
     }
 
-    /* Fondo: nieve */
+    /* Fondo nieve */
     .snow {
       position: fixed;
       top: 0;
@@ -53,43 +53,46 @@
     .card {
       position: relative;
       z-index: 1;
-      background: rgba(255, 255, 255, 0.97);
-      border-radius: 26px;
-      padding: 22px 18px 20px;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 24px;
+      padding: 22px 18px;
       max-width: 420px;
       width: 100%;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
       border: 1px solid rgba(248, 250, 252, 0.95);
-      animation: cardIn 0.45s ease-out;
     }
 
-    @keyframes cardIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.98);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    /* Borde glow */
+    /* Borde brillo elegante */
     .card::before {
       content: "";
       position: absolute;
       inset: -2px;
-      border-radius: 28px;
+      border-radius: 26px;
       padding: 1px;
-      background: linear-gradient(135deg, rgba(239,68,68,0.9), rgba(34,197,94,0.9));
-      -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
+      background: linear-gradient(135deg, rgba(239,68,68,0.7), rgba(34,197,94,0.7));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
-      opacity: 0.7;
+      opacity: 0.75;
       pointer-events: none;
+    }
+
+    /* Santa Claus bailando */
+    .santa-mini {
+      position: absolute;
+      top: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 38px;
+      z-index: 20;
+      animation: danceSanta 1.6s infinite ease-in-out;
+    }
+
+    @keyframes danceSanta {
+      0% { transform: translateX(-50%) rotate(-6deg); }
+      50% { transform: translateX(-50%) rotate(6deg); }
+      100% { transform: translateX(-50%) rotate(-6deg); }
     }
 
     .badge {
@@ -97,406 +100,237 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      font-size: 0.78rem;
-      padding: 4px 12px;
+      font-size: 0.85rem;
+      padding: 5px 14px;
       border-radius: 999px;
       background: linear-gradient(135deg, #b91c1c, #065f46);
       color: #fefce8;
-      margin: 0 auto 10px;
-    }
-
-    .badge span {
-      font-weight: 500;
+      margin: 18px auto 12px;
     }
 
     h1 {
-      font-size: 1.55rem;
-      margin: 2px 0 4px;
+      font-size: 1.5rem;
       text-align: center;
+      margin-bottom: 4px;
       color: #111827;
     }
 
     .tagline {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       text-align: center;
-      margin-top: -2px;
-      margin-bottom: 10px;
       color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .price {
+      font-size: 0.95rem;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #b91c1c;
     }
 
     .place {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       text-align: center;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       color: #374151;
       line-height: 1.4;
     }
 
     .place a {
       color: #16a34a;
-      text-decoration: none;
       font-weight: 600;
-    }
-
-    .place a:hover {
-      text-decoration: underline;
+      text-decoration: none;
     }
 
     .subtitle {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       text-align: center;
-      margin-bottom: 16px;
       color: #4b5563;
+      margin-bottom: 14px;
     }
 
     label {
-      display: block;
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       margin-bottom: 6px;
       color: #111827;
     }
 
-    select,
-    button {
+    select, button {
       width: 100%;
+      padding: 12px 14px;
       border-radius: 999px;
-      padding: 12px 16px;
-      font-size: 0.95rem;
+      font-size: 1rem;
       outline: none;
     }
 
     select {
-      border: 1px solid #e5e7eb;
       background: #f9fafb;
+      border: 1px solid #e5e7eb;
       margin-bottom: 14px;
     }
 
-    select:focus {
-      border-color: #16a34a;
-      box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.22);
-    }
-
     button {
-      border: none;
       background: linear-gradient(135deg, #b91c1c, #16a34a);
-      color: #fefce8;
+      color: white;
+      border: none;
       font-weight: 600;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 4px;
-      transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.08s ease;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.28);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+      transition: 0.12s ease;
     }
 
     button:active {
-      transform: scale(0.97) translateY(1px);
-      box-shadow: 0 5px 12px rgba(0,0,0,0.3);
-      filter: brightness(0.97);
-    }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      box-shadow: none;
+      transform: scale(0.97);
     }
 
     .result {
+      display: none;
       margin-top: 18px;
-      padding: 12px 14px;
+      padding: 14px;
       border-radius: 14px;
       background: #f1f5f9;
-      font-size: 0.96rem;
-      display: none;
       border: 1px dashed #9ca3af;
-      animation: resultIn 0.25s ease-out;
-    }
-
-    .result.show {
-      display: block;
-    }
-
-    @keyframes resultIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .result strong {
-      color: #111827;
+      font-size: 0.95rem;
     }
 
     .note {
-      margin-top: 10px;
-      font-size: 0.78rem;
-      color: #6b7280;
+      font-size: 0.8rem;
+      margin-top: 12px;
       text-align: center;
+      color: #6b7280;
     }
 
     .footer {
-      margin-top: 16px;
       font-size: 0.7rem;
       text-align: center;
+      margin-top: 18px;
       color: #9ca3af;
     }
 
     .creator {
-      margin-top: 4px;
       font-size: 0.7rem;
       text-align: center;
+      margin-top: 4px;
       color: #7f8c9d;
     }
 
-    .creator strong {
-      font-weight: 600;
-    }
-
-    .error {
-      margin-top: 10px;
-      color: #b91c1c;
-      font-size: 0.8rem;
-      text-align: center;
-    }
-
-    /* Ajustes para teléfonos */
     @media (max-width: 600px) {
-      body {
-        align-items: flex-start;
-        padding-top: 26px;
-      }
-
-      .card {
-        border-radius: 24px;
-        padding: 18px 14px 20px;
-      }
-
-      h1 {
-        font-size: 1.4rem;
-      }
-
-      .tagline {
-        font-size: 0.8rem;
-      }
-
-      .result {
-        font-size: 0.94rem;
-      }
-
-      select,
-      button {
-        font-size: 0.9rem;
-        padding: 11px 14px;
-      }
+      .card { padding: 18px 14px; }
+      h1 { font-size: 1.4rem; }
     }
   </style>
 </head>
+
 <body>
   <div class="snow" id="snow"></div>
 
   <div class="card">
-    <div class="badge">
-      🎄 <span>Intercambio Navideño 2025</span>
-    </div>
+
+    <div class="santa-mini">🎅</div>
+
+    <div class="badge">🎄 Intercambio Navideño 2025</div>
 
     <h1>Santa Secreto Familiar</h1>
 
-    <p class="tagline">
-      Familia Villa · Unidos · Tradición · Buenos Momentos 🎁
-    </p>
+    <p class="tagline">Familia Villa · Unidos · Tradición · Buenos Momentos 🎁</p>
+
+    <p class="price">💰 Monto del intercambio: <strong>$500 MXN</strong></p>
 
     <p class="place">
       📍 <strong>Casa de Sergio Villa</strong><br>
       Calle Guamúchil #52 · Colonia El Tizate · Zapopan, Jalisco<br>
-      <a href="https://maps.app.goo.gl/PkwVp3p2bp2CBwY8A" target="_blank">
-        👉 Ver ubicación en Google Maps
-      </a>
+      👉 <a href="https://maps.app.goo.gl/PkwVp3p2bp2CBwY8A" target="_blank">Ver ubicación en Google Maps</a>
     </p>
 
-    <p class="subtitle">
-      Selecciona tu nombre para saber a quién le vas a regalar.
-    </p>
+    <p class="subtitle">Selecciona tu nombre para saber a quién le vas a regalar.</p>
 
-    <div>
-      <label for="nameSelect">¿Quién eres?</label>
-      <select id="nameSelect">
-        <option value="">-- Selecciona tu nombre --</option>
-      </select>
+    <label for="nameSelect">¿Quién eres?</label>
+    <select id="nameSelect">
+      <option value="">-- Selecciona tu nombre --</option>
+    </select>
 
-      <button id="drawBtn">
-        Ver a quién le regalo 🎁
-      </button>
+    <button id="drawBtn">Ver a quién le regalo 🎁</button>
 
-      <div id="result" class="result"></div>
-      <div id="error" class="error"></div>
+    <div id="result" class="result"></div>
+    <div id="error" class="error"></div>
 
-      <p class="note">
-        💡 Sólo verás el resultado de tu propio nombre.<br />
-        No recargues la página para espiar, confía en la magia navideña 😜
-      </p>
-    </div>
+    <p class="note">💡 Solo verás tu propio resultado. No recargues para espiar 😜</p>
 
-    <div class="footer">
-      Intercambio navideño familiar · 2025
-    </div>
-
-    <div class="creator">
-      Creado por <strong>Paulo Cesar Villa Ibarra</strong>
-    </div>
+    <div class="footer">Intercambio navideño familiar · 2025</div>
+    <div class="creator">Creado por <strong>Paulo Cesar Villa Ibarra</strong></div>
   </div>
 
   <script>
     const PARTICIPANTS = [
- "Paulo Cesar",
-  "Naydelin Fernanda",
-  "Sergio Villa",
-  "Julia Ibarra",
-  "Daniel Villa",
-  "Oscar Padilla",
-  "Mayra Villa",
-  "Leonardo Matías",
-  "Papa Chava",
-  "Mama Tere",
-  "Tania Villa",
-  "Novio de Tania (Diego)",
-  "Mayte Villa",
-  "Omar Grande",
-  "Marichuy",
-  "Omar Junior",
-  "Fernanda Quiñones",
-  "Beto (el que me regalará su carro)",
-  "Brayan",
-  "Novia de Brayan (Valentina)",
-  "Salvador Villa",
-  "Irene Salazar"
+      "Paulo Cesar",
+      "Naydelin Fernanda",
+      "Sergio Villa",
+      "Julia Ibarra",
+      "Daniel Villa",
+      "Oscar Padilla",
+      "Mayra Villa",
+      "Leonardo Matías",
+      "Papa Chava",
+      "Mama Tere",
+      "Tania Villa",
+      "Novio de Tania Diego",
+      "Mayte Villa",
+      "Omar Grande",
+      "Marichuy",
+      "Omar Junior",
+      "Fernanda Quiñones",
+      "Beto El que me regalara su carro",
+      "Brayan",
+      "Novia de Brayan Valentina",
+      "Salvador Villa",
+      "Irene Salazar"
     ];
 
     const SEED = "intercambio-navideno-familiar-2025";
 
-    function xmur3(str) {
-      let h = 1779033703 ^ str.length;
-      for (let i = 0; i < str.length; i++) {
-        h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
-        h = (h << 13) | (h >>> 19);
-      }
-      return function () {
-        h = Math.imul(h ^ (h >>> 16), 2246822507);
-        h = Math.imul(h ^ (h >>> 13), 3266489909);
-        h ^= h >>> 16;
-        return h >>> 0;
-      };
-    }
+    function xmur3(str){let h=1779033703^str.length;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=(h<<13)|(h>>>19);}return function(){h=Math.imul(h^(h>>>16),2246822507);h=Math.imul(h^(h>>>13),3266489909);h^=h>>>16;return h>>>0;};}
+    function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^(t>>>15),t|1);t=t^(t+Math.imul(t^(t>>>7),t|61));return((t^(t>>>14))>>>0)/4294967296;};}
+    function seededShuffle(array,seed){const seedFn=xmur3(seed),rng=mulberry32(seedFn());const a=array.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+    function generateDerangement(names,seed,maxTries=1000){for(let k=0;k<maxTries;k++){const out=seededShuffle(names,seed+"#"+k);let ok=true;for(let i=0;i<names.length;i++){if(names[i]===out[i]){ok=false;break;}}if(ok)return out;}throw new Error("No se pudo generar sorteo válido.");}
+    function buildAssignmentMap(names,seed){const d=generateDerangement(names,seed);const m={};names.forEach((n,i)=>m[n]=d[i]);return m;}
 
-    function mulberry32(a) {
-      return function () {
-        let t = a += 0x6D2B79F5;
-        t = Math.imul(t ^ (t >>> 15), t | 1);
-        t = t ^ (t + Math.imul(t ^ (t >>> 7), t | 61));
-        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-      };
-    }
+    const nameSelect=document.getElementById("nameSelect");
+    const btn=document.getElementById("drawBtn");
+    const result=document.getElementById("result");
 
-    function seededShuffle(array, seedStr) {
-      const seedFn = xmur3(seedStr);
-      const rng = mulberry32(seedFn());
-      const a = array.slice();
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(rng() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-      }
-      return a;
-    }
+    let assignment={};
 
-    function generateDerangement(names, seedStr, maxTries = 1000) {
-      for (let attempt = 0; attempt < maxTries; attempt++) {
-        const shuffled = seededShuffle(names, seedStr + "#" + attempt);
-        let valid = true;
-        for (let i = 0; i < names.length; i++) {
-          if (names[i] === shuffled[i]) {
-            valid = false;
-            break;
-          }
-        }
-        if (valid) return shuffled;
-      }
-      throw new Error("No se pudo generar un sorteo válido. Revisa la lista de participantes.");
-    }
-
-    function buildAssignmentMap(names, seedStr) {
-      if (names.length < 2) {
-        throw new Error("Se necesitan al menos 2 participantes.");
-      }
-      const derangement = generateDerangement(names, seedStr);
-      const map = {};
-      names.forEach((name, idx) => {
-        map[name] = derangement[idx];
-      });
-      return map;
-    }
-
-    const nameSelect = document.getElementById("nameSelect");
-    const drawBtn = document.getElementById("drawBtn");
-    const resultBox = document.getElementById("result");
-    const errorBox = document.getElementById("error");
-    const snowContainer = document.getElementById("snow");
-
-    let assignment = null;
-
-    function initSnow() {
-      const flakes = 60;
-      for (let i = 0; i < flakes; i++) {
-        const span = document.createElement("span");
-        const size = Math.random() * 6 + 3;
-        span.style.left = Math.random() * 100 + "vw";
-        span.style.width = size + "px";
-        span.style.height = size + "px";
-        const duration = Math.random() * 10 + 8;
-        const delay = Math.random() * -20;
-        span.style.animationDuration = duration + "s";
-        span.style.animationDelay = delay + "s";
-        snowContainer.appendChild(span);
+    function initSnow(){
+      const flakes=60,snow=document.getElementById("snow");
+      for(let i=0;i<flakes;i++){
+        const s=document.createElement("span");
+        const size=Math.random()*6+3;
+        s.style.left=Math.random()*100+"vw";
+        s.style.width=size+"px";
+        s.style.height=size+"px";
+        s.style.animationDuration=(Math.random()*10+8)+"s";
+        s.style.animationDelay=(Math.random()*-20)+"s";
+        snow.appendChild(s);
       }
     }
 
-    function init() {
-      PARTICIPANTS.forEach(name => {
-        const opt = document.createElement("option");
-        opt.value = name;
-        opt.textContent = name;
+    function init(){
+      PARTICIPANTS.forEach(n=>{
+        const opt=document.createElement("option");
+        opt.value=n; opt.textContent=n;
         nameSelect.appendChild(opt);
       });
 
-      try {
-        assignment = buildAssignmentMap(PARTICIPANTS, SEED);
-      } catch (err) {
-        errorBox.textContent = err.message;
-        drawBtn.disabled = true;
-      }
+      assignment=buildAssignmentMap(PARTICIPANTS,SEED);
 
-      drawBtn.addEventListener("click", () => {
-        errorBox.textContent = "";
-        resultBox.classList.remove("show");
-
-        const selected = nameSelect.value;
-        if (!selected) {
-          errorBox.textContent = "Por favor, selecciona tu nombre.";
-          return;
-        }
-
-        if (!assignment || !assignment[selected]) {
-          errorBox.textContent = "Hubo un problema con el sorteo.";
-          return;
-        }
-
-        const target = assignment[selected];
-        resultBox.innerHTML = `
-          👋 Hola, <strong>${selected}</strong><br/>
-          Tú le vas a regalar a:<br/>
-          🎁 <strong>${target}</strong>
-        `;
-        // pequeño truco para reiniciar la animación
-        void resultBox.offsetWidth;
-        resultBox.classList.add("show");
+      btn.addEventListener("click",()=>{
+        const me=nameSelect.value;
+        if(!me){ result.style.display="block"; result.innerHTML="❗ Selecciona tu nombre."; return;}
+        const target=assignment[me];
+        result.style.display="block";
+        result.innerHTML=`👋 Hola, <strong>${me}</strong><br> Tú le vas a regalar a:<br> 🎁 <strong>${target}</strong>`;
       });
 
       initSnow();
@@ -506,4 +340,3 @@
   </script>
 </body>
 </html>
-
