@@ -178,6 +178,7 @@
       border-radius: 999px;
       background: linear-gradient(135deg,#0369a1,#0ea5e9);
       box-shadow: 0 4px 12px rgba(15,118,178,0.5);
+      animation: none;
     }
 
     .admin-actions small {
@@ -193,7 +194,6 @@
       padding: 2px 8px;
       border-radius: 999px;
       border: 1px solid rgba(148,163,184,0.8);
-      cursor: pointer;
       white-space: nowrap;
     }
 
@@ -262,7 +262,48 @@
     <div class="creator">Creado por <strong>Paulo Cesar Villa Ibarra</strong></div>
   </div>
 
-  <script>
+  <!-- TODO: AQUÍ VA TODO EL JS + FIREBASE -->
+  <script type="module">
+    /* ---------------------------
+       FIREBASE + FIRESTORE
+    --------------------------- */
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBkln8OvQIhSd2Phnbt0VpUWxwlfiP5upo",
+      authDomain: "intercambio-familiar-2025.firebaseapp.com",
+      projectId: "intercambio-familiar-2025",
+      storageBucket: "intercambio-familiar-2025.firebasestorage.app",
+      messagingSenderId: "782877002512",
+      appId: "1:782877002512:web:fa9e0fc96fa2fe2074f395"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    async function marcarComoRevisado(nombre, edicion) {
+      await setDoc(
+        doc(db, "revisados", String(edicion)),
+        { [nombre]: true },
+        { merge: true }
+      );
+    }
+
+    async function obtenerRevisados(edicion) {
+      const snap = await getDoc(doc(db, "revisados", String(edicion)));
+      return snap.exists() ? snap.data() : {};
+    }
+
+    /* ---------------------------
+       LÓGICA DEL INTERCAMBIO
+    --------------------------- */
+
     const PARTICIPANTS = [
       "Paulo Cesar",
       "Naydelin Fernanda",
@@ -277,7 +318,6 @@
       "Tania Villa",
       "Novio de Tania Diego",
       "Mayte Villa",
-    
       "Marichuy",
       "Omar Junior",
       "Fernanda Quiñones",
@@ -294,7 +334,6 @@
 
     const SEED = "intercambio-navideno-familiar-2025-edicion-" + edition;
     const STORAGE_KEY = "intercambio_navideno_2025_nombre_edicion_" + edition;
-    const ADMIN_DONE_KEY = "intercambio_navideno_2025_vistos_edicion_" + edition;
 
     function xmur3(str){
       let h = 1779033703 ^ str.length;
@@ -364,21 +403,6 @@
 
     let assignment = null;
     let storedName = null;
-    let resultsShown = false;
-    let adminDone = {};
-
-    function loadAdminDone(){
-      try {
-        const raw = localStorage.getItem(ADMIN_DONE_KEY);
-        if (raw) adminDone = JSON.parse(raw) || {};
-      } catch(e){
-        adminDone = {};
-      }
-    }
-
-    function saveAdminDone(){
-      localStorage.setItem(ADMIN_DONE_KEY, JSON.stringify(adminDone));
-    }
 
     function initSnow(){
       const flakes = 60;
@@ -401,49 +425,28 @@
       }
     }
 
-    function fillAdminList() {
-      if (!assignment || resultsShown) return;
+    async function fillAdminList() {
+      if (!assignment) return;
       adminList.innerHTML = "";
+
+      const revisados = await obtenerRevisados(edition);
+
       PARTICIPANTS.forEach(giver => {
         const li = document.createElement("li");
         const leftSpan = document.createElement("span");
         leftSpan.innerHTML = `<strong>${giver}</strong> → ${assignment[giver]}`;
 
-        const tag = document.createElement("button");
-        tag.type = "button";
-        tag.className = "admin-tag";
-        const key = giver;
-        const isDone = !!adminDone[key];
-        if (isDone) {
-          tag.classList.add("done");
-          tag.textContent = "✅ Ya revisó";
-        } else {
-          tag.textContent = "❌ Pendiente";
-        }
-
-        tag.addEventListener("click", () => {
-          const nowDone = !adminDone[key];
-          adminDone[key] = nowDone;
-          if (!nowDone) delete adminDone[key];
-          saveAdminDone();
-
-          if (nowDone) {
-            tag.classList.add("done");
-            tag.textContent = "✅ Ya revisó";
-          } else {
-            tag.classList.remove("done");
-            tag.textContent = "❌ Pendiente";
-          }
-        });
+        const tag = document.createElement("span");
+        tag.className = "admin-tag" + (revisados[giver] ? " done" : "");
+        tag.textContent = revisados[giver] ? "✅ Confirmó" : "⏳ Sin confirmar";
 
         li.appendChild(leftSpan);
         li.appendChild(tag);
         adminList.appendChild(li);
       });
-      resultsShown = true;
     }
 
-    function init(){
+    async function init(){
       PARTICIPANTS.forEach(name => {
         const opt = document.createElement("option");
         opt.value = name;
@@ -456,8 +459,6 @@
         nameSelect.value = storedName;
         showDeviceNote();
       }
-
-      loadAdminDone();
 
       try {
         assignment = buildAssignmentMap(PARTICIPANTS, SEED);
@@ -486,14 +487,11 @@
             `🔗 Público: ${publicUrl}<br>` +
             `🛡️ Admin: ${adminUrl}`;
 
-          // Limpia estado de admin para la nueva edición en este navegador
-          localStorage.removeItem("intercambio_navideno_2025_vistos_edicion_" + next);
-
           window.location.href = adminUrl;
         });
       }
 
-      drawBtn.addEventListener("click", () => {
+      drawBtn.addEventListener("click", async () => {
         errorBox.textContent = "";
         resultBox.classList.remove("show");
 
@@ -524,12 +522,32 @@
         }
 
         const target = assignment[selected];
+
         resultBox.innerHTML = `
           👋 Hola, <strong>${selected}</strong><br/>
           Tú le vas a regalar a:<br/>
           🎁 <strong>${target}</strong>
+          <br/><br/>
+          <button id="confirmBtn">✅ Ya vi quién me tocó</button>
         `;
         resultBox.classList.add("show");
+
+        const confirmBtn = document.getElementById("confirmBtn");
+        if (confirmBtn) {
+          confirmBtn.addEventListener("click", async () => {
+            confirmBtn.disabled = true;
+            confirmBtn.textContent = "Guardando...";
+            try {
+              await marcarComoRevisado(selected, edition);
+              confirmBtn.textContent = "✅ Confirmado";
+            } catch (e) {
+              console.error(e);
+              confirmBtn.disabled = false;
+              confirmBtn.textContent = "Intentar de nuevo";
+              alert("Hubo un problema al guardar la confirmación, pero tu resultado sí es válido.");
+            }
+          });
+        }
       });
 
       initSnow();
