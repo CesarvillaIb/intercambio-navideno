@@ -52,7 +52,7 @@
 
     .card {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       background: rgba(255, 255, 255, 0.96);
       border-radius: 24px;
       padding: 22px 18px;
@@ -61,6 +61,12 @@
       box-shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(248, 250, 252, 0.95);
+      animation: cardIn 0.45s ease-out;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     /* Borde brillo elegante */
@@ -78,21 +84,37 @@
       pointer-events: none;
     }
 
-    /* Santa Claus bailando */
+    /* Santa Claus bailando (más rápido) */
     .santa-mini {
       position: absolute;
-      top: -28px;
+      top: -30px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 38px;
-      z-index: 20;
-      animation: danceSanta 1.6s infinite ease-in-out;
+      font-size: 40px;
+      z-index: 3;
+      animation: danceSanta 1s infinite ease-in-out;
     }
 
     @keyframes danceSanta {
-      0% { transform: translateX(-50%) rotate(-6deg); }
-      50% { transform: translateX(-50%) rotate(6deg); }
-      100% { transform: translateX(-50%) rotate(-6deg); }
+      0% { transform: translateX(-50%) rotate(-10deg); }
+      50% { transform: translateX(-50%) rotate(10deg); }
+      100% { transform: translateX(-50%) rotate(-10deg); }
+    }
+
+    /* Reno caminando */
+    .reindeer {
+      position: fixed;
+      bottom: 18px;
+      left: -60px;
+      font-size: 34px;
+      z-index: 1;
+      animation: walkReindeer 14s linear infinite;
+      opacity: 0.9;
+    }
+
+    @keyframes walkReindeer {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(120vw); }
     }
 
     .badge {
@@ -105,7 +127,7 @@
       border-radius: 999px;
       background: linear-gradient(135deg, #b91c1c, #065f46);
       color: #fefce8;
-      margin: 18px auto 12px;
+      margin: 20px auto 12px;
     }
 
     h1 {
@@ -119,7 +141,7 @@
       font-size: 0.85rem;
       text-align: center;
       color: #6b7280;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .price {
@@ -171,18 +193,31 @@
       margin-bottom: 14px;
     }
 
+    select:focus {
+      border-color: #16a34a;
+      box-shadow: 0 0 0 2px rgba(22,163,74,0.25);
+    }
+
     button {
       background: linear-gradient(135deg, #b91c1c, #16a34a);
       color: white;
       border: none;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.25);
-      transition: 0.12s ease;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      animation: buttonGlow 1.8s infinite ease-in-out;
+    }
+
+    @keyframes buttonGlow {
+      0%   { box-shadow: 0 0 12px rgba(34,197,94,0.4), 0 8px 18px rgba(0,0,0,0.3); }
+      50%  { box-shadow: 0 0 22px rgba(34,197,94,0.8), 0 10px 22px rgba(0,0,0,0.35); }
+      100% { box-shadow: 0 0 12px rgba(34,197,94,0.4), 0 8px 18px rgba(0,0,0,0.3); }
     }
 
     button:active {
       transform: scale(0.97);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
     }
 
     .result {
@@ -193,6 +228,24 @@
       background: #f1f5f9;
       border: 1px dashed #9ca3af;
       font-size: 0.95rem;
+      transform-origin: center;
+    }
+
+    .result.show {
+      display: block;
+      animation: resultPop 0.28s ease-out;
+    }
+
+    @keyframes resultPop {
+      0%   { opacity: 0; transform: scale(0.9) translateY(6px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .error {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #b91c1c;
+      text-align: center;
     }
 
     .note {
@@ -226,11 +279,14 @@
 <body>
   <div class="snow" id="snow"></div>
 
-  <div class="card">
+  <!-- Reno caminando -->
+  <div class="reindeer">🦌</div>
 
+  <div class="card">
+    <!-- Santa bailando -->
     <div class="santa-mini">🎅</div>
 
-    <div class="badge">🎄 Intercambio Navideño 2025</div>
+    <div class="badge">Intercambio Navideño 2025</div>
 
     <h1>Santa Secreto Familiar</h1>
 
@@ -256,7 +312,10 @@
     <div id="result" class="result"></div>
     <div id="error" class="error"></div>
 
-    <p class="note">💡 Solo verás tu propio resultado. No recargues para espiar 😜</p>
+    <p class="note">
+      💡 Solo verás tu propio resultado.<br>
+      No recargues la página para espiar, confía en la magia navideña 😜
+    </p>
 
     <div class="footer">Intercambio navideño familiar · 2025</div>
     <div class="creator">Creado por <strong>Paulo Cesar Villa Ibarra</strong></div>
@@ -290,47 +349,125 @@
 
     const SEED = "intercambio-navideno-familiar-2025";
 
-    function xmur3(str){let h=1779033703^str.length;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=(h<<13)|(h>>>19);}return function(){h=Math.imul(h^(h>>>16),2246822507);h=Math.imul(h^(h>>>13),3266489909);h^=h>>>16;return h>>>0;};}
-    function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^(t>>>15),t|1);t=t^(t+Math.imul(t^(t>>>7),t|61));return((t^(t>>>14))>>>0)/4294967296;};}
-    function seededShuffle(array,seed){const seedFn=xmur3(seed),rng=mulberry32(seedFn());const a=array.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-    function generateDerangement(names,seed,maxTries=1000){for(let k=0;k<maxTries;k++){const out=seededShuffle(names,seed+"#"+k);let ok=true;for(let i=0;i<names.length;i++){if(names[i]===out[i]){ok=false;break;}}if(ok)return out;}throw new Error("No se pudo generar sorteo válido.");}
-    function buildAssignmentMap(names,seed){const d=generateDerangement(names,seed);const m={};names.forEach((n,i)=>m[n]=d[i]);return m;}
+    function xmur3(str){
+      let h = 1779033703 ^ str.length;
+      for (let i = 0; i < str.length; i++) {
+        h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+        h = (h << 13) | (h >>> 19);
+      }
+      return function () {
+        h = Math.imul(h ^ (h >>> 16), 2246822507);
+        h = Math.imul(h ^ (h >>> 13), 3266489909);
+        h ^= h >>> 16;
+        return h >>> 0;
+      };
+    }
 
-    const nameSelect=document.getElementById("nameSelect");
-    const btn=document.getElementById("drawBtn");
-    const result=document.getElementById("result");
+    function mulberry32(a){
+      return function () {
+        let t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t = t ^ (t + Math.imul(t ^ (t >>> 7), t | 61));
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
 
-    let assignment={};
+    function seededShuffle(array, seedStr){
+      const seedFn = xmur3(seedStr);
+      const rng = mulberry32(seedFn());
+      const a = array.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function generateDerangement(names, seedStr, maxTries = 1000){
+      for (let attempt = 0; attempt < maxTries; attempt++) {
+        const shuffled = seededShuffle(names, seedStr + "#" + attempt);
+        let valid = true;
+        for (let i = 0; i < names.length; i++) {
+          if (names[i] === shuffled[i]) {
+            valid = false;
+            break;
+          }
+        }
+        if (valid) return shuffled;
+      }
+      throw new Error("No se pudo generar un sorteo válido. Revisa la lista de participantes.");
+    }
+
+    function buildAssignmentMap(names, seedStr){
+      const derangement = generateDerangement(names, seedStr);
+      const map = {};
+      names.forEach((name, idx) => {
+        map[name] = derangement[idx];
+      });
+      return map;
+    }
+
+    const nameSelect = document.getElementById("nameSelect");
+    const drawBtn    = document.getElementById("drawBtn");
+    const resultBox  = document.getElementById("result");
+    const errorBox   = document.getElementById("error");
+    const snowContainer = document.getElementById("snow");
+
+    let assignment = null;
 
     function initSnow(){
-      const flakes=60,snow=document.getElementById("snow");
-      for(let i=0;i<flakes;i++){
-        const s=document.createElement("span");
-        const size=Math.random()*6+3;
-        s.style.left=Math.random()*100+"vw";
-        s.style.width=size+"px";
-        s.style.height=size+"px";
-        s.style.animationDuration=(Math.random()*10+8)+"s";
-        s.style.animationDelay=(Math.random()*-20)+"s";
-        snow.appendChild(s);
+      const flakes = 60;
+      for (let i = 0; i < flakes; i++) {
+        const span = document.createElement("span");
+        const size = Math.random() * 6 + 3;
+        span.style.left = Math.random() * 100 + "vw";
+        span.style.width  = size + "px";
+        span.style.height = size + "px";
+        span.style.animationDuration = (Math.random() * 10 + 8) + "s";
+        span.style.animationDelay    = (Math.random() * -20) + "s";
+        snowContainer.appendChild(span);
       }
     }
 
     function init(){
-      PARTICIPANTS.forEach(n=>{
-        const opt=document.createElement("option");
-        opt.value=n; opt.textContent=n;
+      PARTICIPANTS.forEach(name => {
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
         nameSelect.appendChild(opt);
       });
 
-      assignment=buildAssignmentMap(PARTICIPANTS,SEED);
+      try {
+        assignment = buildAssignmentMap(PARTICIPANTS, SEED);
+      } catch (err) {
+        errorBox.textContent = err.message;
+        drawBtn.disabled = true;
+      }
 
-      btn.addEventListener("click",()=>{
-        const me=nameSelect.value;
-        if(!me){ result.style.display="block"; result.innerHTML="❗ Selecciona tu nombre."; return;}
-        const target=assignment[me];
-        result.style.display="block";
-        result.innerHTML=`👋 Hola, <strong>${me}</strong><br> Tú le vas a regalar a:<br> 🎁 <strong>${target}</strong>`;
+      drawBtn.addEventListener("click", () => {
+        errorBox.textContent = "";
+        resultBox.classList.remove("show");
+
+        const selected = nameSelect.value;
+        if (!selected) {
+          errorBox.textContent = "Por favor, selecciona tu nombre.";
+          resultBox.style.display = "none";
+          return;
+        }
+
+        if (!assignment || !assignment[selected]) {
+          errorBox.textContent = "Hubo un problema con el sorteo.";
+          resultBox.style.display = "none";
+          return;
+        }
+
+        const target = assignment[selected];
+        resultBox.innerHTML = `
+          👋 Hola, <strong>${selected}</strong><br/>
+          Tú le vas a regalar a:<br/>
+          🎁 <strong>${target}</strong>
+        `;
+        resultBox.classList.add("show");
       });
 
       initSnow();
