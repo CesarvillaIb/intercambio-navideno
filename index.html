@@ -32,52 +32,34 @@
       overflow: hidden;
       z-index: 0;
     }
-
     .snow span {
       position: absolute;
       top: -10px;
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.9);
+      background: rgba(255, 255, 255, 0.9);
       animation: fall linear infinite;
       opacity: .8;
     }
-
     @keyframes fall {
       0% { transform: translateY(-10px); }
       100% { transform: translateY(110vh); }
     }
 
-    .reindeer {
-      position: fixed;
-      bottom: 18px;
-      left: -60px;
-      font-size: 34px;
-      z-index: 1;
-      animation: walkReindeer 14s linear infinite;
-      opacity: .9;
-    }
-
-    @keyframes walkReindeer {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(120vw); }
-    }
-
     .card {
       position: relative;
       z-index: 2;
-      background: rgba(255,255,255,0.96);
+      background: rgba(255, 255, 255, 0.96);
       border-radius: 24px;
-      padding: 22px 18px 20px;
+      padding: 22px 18px;
       max-width: 420px;
       width: 100%;
-      box-shadow: 0 18px 45px rgba(0,0,0,.4);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, .4);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(248,250,252,.95);
+      border: 1px solid rgba(248, 250, 252, .95);
       animation: cardIn .45s ease-out;
     }
-
     @keyframes cardIn {
       from { opacity: 0; transform: translateY(20px) scale(.98); }
       to   { opacity: 1; transform: translateY(0) scale(1); }
@@ -89,7 +71,7 @@
       inset: -2px;
       border-radius: 26px;
       padding: 1px;
-      background: linear-gradient(135deg, rgba(239,68,68,.7), rgba(34,197,94,.7));
+      background: linear-gradient(135deg, rgba(239, 68, 68, .7), rgba(34, 197, 94, .7));
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
@@ -106,11 +88,24 @@
       z-index: 3;
       animation: danceSanta 1s infinite ease-in-out;
     }
-
     @keyframes danceSanta {
       0% { transform: translateX(-50%) rotate(-10deg); }
       50% { transform: translateX(-50%) rotate(10deg); }
       100% { transform: translateX(-50%) rotate(-10deg); }
+    }
+
+    .reindeer {
+      position: fixed;
+      bottom: 18px;
+      left: -60px;
+      font-size: 34px;
+      z-index: 1;
+      animation: walkReindeer 14s linear infinite;
+      opacity: .9;
+    }
+    @keyframes walkReindeer {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(120vw); }
     }
 
     .badge {
@@ -133,20 +128,8 @@
       color:#111827;
     }
 
-    .tagline {
-      font-size: .85rem;
-      text-align:center;
-      color:#6b7280;
-      margin-bottom:4px;
-    }
-
-    .price {
-      font-size: .95rem;
-      text-align:center;
-      font-weight:600;
-      margin-bottom:10px;
-      color:#b91c1c;
-    }
+    .tagline { font-size: .85rem; text-align:center; color:#6b7280; margin-bottom:4px; }
+    .price { font-size: .95rem; text-align:center; font-weight:600; margin-bottom:10px; color:#b91c1c; }
 
     .place {
       font-size: .82rem;
@@ -155,27 +138,11 @@
       color:#374151;
       line-height:1.4;
     }
+    .place a { color:#16a34a; font-weight:600; text-decoration:none; }
 
-    .place a {
-      color:#16a34a;
-      font-weight:600;
-      text-decoration:none;
-    }
+    .subtitle { font-size:.9rem; text-align:center; color:#4b5563; margin-bottom:14px; }
 
-    .subtitle {
-      font-size:.9rem;
-      text-align:center;
-      color:#4b5563;
-      margin-bottom:14px;
-    }
-
-    label {
-      font-size:.85rem;
-      margin-bottom:6px;
-      color:#111827;
-      display:block;
-    }
-
+    label { font-size:.85rem; margin-bottom:6px; color:#111827; display:block; }
     select, button {
       width:100%;
       padding:12px 14px;
@@ -183,13 +150,11 @@
       font-size:1rem;
       outline:none;
     }
-
     select {
       background:#f9fafb;
       border:1px solid #e5e7eb;
       margin-bottom:14px;
     }
-
     select:focus {
       border-color:#16a34a;
       box-shadow:0 0 0 2px rgba(22,163,74,.25);
@@ -204,7 +169,6 @@
       box-shadow:0 8px 20px rgba(0,0,0,.3);
       transition: transform .1s ease, box-shadow .1s ease;
     }
-
     button:active {
       transform:scale(.97);
       box-shadow:0 4px 12px rgba(0,0,0,.35);
@@ -220,12 +184,10 @@
       font-size:.95rem;
       transform-origin:center;
     }
-
     .result.show {
       display:block;
       animation: resultPop .28s ease-out;
     }
-
     @keyframes resultPop {
       0% { opacity:0; transform:scale(.9) translateY(6px); }
       100%{ opacity:1; transform:scale(1) translateY(0); }
@@ -248,7 +210,7 @@
     .footer {
       font-size:.7rem;
       text-align:center;
-      margin-top:14px;
+      margin-top:18px;
       color:#9ca3af;
     }
 
@@ -259,23 +221,84 @@
       color:#7f8c9d;
     }
 
-    @media (max-width:600px){
-      .card{ padding:18px 14px; }
-      h1{ font-size:1.4rem; }
+    /* Panel admin */
+    .admin-panel {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background:#020617;
+      color:#e5e7eb;
+      padding:14px;
+      border-radius:16px;
+      z-index:50;
+      box-shadow:0 10px 30px rgba(0,0,0,.6);
+      font-size:13px;
+      width:260px;
+      max-height:90vh;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .admin-panel h2 {
+      margin:0;
+      font-size:14px;
+    }
+    .admin-section-title {
+      font-weight:600;
+      margin:6px 0 4px;
+      font-size:12px;
+    }
+    .admin-list {
+      background:#020617;
+      border-radius:10px;
+      padding:8px;
+      border:1px solid rgba(148,163,184,0.5);
+      max-height:170px;
+      overflow-y:auto;
+      font-size:12px;
+    }
+    .admin-list-item-ok::before {
+      content:"✔ ";
+      color:#22c55e;
+    }
+    .admin-list-item-pend::before {
+      content:"• ";
+      color:#f97316;
+    }
+    .admin-btn {
+      width:100%;
+      padding:8px 10px;
+      border-radius:999px;
+      border:none;
+      cursor:pointer;
+      font-size:12px;
+      font-weight:600;
+      box-shadow:0 6px 16px rgba(15,118,178,0.6);
+      background:linear-gradient(135deg,#0369a1,#0ea5e9);
+      color:white;
+    }
+    .admin-small {
+      font-size:11px;
+      color:#9ca3af;
+      line-height:1.4;
+    }
+
+    @media (max-width:600px) {
+      .card { padding:18px 14px; }
+      h1 { font-size:1.4rem; }
     }
   </style>
 </head>
-
 <body>
   <div class="snow" id="snow"></div>
   <div class="reindeer">🦌</div>
 
   <div class="card">
     <div class="santa-mini">🎅</div>
-
     <div class="badge">Intercambio Navideño 2025</div>
+
     <h1>Santa Secreto Familiar</h1>
-    <p class="tagline">Familia Villa · Unidos · Tradición · Buenos Momentos 🎁</p>
+    <p class="tagline">Familia Villa · Unidos · Tradición · Buenos momentos 🎁</p>
     <p class="price">💰 Monto del intercambio: <strong>$500 MXN</strong></p>
 
     <p class="place">
@@ -306,11 +329,8 @@
     <div class="creator">Creado por <strong>Paulo Cesar Villa Ibarra</strong></div>
   </div>
 
-  <!-- ======================= -->
-  <!-- 🎄 LÓGICA DEL SORTEO    -->
-  <!-- ======================= -->
-  <script>
-    // Participantes
+  <script type="module">
+    // ========= PARTICIPANTES =========
     const PARTICIPANTS = [
       "Paulo Cesar",
       "Naydelin Fernanda",
@@ -335,19 +355,8 @@
       "Irene Salazar"
     ];
 
-    // Parámetros de la URL
-    const params  = new URLSearchParams(window.location.search);
-    const edition = params.get("edicion") || "1";
-    const isAdmin = params.get("admin") === "paulo2025";
-
-    // Semilla fija por edición
-    const SEED = "intercambio-navideno-familiar-2025-edicion-" + edition;
-
-    // Clave para bloquear nombre por dispositivo
-    const STORAGE_KEY = "intercambio_navideno_2025_nombre_edicion_" + edition;
-
-    // ---------- RNG y desordenado fijo ----------
-    function xmur3(str){
+    // ========= FUNCIONES RANDOM DETERMINISTAS =========
+    function xmur3(str) {
       let h = 1779033703 ^ str.length;
       for (let i = 0; i < str.length; i++) {
         h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
@@ -361,7 +370,7 @@
       };
     }
 
-    function mulberry32(a){
+    function mulberry32(a) {
       return function () {
         let t = a += 0x6D2B79F5;
         t = Math.imul(t ^ (t >>> 15), t | 1);
@@ -370,7 +379,7 @@
       };
     }
 
-    function seededShuffle(array, seedStr){
+    function seededShuffle(array, seedStr) {
       const seedFn = xmur3(seedStr);
       const rng = mulberry32(seedFn());
       const a = array.slice();
@@ -381,8 +390,8 @@
       return a;
     }
 
-    function generateDerangement(names, seedStr){
-      for (let attempt = 0; attempt < 1000; attempt++) {
+    function generateDerangement(names, seedStr, maxTries = 1000) {
+      for (let attempt = 0; attempt < maxTries; attempt++) {
         const shuffled = seededShuffle(names, seedStr + "#" + attempt);
         let valid = true;
         for (let i = 0; i < names.length; i++) {
@@ -393,134 +402,23 @@
       throw new Error("No se pudo generar un sorteo válido. Revisa la lista de participantes.");
     }
 
-    function buildAssignmentMap(names, seedStr){
+    function buildAssignmentMap(names, seedStr) {
       const derangement = generateDerangement(names, seedStr);
       const map = {};
       names.forEach((name, idx) => { map[name] = derangement[idx]; });
       return map;
     }
 
-    // Mapa fijo: quién le regala a quién
-    const assignment = buildAssignmentMap(PARTICIPANTS, SEED);
-
-    // ---------- Referencias de la UI ----------
-    const nameSelect   = document.getElementById("nameSelect");
-    const drawBtn      = document.getElementById("drawBtn");
-    const resultBox    = document.getElementById("result");
-    const errorBox     = document.getElementById("error");
-    const deviceNote   = document.getElementById("deviceNote");
-    const snowContainer = document.getElementById("snow");
-
-    // Rellenar select
-    PARTICIPANTS.forEach(name => {
-      const opt = document.createElement("option");
-      opt.value = name;
-      opt.textContent = name;
-      nameSelect.appendChild(opt);
-    });
-
-    // Bloqueo por dispositivo
-    let storedName = localStorage.getItem(STORAGE_KEY);
-    if (storedName && PARTICIPANTS.includes(storedName)) {
-      nameSelect.value = storedName;
-      deviceNote.textContent = `📱 Este dispositivo está registrado para: ${storedName} (Edición ${edition})`;
-      deviceNote.style.display = "block";
-    }
-
-    // Copo de nieve decorativo
-    function initSnow(){
-      const flakes = 60;
-      for (let i = 0; i < flakes; i++) {
-        const span = document.createElement("span");
-        const size = Math.random() * 6 + 3;
-        span.style.left = Math.random() * 100 + "vw";
-        span.style.width = size + "px";
-        span.style.height = size + "px";
-        span.style.animationDuration = (Math.random() * 10 + 8) + "s";
-        span.style.animationDelay    = (Math.random() * -20) + "s";
-        snowContainer.appendChild(span);
-      }
-    }
-
-    initSnow();
-
-    // ---------- Click en "Ver a quién le regalo" ----------
-    drawBtn.addEventListener("click", () => {
-      errorBox.textContent = "";
-      resultBox.classList.remove("show");
-
-      const selected = nameSelect.value;
-
-      if (!selected) {
-        errorBox.textContent = "Por favor, selecciona tu nombre.";
-        resultBox.style.display = "none";
-        return;
-      }
-
-      // Si NO es admin, aplicamos bloqueo por dispositivo
-      if (!isAdmin) {
-        if (storedName && selected !== storedName) {
-          errorBox.textContent =
-            `Este dispositivo ya está asociado al nombre: "${storedName}". ` +
-            `Solo puedes ver tu propio resultado.`;
-          resultBox.style.display = "none";
-          return;
-        }
-        if (!storedName) {
-          storedName = selected;
-          localStorage.setItem(STORAGE_KEY, storedName);
-          deviceNote.textContent = `📱 Este dispositivo está registrado para: ${storedName} (Edición ${edition})`;
-          deviceNote.style.display = "block";
-        }
-      }
-
-      const target = assignment[selected];
-      if (!target) {
-        errorBox.textContent = "Hubo un problema con el sorteo.";
-        resultBox.style.display = "none";
-        return;
-      }
-
-      resultBox.innerHTML = `
-        👋 Hola, <strong>${selected}</strong><br>
-        Te toca regalarle a:<br>
-        🎁 <strong>${target}</strong>
-        <br><br>
-        <button style="
-          width:100%; padding:10px 14px; border-radius:999px;
-          border:none; background:linear-gradient(135deg,#22c55e,#16a34a);
-          color:white; font-weight:600; cursor:pointer;">
-          Entendido ✔
-        </button>
-      `;
-
-      // Botón Entendido -> avisar a Firebase
-      const okBtn = resultBox.querySelector("button");
-      okBtn.addEventListener("click", () => {
-        if (typeof marcarComoVisto === "function") {
-          marcarComoVisto(selected);
-        } else {
-          alert("Confirmación guardada localmente ✔");
-        }
-      });
-
-      resultBox.classList.add("show");
-    });
-  </script>
-
-  <!-- =================================== -->
-  <!-- 🔥 SCRIPT FIREBASE (ADMIN / VISTOS) -->
-  <!-- =================================== -->
-  <script type="module">
+    // ========= FIREBASE =========
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-
-    import {
-      getFirestore, doc, getDoc, setDoc, updateDoc
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc,
+      updateDoc
     } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // Configuración Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBkln8OvQIhSd2Phnbt0VpUWxwlfiP5upo",
       authDomain: "intercambio-familiar-2025.firebaseapp.com",
@@ -531,142 +429,214 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
+    const db = getFirestore(app);
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const edicion  = urlParams.get("edicion") || "1";
-    const admin    = urlParams.get("admin");
+    const params = new URLSearchParams(window.location.search);
+    const edicionParam = params.get("edicion");
+    const isAdmin = params.get("admin") === "paulo2025";
 
-    const docRef = doc(db, "vistas", `edicion-${edicion}`);
+    const configRef = doc(db, "config", "general");
 
-    // ✅ Marcar como visto en Firestore
-    async function marcarComoVisto(nombre){
-      try {
-        const snap = await getDoc(docRef);
-        if (!snap.exists()) {
-          await setDoc(docRef, { vistos: {} });
-        }
+    async function getCurrentEdition() {
+      // Si en la URL viene ?edicion=, la respetamos (para consultar ediciones viejas)
+      if (edicionParam) return edicionParam;
 
-        await updateDoc(docRef, {
-          [`vistos.${nombre}`]: true
-        });
-
-        alert("Marcado como visto ✔");
-        await mostrarAdmin();
-      } catch (e) {
-        console.error(e);
-        alert("Hubo un problema al guardar la confirmación.");
+      // Si no viene, usamos la edición actual guardada en Firestore
+      const snap = await getDoc(configRef);
+      if (snap.exists() && snap.data().edicionActual) {
+        return String(snap.data().edicionActual);
       }
+
+      // Si no existe, creamos edicionActual = 1
+      await setDoc(configRef, { edicionActual: 1 }, { merge: true });
+      return "1";
     }
 
-    // 🧱 Crear / actualizar panel admin
-    function renderAdminPanel(confirmHtml, pairsHtml){
-      let panel = document.getElementById("adminPanel");
-      if (!panel) {
-        panel = document.createElement("div");
+    async function crearNuevaEdicion(editionActual) {
+      const actualNum = parseInt(editionActual, 10) || 1;
+      const next = actualNum + 1;
+
+      // Actualizamos edición actual en config
+      await setDoc(configRef, { edicionActual: next }, { merge: true });
+
+      // Preparamos documento de vistas para la nueva edición
+      const newVistasRef = doc(db, "vistas", `edicion-${next}`);
+      await setDoc(newVistasRef, { vistos: {} }, { merge: true });
+
+      // Recargamos el link base CON admin, pero SIN edicion=
+      const base = window.location.origin + window.location.pathname;
+      window.location.href = `${base}?admin=paulo2025`;
+    }
+
+    async function main() {
+      const edition = await getCurrentEdition();       // <-- aquí se decide la edición
+      const SEED = "intercambio-navideno-familiar-2025-edicion-" + edition;
+      const STORAGE_KEY = "intercambio_navideno_2025_nombre_edicion_" + edition;
+
+      const vistasRef = doc(db, "vistas", `edicion-${edition}`);
+      const vistasSnap = await getDoc(vistasRef);
+      if (!vistasSnap.exists()) {
+        await setDoc(vistasRef, { vistos: {} }, { merge: true });
+      }
+
+      const nameSelect      = document.getElementById("nameSelect");
+      const drawBtn         = document.getElementById("drawBtn");
+      const resultBox       = document.getElementById("result");
+      const errorBox        = document.getElementById("error");
+      const deviceNote      = document.getElementById("deviceNote");
+      const snowContainer   = document.getElementById("snow");
+
+      // Nieve
+      initSnow(snowContainer);
+
+      // Llenar select
+      PARTICIPANTS.forEach(name => {
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        nameSelect.appendChild(opt);
+      });
+
+      // Asignaciones deterministas
+      let assignment;
+      try {
+        assignment = buildAssignmentMap(PARTICIPANTS, SEED);
+      } catch (err) {
+        errorBox.textContent = err.message;
+        drawBtn.disabled = true;
+        return;
+      }
+
+      // Control de dispositivo
+      let storedName = localStorage.getItem(STORAGE_KEY);
+      if (storedName && PARTICIPANTS.includes(storedName)) {
+        nameSelect.value = storedName;
+        deviceNote.textContent = `📱 Este dispositivo está registrado para: ${storedName} (Edición ${edition}).`;
+        deviceNote.style.display = "block";
+      }
+
+      async function marcarComoVisto(nombre) {
+        await updateDoc(vistasRef, {
+          [`vistos.${nombre}`]: true
+        });
+        alert("Marcado como visto ✔");
+        if (isAdmin) {
+          // refrescar panel admin
+          const oldPanel = document.getElementById("adminPanel");
+          if (oldPanel) oldPanel.remove();
+          renderAdminPanel();
+        }
+      }
+
+      // Botón principal
+      drawBtn.addEventListener("click", () => {
+        errorBox.textContent = "";
+        resultBox.classList.remove("show");
+
+        const selected = nameSelect.value;
+        if (!selected) {
+          errorBox.textContent = "Por favor, selecciona tu nombre.";
+          resultBox.style.display = "none";
+          return;
+        }
+
+        // Bloquear que se hagan pasar por otra persona (salvo admin)
+        if (!isAdmin) {
+          if (storedName && selected !== storedName) {
+            errorBox.textContent = `Este dispositivo ya está asociado al nombre: "${storedName}". Solo puedes ver tu propio resultado.`;
+            resultBox.style.display = "none";
+            return;
+          }
+          if (!storedName) {
+            storedName = selected;
+            localStorage.setItem(STORAGE_KEY, storedName);
+            deviceNote.textContent = `📱 Este dispositivo está registrado para: ${storedName} (Edición ${edition}).`;
+            deviceNote.style.display = "block";
+          }
+        }
+
+        const target = assignment[selected];
+        if (!target) {
+          errorBox.textContent = "Hubo un problema con el sorteo.";
+          resultBox.style.display = "none";
+          return;
+        }
+
+        resultBox.innerHTML = `
+          👋 Hola, <strong>${selected}</strong><br/>
+          Te toca regalarle a:<br/>
+          🎁 <strong>${target}</strong>
+          <br/><br/>
+          <button id="okBtn">Entendido ✔</button>
+        `;
+        resultBox.classList.add("show");
+
+        const okBtn = document.getElementById("okBtn");
+        okBtn.addEventListener("click", () => {
+          marcarComoVisto(selected);
+        });
+      });
+
+      // Panel admin (solo si ?admin=paulo2025)
+      async function renderAdminPanel() {
+        if (!isAdmin) return;
+
+        const snap = await getDoc(vistasRef);
+        const data = snap.exists() ? snap.data() : {};
+        const vistos = data.vistos || {};
+
+        const total = PARTICIPANTS.length;
+        const confirmados = PARTICIPANTS.filter(n => vistos[n]).length;
+
+        const panel = document.createElement("div");
         panel.id = "adminPanel";
-        panel.style.position   = "fixed";
-        panel.style.top        = "10px";
-        panel.style.right      = "10px";
-        panel.style.background = "#020617";
-        panel.style.color      = "#e5e7eb";
-        panel.style.padding    = "14px";
-        panel.style.borderRadius = "16px";
-        panel.style.boxShadow  = "0 10px 30px rgba(0,0,0,.6)";
-        panel.style.fontSize   = "13px";
-        panel.style.zIndex     = "9999";
-        panel.style.width      = "260px";
+        panel.className = "admin-panel";
         panel.innerHTML = `
-          <div style="font-weight:600; margin-bottom:6px;">
-            👑 Admin – Edición <span id="adminEdition"></span>
+          <h2>👑 Admin – Edición ${edition}</h2>
+          <div class="admin-small">Paulo Cesar<br>Este panel solo lo ves tú.</div>
+
+          <button class="admin-btn" id="btnNuevaEdicion">➕ Crear nueva edición</button>
+
+          <div class="admin-section-title">Confirmaciones (${confirmados} de ${total})</div>
+          <div class="admin-list">
+            ${PARTICIPANTS.map(n => {
+              const ok = !!vistos[n];
+              const cls = ok ? "admin-list-item-ok" : "admin-list-item-pend";
+              return `<div class="${cls}">${n}</div>`;
+            }).join("")}
           </div>
-          <div style="font-size:11px; color:#9ca3af; margin-bottom:10px;">
-            Este panel solo lo ves tú.
-          </div>
 
-          <button id="newEditionBtn"
-            style="width:100%; padding:8px 10px; border-radius:999px;
-                   border:none; cursor:pointer; margin-bottom:8px;
-                   background:linear-gradient(135deg,#22c55e,#16a34a);
-                   color:white; font-weight:600;">
-            ➕ Crear nueva edición
-          </button>
-
-          <div style="margin-top:4px;">
-            <strong>Confirmaciones</strong>
-            <div id="adminConfirmList"
-                 style="margin-top:4px; max-height:130px; overflow-y:auto; font-size:12px;"></div>
-
-            <hr style="margin:8px 0; border-color:rgba(148,163,184,0.6);">
-
-            <strong>Parejas del sorteo</strong>
-            <div id="adminPairsList"
-                 style="margin-top:4px; max-height:130px; overflow-y:auto; font-size:12px;"></div>
+          <div class="admin-small">
+            • El link público <strong>NO cambia</strong>:<br>
+            ${window.location.origin + window.location.pathname}<br><br>
+            • Para entrar como admin usa:<br>
+            ${window.location.origin + window.location.pathname}?admin=paulo2025
           </div>
         `;
         document.body.appendChild(panel);
-        document.getElementById("adminEdition").textContent = edicion;
 
-        const btn = document.getElementById("newEditionBtn");
-        btn.addEventListener("click", crearNuevaEdicion);
+        const btnNuevaEdicion = document.getElementById("btnNuevaEdicion");
+        btnNuevaEdicion.addEventListener("click", () => crearNuevaEdicion(edition));
       }
 
-      document.getElementById("adminConfirmList").innerHTML = confirmHtml;
-      document.getElementById("adminPairsList").innerHTML   = pairsHtml;
+      renderAdminPanel();
     }
 
-    // 📊 Cargar datos y mostrar panel admin
-    async function mostrarAdmin(){
-      if (admin !== "paulo2025") return;
-
-      const snap  = await getDoc(docRef);
-      const data  = snap.exists() ? snap.data() : {};
-      const vistos = data.vistos || {};
-
-      const confirmados = Object.keys(vistos);
-
-      // Lista de confirmaciones
-      const confirmHtml = PARTICIPANTS
-        .map(nombre => {
-          const ok = confirmados.includes(nombre);
-          const icon = ok ? "✅" : "⏳";
-          return `${icon} ${nombre}`;
-        })
-        .join("<br>");
-
-      // SOLO mostramos parejas de los que YA confirmaron
-      const pairsHtml = confirmados.length
-        ? confirmados
-            .map(nombre => `• ${nombre} → <strong>${assignment[nombre]}</strong>`)
-            .join("<br>")
-        : "<i>Todavía nadie ha visto su resultado</i>";
-
-      renderAdminPanel(confirmHtml, pairsHtml);
+    function initSnow(container) {
+      const flakes = 60;
+      for (let i = 0; i < flakes; i++) {
+        const span = document.createElement("span");
+        const size = Math.random() * 6 + 3;
+        span.style.left = Math.random() * 100 + "vw";
+        span.style.width = size + "px";
+        span.style.height = size + "px";
+        span.style.animationDuration = (Math.random() * 10 + 8) + "s";
+        span.style.animationDelay    = (Math.random() * -20) + "s";
+        container.appendChild(span);
+      }
     }
 
-    // ➕ Crear nueva edición
-    function crearNuevaEdicion(){
-      const actual    = parseInt(edicion, 10) || 1;
-      const siguiente = String(actual + 1);
-
-      const baseUrl   = window.location.origin + window.location.pathname;
-      const publicUrl = `${baseUrl}?edicion=${siguiente}`;
-      const adminUrl  = `${baseUrl}?admin=paulo2025&edicion=${siguiente}`;
-
-      alert(
-        `✅ Nueva edición creada (Edición ${siguiente})\n\n` +
-        `🔗 Link público:\n${publicUrl}\n\n` +
-        `🛡️ Link admin:\n${adminUrl}`
-      );
-
-      window.location.href = adminUrl;
-    }
-
-    // Mostrar panel si corresponde
-    mostrarAdmin();
-
-    // Exponer función para el botón "Entendido ✔"
-    window.marcarComoVisto = marcarComoVisto;
+    main();
   </script>
 </body>
 </html>
