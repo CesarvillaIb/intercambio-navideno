@@ -19,313 +19,120 @@
       overflow: hidden;
     }
 
-    .snow {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; overflow: hidden; z-index: 0;
-    }
+    .snow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 0; }
     .snow span {
-      position: absolute; top: -10px;
-      width: 6px; height: 6px; border-radius: 50%;
+      position: absolute; top: -10px; width: 6px; height: 6px; border-radius: 50%;
       background: rgba(255,255,255,0.9); animation: fall linear infinite; opacity: .8;
     }
-    @keyframes fall {
-      0% { transform: translateY(-10px); }
-      100% { transform: translateY(110vh); }
-    }
+    @keyframes fall { 0% { transform: translateY(-10px); } 100% { transform: translateY(110vh); } }
 
     .card {
-      position: relative; z-index: 2;
-      background: rgba(255,255,255,0.96);
-      border-radius: 24px;
-      padding: 22px 18px;
-      max-width: 420px; width: 100%;
-      box-shadow: 0 18px 45px rgba(0,0,0,.4);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(248,250,252,.95);
-      animation: cardIn .45s ease-out;
+      position: relative; z-index: 2; background: rgba(255,255,255,0.96);
+      border-radius: 24px; padding: 22px 18px; max-width: 420px; width: 100%;
+      box-shadow: 0 18px 45px rgba(0,0,0,.4); backdrop-filter: blur(10px);
+      border: 1px solid rgba(248,250,252,.95); animation: cardIn .45s ease-out;
     }
-    @keyframes cardIn {
-      from { opacity: 0; transform: translateY(20px) scale(.98); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
+    @keyframes cardIn { from { opacity: 0; transform: translateY(20px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
     .card::before {
-      content: ""; position: absolute; inset: -2px;
-      border-radius: 26px; padding: 1px;
+      content: ""; position: absolute; inset: -2px; border-radius: 26px; padding: 1px;
       background: linear-gradient(135deg, rgba(239,68,68,.7), rgba(34,197,94,.7));
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor; mask-composite: exclude;
-      opacity: .75; pointer-events: none;
+      -webkit-mask-composite: xor; mask-composite: exclude; opacity: .75; pointer-events: none;
     }
 
     .santa-mini {
-      position: absolute; top: -30px; left: 50%;
-      transform: translateX(-50%);
-      font-size: 40px; z-index: 3;
-      animation: danceSanta 1s infinite ease-in-out;
+      position: absolute; top: -30px; left: 50%; transform: translateX(-50%); font-size: 40px;
+      z-index: 3; animation: danceSanta 1s infinite ease-in-out;
     }
-    @keyframes danceSanta {
-      0% { transform: translateX(-50%) rotate(-10deg); }
-      50% { transform: translateX(-50%) rotate(10deg); }
-      100% { transform: translateX(-50%) rotate(-10deg); }
-    }
+    @keyframes danceSanta { 0% { transform: translateX(-50%) rotate(-10deg); } 50% { transform: translateX(-50%) rotate(10deg); } 100% { transform: translateX(-50%) rotate(-10deg); } }
 
     .reindeer {
-      position: fixed; bottom: 18px; left: -60px;
-      font-size: 34px; z-index: 1;
+      position: fixed; bottom: 18px; left: -60px; font-size: 34px; z-index: 1;
       animation: walkReindeer 14s linear infinite; opacity: .9;
     }
-    @keyframes walkReindeer {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(120vw); }
-    }
+    @keyframes walkReindeer { 0% { transform: translateX(0); } 100% { transform: translateX(120vw); } }
 
-    .badge {
-      display: inline-flex; align-items: center; justify-content: center;
-      gap: 6px; font-size: .85rem;
-      padding: 5px 14px; border-radius: 999px;
-      background: linear-gradient(135deg,#b91c1c,#065f46);
+    .badge { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: .85rem;
+      padding: 5px 14px; border-radius: 999px; background: linear-gradient(135deg,#b91c1c,#065f46);
       color: #fefce8; margin: 20px auto 12px;
     }
 
     h1 { font-size: 1.5rem; text-align: center; margin-bottom: 4px; color:#111827; }
-
     .tagline { font-size: .85rem; text-align:center; color:#6b7280; margin-bottom:4px; }
-
     .price { font-size: .95rem; text-align:center; font-weight:600; margin-bottom:10px; color:#b91c1c; }
-
-    .place {
-      font-size: .82rem; text-align:center; margin-bottom:16px;
-      color:#374151; line-height:1.4;
-    }
+    .place { font-size: .82rem; text-align:center; margin-bottom:16px; color:#374151; line-height:1.4; }
     .place a { color:#16a34a; font-weight:600; text-decoration:none; }
-
     .subtitle { font-size:.9rem; text-align:center; color:#4b5563; margin-bottom:14px; }
 
     label { font-size:.85rem; margin-bottom:6px; color:#111827; display:block; }
-
     select, button {
-      width:100%; padding:12px 14px; border-radius:999px;
-      font-size:1rem; outline:none;
+      width:100%; padding:12px 14px; border-radius:999px; font-size:1rem; outline:none;
     }
     select { background:#f9fafb; border:1px solid #e5e7eb; margin-bottom:14px; }
-    select:focus { border-color:#16a34a; box-shadow:0 0 0 2px rgba(22,163,74,.25); }
-
     button {
-      background: linear-gradient(135deg,#b91c1c,#16a34a); color:white;
-      border:none; font-weight:600; cursor:pointer;
-      box-shadow:0 8px 20px rgba(0,0,0,.3);
-      transition: transform .1s ease, box-shadow .1s ease;
-      animation: buttonGlow 1.8s infinite ease-in-out;
+      background: linear-gradient(135deg,#b91c1c,#16a34a); color:white; border:none; font-weight:600; cursor:pointer;
+      box-shadow:0 8px 20px rgba(0,0,0,.3); transition: transform .1s ease;
     }
-    @keyframes buttonGlow {
-      0% { box-shadow:0 0 12px rgba(34,197,94,.4),0 8px 18px rgba(0,0,0,.3); }
-      50%{ box-shadow:0 0 22px rgba(34,197,94,.8),0 10px 22px rgba(0,0,0,.35);}
-      100%{ box-shadow:0 0 12px rgba(34,197,94,.4),0 8px 18px rgba(0,0,0,.3);}
-    }
-    button:active { transform:scale(.97); box-shadow:0 4px 12px rgba(0,0,0,.35); }
 
-    .result {
-      display:none; margin-top:18px; padding:14px;
-      border-radius:14px; background:#f1f5f9;
-      border:1px dashed #9ca3af; font-size:.95rem;
-      transform-origin:center;
+    .result { display:none; margin-top:18px; padding:14px; border-radius:14px; background:#f1f5f9;
+      border:1px dashed #9ca3af; font-size:.95rem; transform-origin:center;
     }
     .result.show { display:block; animation: resultPop .28s ease-out; }
-    @keyframes resultPop {
-      0% { opacity:0; transform:scale(.9) translateY(6px); }
-      100%{ opacity:1; transform:scale(1) translateY(0); }
-    }
+    @keyframes resultPop { 0% { opacity:0; transform:scale(.9) translateY(6px); }
+                           100%{ opacity:1; transform:scale(1) translateY(0); } }
 
     .error { margin-top:10px; font-size:.8rem; color:#b91c1c; text-align:center; }
-
-    .note {
-      font-size:.8rem; margin-top:12px; text-align:center; color:#6b7280;
-    }
-
+    .note { font-size:.8rem; margin-top:12px; text-align:center; color:#6b7280; }
     .footer { font-size:.7rem; text-align:center; margin-top:18px; color:#9ca3af; }
-
     .creator { font-size:.7rem; text-align:center; margin-top:4px; color:#7f8c9d; }
-
-    .admin-panel {
-      margin-top: 20px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(15,23,42,0.9);
-      color: #e5e7eb;
-      font-size: 0.78rem;
-      display:none;
-    }
-    .admin-panel h2 { margin:0 0 6px; font-size:.9rem; text-align:center; }
-    .admin-panel p { margin:0 0 8px; text-align:center; color:#9ca3af; }
-    .admin-panel ul { list-style:none; padding:0; margin:6px 0 0; max-height:220px; overflow-y:auto; }
-    .admin-panel li { padding:4px 0; border-bottom:1px solid rgba(148,163,184,.3); display:flex; justify-content:space-between; align-items:center; gap:8px;}
-    .admin-panel li:last-child { border-bottom:none; }
-    .admin-panel strong { color:#facc15; }
-
-    .admin-actions {
-      margin-top: 10px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(148,163,184,0.4);
-      font-size: 0.76rem;
-    }
-
-    .admin-actions button {
-      margin-top: 8px;
-      width: 100%;
-      padding: 8px 10px;
-      font-size: 0.8rem;
-      border-radius: 999px;
-      background: linear-gradient(135deg,#0369a1,#0ea5e9);
-      box-shadow: 0 4px 12px rgba(15,118,178,0.5);
-      animation: none;
-    }
-
-    .admin-actions small {
-      display: block;
-      margin-top: 6px;
-      color: #cbd5f5;
-      text-align: center;
-      word-break: break-all;
-    }
-
-    .admin-tag {
-      font-size: 0.75rem;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.8);
-      white-space: nowrap;
-    }
-
-    .admin-tag.done {
-      background: rgba(34,197,94,0.2);
-      border-color: rgba(34,197,94,0.8);
-      color: #bbf7d0;
-    }
-
-    @media (max-width:600px){
-      .card{ padding:18px 14px; }
-      h1{ font-size:1.4rem; }
-    }
   </style>
 </head>
+
 <body>
   <div class="snow" id="snow"></div>
   <div class="reindeer">🦌</div>
 
   <div class="card">
     <div class="santa-mini">🎅</div>
-
     <div class="badge">Intercambio Navideño 2025</div>
 
     <h1>Santa Secreto Familiar</h1>
-    <p class="tagline">Familia Villa · Unidos · Tradición · Buenos Momentos 🎁</p>
-    <p class="price">💰 Monto del intercambio: <strong>$500 MXN</strong></p>
+    <p class="tagline">Familia Villa · Unidos · Tradición 🎁</p>
+    <p class="price">💰 Monto: <strong>$500 MXN</strong></p>
 
     <p class="place">
       📍 <strong>Casa de Sergio Villa</strong><br>
-      Calle Guamúchil #52 · Colonia El Tizate · Zapopan, Jalisco<br>
-      👉 <a href="https://maps.app.goo.gl/PkwVp3p2bp2CBwY8A" target="_blank">Ver ubicación en Google Maps</a>
+      Calle Guamúchil #52 · Zapopan, Jalisco<br>
+      👉 <a href="https://maps.app.goo.gl/PkwVp3p2bp2CBwY8A" target="_blank">Ver mapa</a>
     </p>
 
     <p class="subtitle">Selecciona tu nombre para saber a quién le vas a regalar.</p>
 
     <label for="nameSelect">¿Quién eres?</label>
-    <select id="nameSelect">
-      <option value="">-- Selecciona tu nombre --</option>
-    </select>
+    <select id="nameSelect"><option value="">-- Selecciona tu nombre --</option></select>
 
     <button id="drawBtn">Ver a quién le regalo 🎁</button>
-
     <div id="result" class="result"></div>
     <div id="error" class="error"></div>
 
-    <p class="note">
-      💡 Solo verás tu propio resultado.<br>
-      No recargues la página para espiar, confía en la magia navideña 😜
-    </p>
+    <p class="note">💡 Solo verás tu propio resultado. No recargues la página 😜</p>
     <p id="deviceNote" class="note" style="display:none;"></p>
-
-    <div id="adminPanel" class="admin-panel">
-      <h2>🔐 Panel administrador</h2>
-      <p id="editionLabel"></p>
-      <ul id="adminList"></ul>
-
-      <div class="admin-actions">
-        <button id="showResultsBtn">👀 Ver resultados de esta edición</button>
-        <button id="resetEditionBtn">🔁 Reiniciar sorteo (nueva edición)</button>
-        <small id="nextLinks"></small>
-      </div>
-    </div>
-
-    <div class="footer">Intercambio navideño familiar · 2025</div>
+    <div class="footer">Intercambio familiar · 2025</div>
     <div class="creator">Creado por <strong>Paulo Cesar Villa Ibarra</strong></div>
   </div>
 
-  <!-- TODO: AQUÍ VA TODO EL JS + FIREBASE -->
-  <script type="module">
-    /* ---------------------------
-       FIREBASE + FIRESTORE
-    --------------------------- */
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-    import {
-      getFirestore,
-      doc,
-      setDoc,
-      getDoc
-    } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBkln8OvQIhSd2Phnbt0VpUWxwlfiP5upo",
-      authDomain: "intercambio-familiar-2025.firebaseapp.com",
-      projectId: "intercambio-familiar-2025",
-      storageBucket: "intercambio-familiar-2025.firebasestorage.app",
-      messagingSenderId: "782877002512",
-      appId: "1:782877002512:web:fa9e0fc96fa2fe2074f395"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
-
-    async function marcarComoRevisado(nombre, edicion) {
-      await setDoc(
-        doc(db, "revisados", String(edicion)),
-        { [nombre]: true },
-        { merge: true }
-      );
-    }
-
-    async function obtenerRevisados(edicion) {
-      const snap = await getDoc(doc(db, "revisados", String(edicion)));
-      return snap.exists() ? snap.data() : {};
-    }
-
-    /* ---------------------------
-       LÓGICA DEL INTERCAMBIO
-    --------------------------- */
-
+  <!-- ========================== -->
+  <!-- 🧩 TU SCRIPT ORIGINAL      -->
+  <!-- ========================== -->
+  <script>
     const PARTICIPANTS = [
-      "Paulo Cesar",
-      "Naydelin Fernanda",
-      "Sergio Villa",
-      "Julia Ibarra",
-      "Daniel Villa",
-      "Oscar Padilla",
-      "Mayra Villa",
-      "Leonardo Matías",
-      "Papa Chava",
-      "Mama Tere",
-      "Tania Villa",
-      "Novio de Tania Diego",
-      "Mayte Villa",
-      "Marichuy",
-      "Omar Junior",
-      "Fernanda Quiñones",
-      "Beto El que me regalara su carro",
-      "Brayan",
-      "Novia de Brayan Valentina",
-      "Salvador Villa",
-      "Irene Salazar"
+      "Paulo Cesar", "Naydelin Fernanda", "Sergio Villa", "Julia Ibarra",
+      "Daniel Villa", "Oscar Padilla", "Mayra Villa", "Leonardo Matías",
+      "Papa Chava", "Mama Tere", "Tania Villa", "Novio de Tania Diego",
+      "Mayte Villa", "Marichuy", "Omar Junior", "Fernanda Quiñones",
+      "Beto El que me regalara su carro", "Brayan", "Novia de Brayan Valentina",
+      "Salvador Villa", "Irene Salazar"
     ];
 
     const params  = new URLSearchParams(window.location.search);
@@ -369,191 +176,110 @@
       return a;
     }
 
-    function generateDerangement(names, seedStr, maxTries = 1000){
-      for (let attempt = 0; attempt < maxTries; attempt++) {
+    function generateDerangement(names, seedStr){
+      for (let attempt = 0; attempt < 1000; attempt++) {
         const shuffled = seededShuffle(names, seedStr + "#" + attempt);
-        let valid = true;
-        for (let i = 0; i < names.length; i++) {
-          if (names[i] === shuffled[i]) { valid = false; break; }
-        }
-        if (valid) return shuffled;
+        if (shuffled.every((v,i)=>v !== names[i])) return shuffled;
       }
-      throw new Error("No se pudo generar un sorteo válido. Revisa la lista de participantes.");
+      throw new Error("No se pudo generar un sorteo válido.");
     }
 
-    function buildAssignmentMap(names, seedStr){
-      const derangement = generateDerangement(names, seedStr);
-      const map = {};
-      names.forEach((name, idx) => { map[name] = derangement[idx]; });
-      return map;
-    }
+    let assignment = generateDerangement(PARTICIPANTS, SEED)
+      .reduce((map, val, idx) => (map[PARTICIPANTS[idx]] = val, map), {});
 
-    const nameSelect      = document.getElementById("nameSelect");
-    const drawBtn         = document.getElementById("drawBtn");
-    const resultBox       = document.getElementById("result");
-    const errorBox        = document.getElementById("error");
-    const snowContainer   = document.getElementById("snow");
-    const adminPanel      = document.getElementById("adminPanel");
-    const adminList       = document.getElementById("adminList");
-    const deviceNote      = document.getElementById("deviceNote");
-    const editionLabel    = document.getElementById("editionLabel");
-    const resetEditionBtn = document.getElementById("resetEditionBtn");
-    const nextLinks       = document.getElementById("nextLinks");
-    const showResultsBtn  = document.getElementById("showResultsBtn");
+    const nameSelect = document.getElementById("nameSelect");
+    const drawBtn = document.getElementById("drawBtn");
+    const resultBox = document.getElementById("result");
+    const errorBox = document.getElementById("error");
+    const deviceNote = document.getElementById("deviceNote");
 
-    let assignment = null;
-    let storedName = null;
+    PARTICIPANTS.forEach(n=>{
+      const op=document.createElement("option");
+      op.value=n; op.textContent=n;
+      nameSelect.appendChild(op);
+    });
 
-    function initSnow(){
-      const flakes = 60;
-      for (let i = 0; i < flakes; i++) {
-        const span = document.createElement("span");
-        const size = Math.random() * 6 + 3;
-        span.style.left = Math.random() * 100 + "vw";
-        span.style.width = size + "px";
-        span.style.height = size + "px";
-        span.style.animationDuration = (Math.random() * 10 + 8) + "s";
-        span.style.animationDelay    = (Math.random() * -20) + "s";
-        snowContainer.appendChild(span);
-      }
-    }
+    let storedName = localStorage.getItem(STORAGE_KEY);
+    if(storedName){ nameSelect.value = storedName; }
 
-    function showDeviceNote() {
-      if (storedName) {
-        deviceNote.textContent = "📱 Este dispositivo está registrado para: " + storedName + " (Edición " + edition + ")";
-        deviceNote.style.display = "block";
-      }
-    }
+    drawBtn.addEventListener("click", ()=>{
+      const selected = nameSelect.value;
+      if(!selected){ errorBox.textContent="Selecciona tu nombre."; return; }
+      localStorage.setItem(STORAGE_KEY, selected);
 
-    async function fillAdminList() {
-      if (!assignment) return;
-      adminList.innerHTML = "";
-
-      const revisados = await obtenerRevisados(edition);
-
-      PARTICIPANTS.forEach(giver => {
-        const li = document.createElement("li");
-        const leftSpan = document.createElement("span");
-        leftSpan.innerHTML = `<strong>${giver}</strong> → ${assignment[giver]}`;
-
-        const tag = document.createElement("span");
-        tag.className = "admin-tag" + (revisados[giver] ? " done" : "");
-        tag.textContent = revisados[giver] ? "✅ Confirmó" : "⏳ Sin confirmar";
-
-        li.appendChild(leftSpan);
-        li.appendChild(tag);
-        adminList.appendChild(li);
-      });
-    }
-
-    async function init(){
-      PARTICIPANTS.forEach(name => {
-        const opt = document.createElement("option");
-        opt.value = name;
-        opt.textContent = name;
-        nameSelect.appendChild(opt);
-      });
-
-      storedName = localStorage.getItem(STORAGE_KEY);
-      if (storedName && PARTICIPANTS.includes(storedName)) {
-        nameSelect.value = storedName;
-        showDeviceNote();
-      }
-
-      try {
-        assignment = buildAssignmentMap(PARTICIPANTS, SEED);
-      } catch (err) {
-        errorBox.textContent = err.message;
-        drawBtn.disabled = true;
-      }
-
-      if (isAdmin && assignment) {
-        adminPanel.style.display = "block";
-        editionLabel.textContent = "Edición actual del sorteo: " + edition;
-
-        showResultsBtn.addEventListener("click", () => {
-          fillAdminList();
-        });
-
-        resetEditionBtn.addEventListener("click", () => {
-          const current = parseInt(edition, 10) || 1;
-          const next = String(current + 1);
-          const baseUrl = window.location.origin + window.location.pathname;
-          const publicUrl = `${baseUrl}?edicion=${next}`;
-          const adminUrl  = `${baseUrl}?admin=paulo2025&edicion=${next}`;
-
-          nextLinks.innerHTML =
-            `Nueva edición creada (Edición ${next}): <br>` +
-            `🔗 Público: ${publicUrl}<br>` +
-            `🛡️ Admin: ${adminUrl}`;
-
-          window.location.href = adminUrl;
-        });
-      }
-
-      drawBtn.addEventListener("click", async () => {
-        errorBox.textContent = "";
-        resultBox.classList.remove("show");
-
-        const selected = nameSelect.value;
-        if (!selected) {
-          errorBox.textContent = "Por favor, selecciona tu nombre.";
-          resultBox.style.display = "none";
-          return;
-        }
-
-        if (!isAdmin) {
-          if (storedName && selected !== storedName) {
-            errorBox.textContent = `Este dispositivo ya está asociado al nombre: "${storedName}". Solo puedes ver tu propio resultado.`;
-            resultBox.style.display = "none";
-            return;
-          }
-          if (!storedName) {
-            storedName = selected;
-            localStorage.setItem(STORAGE_KEY, storedName);
-            showDeviceNote();
-          }
-        }
-
-        if (!assignment || !assignment[selected]) {
-          errorBox.textContent = "Hubo un problema con el sorteo.";
-          resultBox.style.display = "none";
-          return;
-        }
-
-        const target = assignment[selected];
-
-        resultBox.innerHTML = `
-          👋 Hola, <strong>${selected}</strong><br/>
-          Tú le vas a regalar a:<br/>
-          🎁 <strong>${target}</strong>
-          <br/><br/>
-          <button id="confirmBtn">✅ Ya vi quién me tocó</button>
-        `;
-        resultBox.classList.add("show");
-
-        const confirmBtn = document.getElementById("confirmBtn");
-        if (confirmBtn) {
-          confirmBtn.addEventListener("click", async () => {
-            confirmBtn.disabled = true;
-            confirmBtn.textContent = "Guardando...";
-            try {
-              await marcarComoRevisado(selected, edition);
-              confirmBtn.textContent = "✅ Confirmado";
-            } catch (e) {
-              console.error(e);
-              confirmBtn.disabled = false;
-              confirmBtn.textContent = "Intentar de nuevo";
-              alert("Hubo un problema al guardar la confirmación, pero tu resultado sí es válido.");
-            }
-          });
-        }
-      });
-
-      initSnow();
-    }
-
-    init();
+      resultBox.innerHTML = `
+        👋 Hola <strong>${selected}</strong><br>
+        Te toca regalarle a:<br>
+        🎁 <strong>${assignment[selected]}</strong>
+        <br><br>
+        <button onclick="marcarComoVisto('${selected}')">
+          Entendido ✔
+        </button>
+      `;
+      resultBox.classList.add("show");
+    });
   </script>
+
+  <!-- =================================== -->
+  <!-- 🔥 SCRIPT FIREBASE (COMPLETITO)     -->
+  <!-- =================================== -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, doc, getDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBkln8OvQIhSd2Phnbt0VpUWxwlfiP5upo",
+      authDomain: "intercambio-familiar-2025.firebaseapp.com",
+      projectId: "intercambio-familiar-2025",
+      storageBucket: "intercambio-familiar-2025.firebasestorage.app",
+      messagingSenderId: "782877002512",
+      appId: "1:782877002512:web:fa9e0fc96fa2fe2074f395"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const params = new URLSearchParams(window.location.search);
+    const edicion = params.get("edicion") || "1";
+    const admin = params.get("admin");
+
+    const docRef = doc(db, "vistas", `edicion-${edicion}`);
+
+    async function marcarComoVisto(nombre){
+      const snap = await getDoc(docRef);
+      if(!snap.exists()) await setDoc(docRef, { vistos: {} });
+
+      await updateDoc(docRef, {
+        [`vistos.${nombre}`]: true
+      });
+
+      alert("Marcado como visto ✔");
+    }
+
+    async function mostrarAdmin(){
+      if(admin !== "paulo2025") return;
+
+      const snap = await getDoc(docRef);
+      const data = snap.data();
+
+      const lista = data?.vistos
+        ? Object.keys(data.vistos).map(n=>`• ${n}`).join("<br>")
+        : "<i>Nadie ha confirmado todavía</i>";
+
+      document.body.innerHTML += `
+        <div style="
+          position:fixed;top:10px;right:10px;background:#0f172a;
+          color:#e5e7eb;padding:14px;border-radius:12px;z-index:9999;
+          box-shadow:0 6px 20px rgba(0,0,0,.4);font-size:13px;max-width:260px;">
+          <b>👑 Admin – Edición ${edicion}</b><br><br>
+          ${lista}
+        </div>
+      `;
+    }
+
+    mostrarAdmin();
+    window.marcarComoVisto = marcarComoVisto;
+  </script>
+
 </body>
 </html>
