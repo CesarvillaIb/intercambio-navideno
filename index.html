@@ -507,60 +507,111 @@
     // -----------------------------
     //  PANEL ADMIN
     // -----------------------------
-    function crearPanelAdmin(){
-      if (!isAdmin) return;
+  // -----------------------------
+//  PANEL ADMIN
+// -----------------------------
+function crearPanelAdmin(){
+  if (!isAdmin) return;
 
-      const panel = document.createElement("div");
-      panel.id = "adminPanel";
-      panel.style.position = "fixed";
-      panel.style.top = "16px";
-      panel.style.right = "16px";
-      panel.style.background = "rgba(15,23,42,0.95)";
-      panel.style.color = "#e5e7eb";
-      panel.style.padding = "10px 14px";
-      panel.style.borderRadius = "14px";
-      panel.style.fontSize = "12px";
-      panel.style.boxShadow = "0 12px 30px rgba(0,0,0,.6)";
-      panel.style.zIndex = "20";
-      panel.style.maxWidth = "260px";
+  const panel = document.createElement("div");
+  panel.id = "adminPanel";
+  panel.style.position = "fixed";
+  panel.style.top = "16px";
+  panel.style.right = "16px";
+  panel.style.background = "rgba(15,23,42,0.95)";
+  panel.style.color = "#e5e7eb";
+  panel.style.padding = "10px 14px";
+  panel.style.borderRadius = "14px";
+  panel.style.fontSize = "12px";
+  panel.style.boxShadow = "0 12px 30px rgba(0,0,0,.6)";
+  panel.style.zIndex = "20";
+  panel.style.maxWidth = "260px";
 
-      panel.innerHTML = `
-        <div style="font-weight:600; margin-bottom:4px;">
-          👑 Admin – Edición <span id="adminEditionLabel">?</span>
-        </div>
-        <div style="font-size:11px; margin-bottom:8px;">
-          Paulo Cesar<br>
-          <span style="color:#9ca3af;">Este panel solo lo ves tú.</span>
-        </div>
-        <button id="btnNuevaEdicion"
-          style="width:100%;border:none;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:600;cursor:pointer;
-                 background:linear-gradient(135deg,#0369a1,#0ea5e9);color:white;box-shadow:0 4px 12px rgba(15,118,178,0.7);margin-bottom:6px;">
-          🔁 Crear nueva edición
-        </button>
-        <div id="adminStatus" style="max-height:220px;overflow:auto;border-top:1px solid rgba(148,163,184,0.4);margin-top:6px;padding-top:6px;"></div>
-      `;
+  panel.innerHTML = `
+    <div style="font-weight:600; margin-bottom:4px;">
+      👑 Admin – Edición <span id="adminEditionLabel">?</span>
+    </div>
+    <div style="font-size:11px; margin-bottom:8px;">
+      Paulo Cesar<br>
+      <span style="color:#9ca3af;">Este panel solo lo ves tú.</span>
+    </div>
 
-      document.body.appendChild(panel);
+    <button id="btnNuevaEdicion"
+      style="width:100%;border:none;border-radius:999px;padding:6px 10px;
+             font-size:12px;font-weight:600;cursor:pointer;
+             background:linear-gradient(135deg,#0369a1,#0ea5e9);
+             color:white;box-shadow:0 4px 12px rgba(15,118,178,0.7);
+             margin-bottom:6px;">
+      🔁 Crear nueva edición
+    </button>
 
-      const lbl = document.getElementById("adminEditionLabel");
-      if (lbl) lbl.textContent = String(currentEditionNumber);
+    <button id="btnVerSorteo"
+      style="width:100%;border:none;border-radius:999px;padding:6px 10px;
+             font-size:12px;font-weight:600;cursor:pointer;
+             background:linear-gradient(135deg,#16a34a,#22c55e);
+             color:white;box-shadow:0 4px 12px rgba(22,163,74,0.7);
+             margin-bottom:6px;">
+      👀 Ver sorteo completo
+    </button>
 
-      const btn = document.getElementById("btnNuevaEdicion");
-      btn.addEventListener("click", async () => {
-        const siguiente = currentEditionNumber + 1;
-        btn.disabled = true;
-        btn.textContent = "Creando edición " + siguiente + "…";
-        try {
-          await setNextEditionInFirebase(siguiente);
-          // Siempre mismo link para admin
-          window.location.href = window.location.pathname + "?admin=paulo2025";
-        } catch (e) {
-          alert("Error al crear nueva edición: " + e.message);
-          btn.disabled = false;
-          btn.textContent = "🔁 Crear nueva edición";
-        }
-      });
+    <div id="adminStatus"
+         style="max-height:180px;overflow:auto;
+                border-top:1px solid rgba(148,163,184,0.4);
+                margin-top:6px;padding-top:6px;"></div>
+
+    <div id="adminPairs"
+         style="max-height:220px;overflow:auto;
+                border-top:1px solid rgba(148,163,184,0.4);
+                margin-top:6px;padding-top:6px;display:none;"></div>
+  `;
+
+  document.body.appendChild(panel);
+
+  // etiqueta edición
+  const lbl = document.getElementById("adminEditionLabel");
+  if (lbl) lbl.textContent = String(currentEditionNumber);
+
+  // botón nueva edición
+  const btnNueva = document.getElementById("btnNuevaEdicion");
+  btnNueva.addEventListener("click", async () => {
+    const siguiente = currentEditionNumber + 1;
+    btnNueva.disabled = true;
+    btnNueva.textContent = "Creando edición " + siguiente + "…";
+    try {
+      await setNextEditionInFirebase(siguiente);
+      // mismo link, solo recarga con admin
+      window.location.href = window.location.pathname + "?admin=paulo2025";
+    } catch (e) {
+      alert("Error al crear nueva edición: " + e.message);
+      btnNueva.disabled = false;
+      btnNueva.textContent = "🔁 Crear nueva edición";
     }
+  });
+
+  // botón ver sorteo completo
+  const btnVerSorteo = document.getElementById("btnVerSorteo");
+  btnVerSorteo.addEventListener("click", () => {
+    const box = document.getElementById("adminPairs");
+    if (!box) return;
+
+    if (!box.dataset.loaded && assignment) {
+      let html = `<strong>Parejas del sorteo</strong><ul style="margin-top:4px;padding-left:16px;font-size:12px;">`;
+      PARTICIPANTS.forEach(giver => {
+        const receiver = assignment[giver];
+        html += `<li>${giver} → <strong>${receiver}</strong></li>`;
+      });
+      html += "</ul>";
+      box.innerHTML = html;
+      box.dataset.loaded = "1";
+    }
+
+    // toggle mostrar/ocultar
+    box.style.display = (box.style.display === "none" || !box.style.display)
+      ? "block"
+      : "none";
+  });
+}
+
 
     // -----------------------------
     //  FLUJO PRINCIPAL
@@ -683,3 +734,4 @@
   </script>
 </body>
 </html>
+
