@@ -5,7 +5,10 @@
   <title>Intercambio Navideño Familiar 2025</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
 
     body {
       margin: 0;
@@ -19,73 +22,229 @@
       overflow: hidden;
     }
 
-    .snow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 0; }
-    .snow span {
-      position: absolute; top: -10px; width: 6px; height: 6px; border-radius: 50%;
-      background: rgba(255,255,255,0.9); animation: fall linear infinite; opacity: .8;
+    .snow {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
     }
-    @keyframes fall { 0% { transform: translateY(-10px); } 100% { transform: translateY(110vh); } }
+    .snow span {
+      position: absolute;
+      top: -10px;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      animation: fall linear infinite;
+      opacity: .8;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-10px); }
+      100% { transform: translateY(110vh); }
+    }
 
     .card {
-      position: relative; z-index: 2; background: rgba(255,255,255,0.96);
-      border-radius: 24px; padding: 22px 18px; max-width: 420px; width: 100%;
-      box-shadow: 0 18px 45px rgba(0,0,0,.4); backdrop-filter: blur(10px);
-      border: 1px solid rgba(248,250,252,.95); animation: cardIn .45s ease-out;
+      position: relative;
+      z-index: 2;
+      background: rgba(255,255,255,0.96);
+      border-radius: 24px;
+      padding: 22px 18px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 18px 45px rgba(0,0,0,.4);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(248,250,252,.95);
+      animation: cardIn .45s ease-out;
     }
-    @keyframes cardIn { from { opacity: 0; transform: translateY(20px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(20px) scale(.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
 
     .card::before {
-      content: ""; position: absolute; inset: -2px; border-radius: 26px; padding: 1px;
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 26px;
+      padding: 1px;
       background: linear-gradient(135deg, rgba(239,68,68,.7), rgba(34,197,94,.7));
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor; mask-composite: exclude; opacity: .75; pointer-events: none;
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: .75;
+      pointer-events: none;
     }
 
     .santa-mini {
-      position: absolute; top: -30px; left: 50%; transform: translateX(-50%); font-size: 40px;
-      z-index: 3; animation: danceSanta 1s infinite ease-in-out;
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 40px;
+      z-index: 3;
+      animation: danceSanta 1s infinite ease-in-out;
     }
-    @keyframes danceSanta { 0% { transform: translateX(-50%) rotate(-10deg); } 50% { transform: translateX(-50%) rotate(10deg); } 100% { transform: translateX(-50%) rotate(-10deg); } }
+    @keyframes danceSanta {
+      0%   { transform: translateX(-50%) rotate(-10deg); }
+      50%  { transform: translateX(-50%) rotate(10deg); }
+      100% { transform: translateX(-50%) rotate(-10deg); }
+    }
 
     .reindeer {
-      position: fixed; bottom: 18px; left: -60px; font-size: 34px; z-index: 1;
-      animation: walkReindeer 14s linear infinite; opacity: .9;
+      position: fixed;
+      bottom: 18px;
+      left: -60px;
+      font-size: 34px;
+      z-index: 1;
+      animation: walkReindeer 14s linear infinite;
+      opacity: .9;
     }
-    @keyframes walkReindeer { 0% { transform: translateX(0); } 100% { transform: translateX(120vw); } }
-
-    .badge { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: .85rem;
-      padding: 5px 14px; border-radius: 999px; background: linear-gradient(135deg,#b91c1c,#065f46);
-      color: #fefce8; margin: 20px auto 12px;
+    @keyframes walkReindeer {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(120vw); }
     }
 
-    h1 { font-size: 1.5rem; text-align: center; margin-bottom: 4px; color:#111827; }
-    .tagline { font-size: .85rem; text-align:center; color:#6b7280; margin-bottom:4px; }
-    .price { font-size: .95rem; text-align:center; font-weight:600; margin-bottom:10px; color:#b91c1c; }
-    .place { font-size: .82rem; text-align:center; margin-bottom:16px; color:#374151; line-height:1.4; }
-    .place a { color:#16a34a; font-weight:600; text-decoration:none; }
-    .subtitle { font-size:.9rem; text-align:center; color:#4b5563; margin-bottom:14px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: .85rem;
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg,#b91c1c,#065f46);
+      color: #fefce8;
+      margin: 20px auto 12px;
+    }
 
-    label { font-size:.85rem; margin-bottom:6px; color:#111827; display:block; }
+    h1 {
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 4px;
+      color:#111827;
+    }
+
+    .tagline {
+      font-size: .85rem;
+      text-align:center;
+      color:#6b7280;
+      margin-bottom:4px;
+    }
+
+    .price {
+      font-size: .95rem;
+      text-align:center;
+      font-weight:600;
+      margin-bottom:10px;
+      color:#b91c1c;
+    }
+
+    .place {
+      font-size: .82rem;
+      text-align:center;
+      margin-bottom:16px;
+      color:#374151;
+      line-height:1.4;
+    }
+    .place a {
+      color:#16a34a;
+      font-weight:600;
+      text-decoration:none;
+    }
+
+    .subtitle {
+      font-size:.9rem;
+      text-align:center;
+      color:#4b5563;
+      margin-bottom:14px;
+    }
+
+    label {
+      font-size:.85rem;
+      margin-bottom:6px;
+      color:#111827;
+      display:block;
+    }
+
     select, button {
-      width:100%; padding:12px 14px; border-radius:999px; font-size:1rem; outline:none;
+      width:100%;
+      padding:12px 14px;
+      border-radius:999px;
+      font-size:1rem;
+      outline:none;
     }
-    select { background:#f9fafb; border:1px solid #e5e7eb; margin-bottom:14px; }
+
+    select {
+      background:#f9fafb;
+      border:1px solid #e5e7eb;
+      margin-bottom:14px;
+    }
+    select:focus {
+      border-color:#16a34a;
+      box-shadow:0 0 0 2px rgba(22,163,74,.25);
+    }
+
     button {
-      background: linear-gradient(135deg,#b91c1c,#16a34a); color:white; border:none; font-weight:600; cursor:pointer;
-      box-shadow:0 8px 20px rgba(0,0,0,.3); transition: transform .1s ease;
+      background: linear-gradient(135deg,#b91c1c,#16a34a);
+      color:white;
+      border:none;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 8px 20px rgba(0,0,0,.3);
+      transition: transform .1s ease, box-shadow .1s ease;
+    }
+    button:active {
+      transform:scale(.97);
+      box-shadow:0 4px 12px rgba(0,0,0,.35);
     }
 
-    .result { display:none; margin-top:18px; padding:14px; border-radius:14px; background:#f1f5f9;
-      border:1px dashed #9ca3af; font-size:.95rem; transform-origin:center;
+    .result {
+      display:none;
+      margin-top:18px;
+      padding:14px;
+      border-radius:14px;
+      background:#f1f5f9;
+      border:1px dashed #9ca3af;
+      font-size:.95rem;
+      transform-origin:center;
     }
-    .result.show { display:block; animation: resultPop .28s ease-out; }
-    @keyframes resultPop { 0% { opacity:0; transform:scale(.9) translateY(6px); }
-                           100%{ opacity:1; transform:scale(1) translateY(0); } }
+    .result.show {
+      display:block;
+      animation: resultPop .28s ease-out;
+    }
+    @keyframes resultPop {
+      0%   { opacity:0; transform:scale(.9) translateY(6px); }
+      100% { opacity:1; transform:scale(1) translateY(0); }
+    }
 
-    .error { margin-top:10px; font-size:.8rem; color:#b91c1c; text-align:center; }
-    .note { font-size:.8rem; margin-top:12px; text-align:center; color:#6b7280; }
-    .footer { font-size:.7rem; text-align:center; margin-top:18px; color:#9ca3af; }
-    .creator { font-size:.7rem; text-align:center; margin-top:4px; color:#7f8c9d; }
+    .error {
+      margin-top:10px;
+      font-size:.8rem;
+      color:#b91c1c;
+      text-align:center;
+    }
+
+    .note {
+      font-size:.8rem;
+      margin-top:12px;
+      text-align:center;
+      color:#6b7280;
+    }
+
+    .footer {
+      font-size:.7rem;
+      text-align:center;
+      margin-top:18px;
+      color:#9ca3af;
+    }
+
+    .creator {
+      font-size:.7rem;
+      text-align:center;
+      margin-top:4px;
+      color:#7f8c9d;
+    }
   </style>
 </head>
 
@@ -98,50 +257,100 @@
     <div class="badge">Intercambio Navideño 2025</div>
 
     <h1>Santa Secreto Familiar</h1>
-    <p class="tagline">Familia Villa · Unidos · Tradición 🎁</p>
-    <p class="price">💰 Monto: <strong>$500 MXN</strong></p>
+    <p class="tagline">Familia Villa · Unidos · Tradición · Buenos momentos 🎁</p>
+    <p class="price">💰 Monto del intercambio: <strong>$500 MXN</strong></p>
 
     <p class="place">
       📍 <strong>Casa de Sergio Villa</strong><br>
-      Calle Guamúchil #52 · Zapopan, Jalisco<br>
-      👉 <a href="https://maps.app.goo.gl/PkwVp3p2bp2CBwY8A" target="_blank">Ver mapa</a>
+      Calle Guamúchil #52 · Col. El Tizate · Zapopan, Jalisco<br>
+      👉 <a href="https://maps.app.goo.gl/PkwVp3p2bp2CBwY8A" target="_blank">Ver ubicación en Google Maps</a>
     </p>
 
     <p class="subtitle">Selecciona tu nombre para saber a quién le vas a regalar.</p>
 
     <label for="nameSelect">¿Quién eres?</label>
-    <select id="nameSelect"><option value="">-- Selecciona tu nombre --</option></select>
+    <select id="nameSelect">
+      <option value="">-- Selecciona tu nombre --</option>
+    </select>
 
     <button id="drawBtn">Ver a quién le regalo 🎁</button>
+
     <div id="result" class="result"></div>
     <div id="error" class="error"></div>
 
-    <p class="note">💡 Solo verás tu propio resultado. No recargues la página 😜</p>
+    <p class="note">
+      💡 Solo verás tu propio resultado.<br>
+      No recargues la página para espiar, confía en la magia navideña 😜
+    </p>
     <p id="deviceNote" class="note" style="display:none;"></p>
-    <div class="footer">Intercambio familiar · 2025</div>
+
+    <div class="footer">Intercambio navideño familiar · 2025</div>
     <div class="creator">Creado por <strong>Paulo Cesar Villa Ibarra</strong></div>
   </div>
 
-  <!-- ========================== -->
-  <!-- 🧩 TU SCRIPT ORIGINAL      -->
-  <!-- ========================== -->
-  <script>
+  <!-- ===================================== -->
+  <!--  LÓGICA COMPLETA + FIREBASE + ADMIN  -->
+  <!-- ===================================== -->
+  <script type="module">
+    // -----------------------------
+    //  PARTICIPANTES
+    // -----------------------------
     const PARTICIPANTS = [
-      "Paulo Cesar", "Naydelin Fernanda", "Sergio Villa", "Julia Ibarra",
-      "Daniel Villa", "Oscar Padilla", "Mayra Villa", "Leonardo Matías",
-      "Papa Chava", "Mama Tere", "Tania Villa", "Novio de Tania Diego",
-      "Mayte Villa", "Marichuy", "Omar Junior", "Fernanda Quiñones",
-      "Beto El que me regalara su carro", "Brayan", "Novia de Brayan Valentina",
-      "Salvador Villa", "Irene Salazar"
+      "Paulo Cesar",
+      "Naydelin Fernanda",
+      "Sergio Villa",
+      "Julia Ibarra",
+      "Daniel Villa",
+      "Oscar Padilla",
+      "Mayra Villa",
+      "Leonardo Matías",
+      "Papa Chava",
+      "Mama Tere",
+      "Tania Villa",
+      "Novio de Tania Diego",
+      "Mayte Villa",
+      "Marichuy",
+      "Omar Junior",
+      "Fernanda Quiñones",
+      "Beto El que me regalara su carro",
+      "Brayan",
+      "Novia de Brayan Valentina",
+      "Salvador Villa",
+      "Irene Salazar"
     ];
 
     const params  = new URLSearchParams(window.location.search);
-    const edition = params.get("edicion") || "1";
     const isAdmin = params.get("admin") === "paulo2025";
 
-    const SEED = "intercambio-navideno-familiar-2025-edicion-" + edition;
-    const STORAGE_KEY = "intercambio_navideno_2025_nombre_edicion_" + edition;
+    // -----------------------------
+    //  IMPORTS FIREBASE
+    // -----------------------------
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc,
+      updateDoc,
+      collection,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
+    const firebaseConfig = {
+      apiKey: "AIzaSyBkln8OvQIhSd2Phnbt0VpUWxwlfiP5upo",
+      authDomain: "intercambio-familiar-2025.firebaseapp.com",
+      projectId: "intercambio-familiar-2025",
+      storageBucket: "intercambio-familiar-2025.firebasestorage.app",
+      messagingSenderId: "782877002512",
+      appId: "1:782877002512:web:fa9e0fc96fa2fe2074f395"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    // -----------------------------
+    //  UTILIDADES RANDOM
+    // -----------------------------
     function xmur3(str){
       let h = 1779033703 ^ str.length;
       for (let i = 0; i < str.length; i++) {
@@ -176,110 +385,301 @@
       return a;
     }
 
-    function generateDerangement(names, seedStr){
-      for (let attempt = 0; attempt < 1000; attempt++) {
+    function generateDerangement(names, seedStr, maxTries = 1000){
+      for (let attempt = 0; attempt < maxTries; attempt++) {
         const shuffled = seededShuffle(names, seedStr + "#" + attempt);
-        if (shuffled.every((v,i)=>v !== names[i])) return shuffled;
+        let valid = true;
+        for (let i = 0; i < names.length; i++) {
+          if (names[i] === shuffled[i]) { valid = false; break; }
+        }
+        if (valid) return shuffled;
       }
-      throw new Error("No se pudo generar un sorteo válido.");
+      throw new Error("No se pudo generar un sorteo válido. Revisa la lista de participantes.");
     }
 
-    let assignment = generateDerangement(PARTICIPANTS, SEED)
-      .reduce((map, val, idx) => (map[PARTICIPANTS[idx]] = val, map), {});
+    function buildAssignmentMap(names, seedStr){
+      const derangement = generateDerangement(names, seedStr);
+      const map = {};
+      names.forEach((name, idx) => { map[name] = derangement[idx]; });
+      return map;
+    }
 
-    const nameSelect = document.getElementById("nameSelect");
-    const drawBtn = document.getElementById("drawBtn");
-    const resultBox = document.getElementById("result");
-    const errorBox = document.getElementById("error");
-    const deviceNote = document.getElementById("deviceNote");
+    function idFromName(name){
+      return name.toLowerCase().normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"")
+        .replace(/[^a-z0-9]+/g,"-");
+    }
 
-    PARTICIPANTS.forEach(n=>{
-      const op=document.createElement("option");
-      op.value=n; op.textContent=n;
-      nameSelect.appendChild(op);
-    });
+    // -----------------------------
+    //  ELEMENTOS DOM
+    // -----------------------------
+    const nameSelect    = document.getElementById("nameSelect");
+    const drawBtn       = document.getElementById("drawBtn");
+    const resultBox     = document.getElementById("result");
+    const errorBox      = document.getElementById("error");
+    const snowContainer = document.getElementById("snow");
+    const deviceNote    = document.getElementById("deviceNote");
 
-    let storedName = localStorage.getItem(STORAGE_KEY);
-    if(storedName){ nameSelect.value = storedName; }
+    let assignment           = null;
+    let storedName           = null;
+    let currentEditionNumber = 1;
+    let SEED                 = "";
+    let STORAGE_KEY          = "";
+    let visadosCollectionRef = null;
 
-    drawBtn.addEventListener("click", ()=>{
-      const selected = nameSelect.value;
-      if(!selected){ errorBox.textContent="Selecciona tu nombre."; return; }
-      localStorage.setItem(STORAGE_KEY, selected);
+    // -----------------------------
+    //  NIEVE
+    // -----------------------------
+    function initSnow(){
+      const flakes = 60;
+      for (let i = 0; i < flakes; i++) {
+        const span = document.createElement("span");
+        const size = Math.random() * 6 + 3;
+        span.style.left = Math.random() * 100 + "vw";
+        span.style.width = size + "px";
+        span.style.height = size + "px";
+        span.style.animationDuration = (Math.random() * 10 + 8) + "s";
+        span.style.animationDelay    = (Math.random() * -20) + "s";
+        snowContainer.appendChild(span);
+      }
+    }
 
-      resultBox.innerHTML = `
-        👋 Hola <strong>${selected}</strong><br>
-        Te toca regalarle a:<br>
-        🎁 <strong>${assignment[selected]}</strong>
-        <br><br>
-        <button onclick="marcarComoVisto('${selected}')">
-          Entendido ✔
-        </button>
-      `;
-      resultBox.classList.add("show");
-    });
-  </script>
+    // -----------------------------
+    //  FIRESTORE: EDICIÓN ACTUAL
+    // -----------------------------
+    async function getCurrentEditionFromFirebase() {
+      const cfgRef = doc(db, "config", "actual");
+      const snap = await getDoc(cfgRef);
+      if (snap.exists()) {
+        const data = snap.data();
+        if (typeof data.ultimaEdicion === "number" && data.ultimaEdicion > 0) {
+          return data.ultimaEdicion;
+        }
+      }
+      await setDoc(cfgRef, { ultimaEdicion: 1 });
+      return 1;
+    }
 
-  <!-- =================================== -->
-  <!-- 🔥 SCRIPT FIREBASE (COMPLETITO)     -->
-  <!-- =================================== -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, doc, getDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    async function setNextEditionInFirebase(nextNumber){
+      const cfgRef = doc(db, "config", "actual");
+      await setDoc(cfgRef, { ultimaEdicion: nextNumber }, { merge: true });
+    }
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBkln8OvQIhSd2Phnbt0VpUWxwlfiP5upo",
-      authDomain: "intercambio-familiar-2025.firebaseapp.com",
-      projectId: "intercambio-familiar-2025",
-      storageBucket: "intercambio-familiar-2025.firebasestorage.app",
-      messagingSenderId: "782877002512",
-      appId: "1:782877002512:web:fa9e0fc96fa2fe2074f395"
-    };
+    // -----------------------------
+    //  FIRESTORE: VISADOS
+    // -----------------------------
+    async function guardarEntendido(nombre){
+      if (!visadosCollectionRef) return;
+      const id = idFromName(nombre);
+      const ref = doc(visadosCollectionRef, id);
+      await setDoc(ref, {
+        nombre,
+        entendido: true,
+        ts: new Date().toISOString()
+      }, { merge: true });
+    }
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    async function cargarVisadosParaAdmin(){
+      if (!isAdmin || !visadosCollectionRef) return;
 
-    const params = new URLSearchParams(window.location.search);
-    const edicion = params.get("edicion") || "1";
-    const admin = params.get("admin");
-
-    const docRef = doc(db, "vistas", `edicion-${edicion}`);
-
-    async function marcarComoVisto(nombre){
-      const snap = await getDoc(docRef);
-      if(!snap.exists()) await setDoc(docRef, { vistos: {} });
-
-      await updateDoc(docRef, {
-        [`vistos.${nombre}`]: true
+      const snapshot = await getDocs(visadosCollectionRef);
+      const vistos = new Set();
+      snapshot.forEach(d => {
+        const data = d.data();
+        if (data.entendido && data.nombre) {
+          vistos.add(data.nombre);
+        }
       });
 
-      alert("Marcado como visto ✔");
+      const adminStatus = document.getElementById("adminStatus");
+      if (!adminStatus) return;
+
+      let html = `<strong>Confirmaciones (edición ${currentEditionNumber})</strong><br>`;
+      html += `<small>${vistos.size} de ${PARTICIPANTS.length} participantes</small><ul style="margin-top:4px;padding-left:16px;font-size:12px;">`;
+      PARTICIPANTS.forEach(n => {
+        const ok = vistos.has(n);
+        html += `<li>${ok ? "✅" : "⏳"} ${n}</li>`;
+      });
+      html += "</ul>";
+      adminStatus.innerHTML = html;
     }
 
-    async function mostrarAdmin(){
-      if(admin !== "paulo2025") return;
+    // -----------------------------
+    //  PANEL ADMIN
+    // -----------------------------
+    function crearPanelAdmin(){
+      if (!isAdmin) return;
 
-      const snap = await getDoc(docRef);
-      const data = snap.data();
+      const panel = document.createElement("div");
+      panel.id = "adminPanel";
+      panel.style.position = "fixed";
+      panel.style.top = "16px";
+      panel.style.right = "16px";
+      panel.style.background = "rgba(15,23,42,0.95)";
+      panel.style.color = "#e5e7eb";
+      panel.style.padding = "10px 14px";
+      panel.style.borderRadius = "14px";
+      panel.style.fontSize = "12px";
+      panel.style.boxShadow = "0 12px 30px rgba(0,0,0,.6)";
+      panel.style.zIndex = "20";
+      panel.style.maxWidth = "260px";
 
-      const lista = data?.vistos
-        ? Object.keys(data.vistos).map(n=>`• ${n}`).join("<br>")
-        : "<i>Nadie ha confirmado todavía</i>";
-
-      document.body.innerHTML += `
-        <div style="
-          position:fixed;top:10px;right:10px;background:#0f172a;
-          color:#e5e7eb;padding:14px;border-radius:12px;z-index:9999;
-          box-shadow:0 6px 20px rgba(0,0,0,.4);font-size:13px;max-width:260px;">
-          <b>👑 Admin – Edición ${edicion}</b><br><br>
-          ${lista}
+      panel.innerHTML = `
+        <div style="font-weight:600; margin-bottom:4px;">
+          👑 Admin – Edición <span id="adminEditionLabel">?</span>
         </div>
+        <div style="font-size:11px; margin-bottom:8px;">
+          Paulo Cesar<br>
+          <span style="color:#9ca3af;">Este panel solo lo ves tú.</span>
+        </div>
+        <button id="btnNuevaEdicion"
+          style="width:100%;border:none;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:600;cursor:pointer;
+                 background:linear-gradient(135deg,#0369a1,#0ea5e9);color:white;box-shadow:0 4px 12px rgba(15,118,178,0.7);margin-bottom:6px;">
+          🔁 Crear nueva edición
+        </button>
+        <div id="adminStatus" style="max-height:220px;overflow:auto;border-top:1px solid rgba(148,163,184,0.4);margin-top:6px;padding-top:6px;"></div>
       `;
+
+      document.body.appendChild(panel);
+
+      const lbl = document.getElementById("adminEditionLabel");
+      if (lbl) lbl.textContent = String(currentEditionNumber);
+
+      const btn = document.getElementById("btnNuevaEdicion");
+      btn.addEventListener("click", async () => {
+        const siguiente = currentEditionNumber + 1;
+        btn.disabled = true;
+        btn.textContent = "Creando edición " + siguiente + "…";
+        try {
+          await setNextEditionInFirebase(siguiente);
+          // Siempre mismo link para admin
+          window.location.href = window.location.pathname + "?admin=paulo2025";
+        } catch (e) {
+          alert("Error al crear nueva edición: " + e.message);
+          btn.disabled = false;
+          btn.textContent = "🔁 Crear nueva edición";
+        }
+      });
     }
 
-    mostrarAdmin();
-    window.marcarComoVisto = marcarComoVisto;
-  </script>
+    // -----------------------------
+    //  FLUJO PRINCIPAL
+    // -----------------------------
+    async function init(){
+      // 1) Edición actual desde Firebase
+      currentEditionNumber = await getCurrentEditionFromFirebase();
+      const editionSuffix = String(currentEditionNumber);
 
+      SEED        = "intercambio-navideno-familiar-2025-edicion-" + editionSuffix;
+      STORAGE_KEY = "intercambio_navideno_2025_nombre_edicion_" + editionSuffix;
+
+      const docEdicion = doc(db, "vistas", "edicion-" + editionSuffix);
+      visadosCollectionRef = collection(docEdicion, "visados");
+
+      // 2) Llenar select
+      PARTICIPANTS.forEach(name => {
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        nameSelect.appendChild(opt);
+      });
+
+      // 3) Nombre guardado en este dispositivo
+      storedName = localStorage.getItem(STORAGE_KEY);
+      if (storedName && PARTICIPANTS.includes(storedName)) {
+        nameSelect.value = storedName;
+        deviceNote.textContent = "📱 Este dispositivo está registrado para: " +
+          storedName + " (Edición " + editionSuffix + ")";
+        deviceNote.style.display = "block";
+      }
+
+      // 4) Asignaciones
+      try {
+        assignment = buildAssignmentMap(PARTICIPANTS, SEED);
+      } catch (err) {
+        errorBox.textContent = err.message;
+        drawBtn.disabled = true;
+      }
+
+      // 5) Admin
+      if (isAdmin) {
+        crearPanelAdmin();
+        await cargarVisadosParaAdmin();
+      }
+
+      // 6) Botón principal
+      drawBtn.addEventListener("click", async () => {
+        errorBox.textContent = "";
+        resultBox.classList.remove("show");
+
+        const selected = nameSelect.value;
+        if (!selected) {
+          errorBox.textContent = "Por favor, selecciona tu nombre.";
+          resultBox.style.display = "none";
+          return;
+        }
+
+        // Bloqueo por dispositivo
+        if (!isAdmin) {
+          if (storedName && selected !== storedName) {
+            errorBox.textContent = `Este dispositivo ya está asociado al nombre: "${storedName}". Solo puedes ver tu propio resultado.`;
+            resultBox.style.display = "none";
+            return;
+          }
+          if (!storedName) {
+            storedName = selected;
+            localStorage.setItem(STORAGE_KEY, storedName);
+            deviceNote.textContent =
+              "📱 Este dispositivo está registrado para: " +
+              storedName + " (Edición " + editionSuffix + ")";
+            deviceNote.style.display = "block";
+          }
+        }
+
+        if (!assignment || !assignment[selected]) {
+          errorBox.textContent = "Hubo un problema con el sorteo.";
+          resultBox.style.display = "none";
+          return;
+        }
+
+        const target = assignment[selected];
+
+        resultBox.innerHTML = `
+          👋 Hola, <strong>${selected}</strong><br/>
+          Te toca regalarle a:<br/>
+          🎁 <strong>${target}</strong><br/><br/>
+          <button id="btnOk" style="
+            margin-top:4px;border:none;border-radius:999px;padding:8px 14px;
+            font-size:0.9rem;font-weight:600;cursor:pointer;
+            background:linear-gradient(135deg,#16a34a,#22c55e);color:white;
+            box-shadow:0 6px 16px rgba(22,163,74,0.6);
+          ">Entendido ✓</button>
+        `;
+        resultBox.classList.add("show");
+
+        const btnOk = document.getElementById("btnOk");
+        btnOk.addEventListener("click", async () => {
+          btnOk.disabled = true;
+          btnOk.textContent = "Guardando…";
+          try {
+            await guardarEntendido(selected);
+            btnOk.textContent = "¡Listo! ✅";
+            if (isAdmin) {
+              await cargarVisadosParaAdmin();
+            }
+          } catch (e) {
+            alert("No se pudo guardar la confirmación: " + e.message);
+            btnOk.disabled = false;
+            btnOk.textContent = "Entendido ✓";
+          }
+        });
+      });
+
+      // 7) Nieve
+      initSnow();
+    }
+
+    init();
+  </script>
 </body>
 </html>
