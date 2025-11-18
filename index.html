@@ -7,7 +7,8 @@
   <style>
     * {
       box-sizing: border-box;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
     }
 
     body {
@@ -17,11 +18,18 @@
       align-items: center;
       justify-content: center;
       padding: 16px;
-      background: radial-gradient(circle at top, #ffffff 0, #ffe6ec 25%, #5b0b12 70%, #050816 100%);
+      background: radial-gradient(
+        circle at top,
+        #ffffff 0,
+        #ffe6ec 25%,
+        #5b0b12 70%,
+        #050816 100%
+      );
       color: #1f2933;
       overflow: hidden;
     }
 
+    /* Nieve */
     .snow {
       position: fixed;
       top: 0;
@@ -40,13 +48,36 @@
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.9);
       animation: fall linear infinite;
-      opacity: .8;
+      opacity: 0.8;
     }
     @keyframes fall {
-      0% { transform: translateY(-10px); }
-      100% { transform: translateY(110vh); }
+      0% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(110vh);
+      }
     }
 
+    .reindeer {
+      position: fixed;
+      bottom: 18px;
+      left: -60px;
+      font-size: 34px;
+      z-index: 1;
+      animation: walkReindeer 14s linear infinite;
+      opacity: 0.9;
+    }
+    @keyframes walkReindeer {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(120vw);
+      }
+    }
+
+    /* Tarjeta principal */
     .card {
       position: relative;
       z-index: 2;
@@ -55,14 +86,20 @@
       padding: 22px 18px;
       max-width: 420px;
       width: 100%;
-      box-shadow: 0 18px 45px rgba(0, 0, 0, .4);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(248, 250, 252, .95);
-      animation: cardIn .45s ease-out;
+      border: 1px solid rgba(248, 250, 252, 0.95);
+      animation: cardIn 0.45s ease-out;
     }
     @keyframes cardIn {
-      from { opacity: 0; transform: translateY(20px) scale(.98); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .card::before {
@@ -71,11 +108,16 @@
       inset: -2px;
       border-radius: 26px;
       padding: 1px;
-      background: linear-gradient(135deg, rgba(239, 68, 68, .7), rgba(34, 197, 94, .7));
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      background: linear-gradient(
+        135deg,
+        rgba(239, 68, 68, 0.7),
+        rgba(34, 197, 94, 0.7)
+      );
+      -webkit-mask: linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
-      opacity: .75;
+      opacity: 0.75;
       pointer-events: none;
     }
 
@@ -89,23 +131,15 @@
       animation: danceSanta 1s infinite ease-in-out;
     }
     @keyframes danceSanta {
-      0% { transform: translateX(-50%) rotate(-10deg); }
-      50% { transform: translateX(-50%) rotate(10deg); }
-      100% { transform: translateX(-50%) rotate(-10deg); }
-    }
-
-    .reindeer {
-      position: fixed;
-      bottom: 18px;
-      left: -60px;
-      font-size: 34px;
-      z-index: 1;
-      animation: walkReindeer 14s linear infinite;
-      opacity: .9;
-    }
-    @keyframes walkReindeer {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(120vw); }
+      0% {
+        transform: translateX(-50%) rotate(-10deg);
+      }
+      50% {
+        transform: translateX(-50%) rotate(10deg);
+      }
+      100% {
+        transform: translateX(-50%) rotate(-10deg);
+      }
     }
 
     .badge {
@@ -113,10 +147,10 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      font-size: .85rem;
+      font-size: 0.85rem;
       padding: 5px 14px;
       border-radius: 999px;
-      background: linear-gradient(135deg,#b91c1c,#065f46);
+      background: linear-gradient(135deg, #b91c1c, #065f46);
       color: #fefce8;
       margin: 20px auto 12px;
     }
@@ -125,189 +159,251 @@
       font-size: 1.5rem;
       text-align: center;
       margin-bottom: 4px;
-      color:#111827;
+      color: #111827;
     }
 
-    .tagline { font-size: .85rem; text-align:center; color:#6b7280; margin-bottom:4px; }
-    .price { font-size: .95rem; text-align:center; font-weight:600; margin-bottom:10px; color:#b91c1c; }
+    .tagline {
+      font-size: 0.85rem;
+      text-align: center;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .price {
+      font-size: 0.95rem;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #b91c1c;
+    }
 
     .place {
-      font-size: .82rem;
-      text-align:center;
-      margin-bottom:16px;
-      color:#374151;
-      line-height:1.4;
+      font-size: 0.82rem;
+      text-align: center;
+      margin-bottom: 16px;
+      color: #374151;
+      line-height: 1.4;
     }
-    .place a { color:#16a34a; font-weight:600; text-decoration:none; }
-
-    .subtitle { font-size:.9rem; text-align:center; color:#4b5563; margin-bottom:14px; }
-
-    label { font-size:.85rem; margin-bottom:6px; color:#111827; display:block; }
-    select, button {
-      width:100%;
-      padding:12px 14px;
-      border-radius:999px;
-      font-size:1rem;
-      outline:none;
+    .place a {
+      color: #16a34a;
+      font-weight: 600;
+      text-decoration: none;
     }
+
+    .subtitle {
+      font-size: 0.9rem;
+      text-align: center;
+      color: #4b5563;
+      margin-bottom: 14px;
+    }
+
+    label {
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      color: #111827;
+      display: block;
+    }
+
+    select,
+    button {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 999px;
+      font-size: 1rem;
+      outline: none;
+    }
+
     select {
-      background:#f9fafb;
-      border:1px solid #e5e7eb;
-      margin-bottom:14px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 14px;
     }
     select:focus {
-      border-color:#16a34a;
-      box-shadow:0 0 0 2px rgba(22,163,74,.25);
+      border-color: #16a34a;
+      box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.25);
     }
 
     button {
-      background: linear-gradient(135deg,#b91c1c,#16a34a);
-      color:white;
-      border:none;
-      font-weight:600;
-      cursor:pointer;
-      box-shadow:0 8px 20px rgba(0,0,0,.3);
-      transition: transform .1s ease, box-shadow .1s ease;
+      background: linear-gradient(135deg, #b91c1c, #16a34a);
+      color: white;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
     button:active {
-      transform:scale(.97);
-      box-shadow:0 4px 12px rgba(0,0,0,.35);
+      transform: scale(0.97);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
     }
 
     .result {
-      display:none;
-      margin-top:18px;
-      padding:14px;
-      border-radius:14px;
-      background:#f1f5f9;
-      border:1px dashed #9ca3af;
-      font-size:.95rem;
-      transform-origin:center;
+      display: none;
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 14px;
+      background: #f1f5f9;
+      border: 1px dashed #9ca3af;
+      font-size: 0.95rem;
+      transform-origin: center;
+      text-align: center;
     }
     .result.show {
-      display:block;
-      animation: resultPop .28s ease-out;
+      display: block;
+      animation: resultPop 0.28s ease-out;
     }
     @keyframes resultPop {
-      0% { opacity:0; transform:scale(.9) translateY(6px); }
-      100%{ opacity:1; transform:scale(1) translateY(0); }
+      0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(6px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
     }
 
     .error {
-      margin-top:10px;
-      font-size:.8rem;
-      color:#b91c1c;
-      text-align:center;
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #b91c1c;
+      text-align: center;
     }
 
     .note {
-      font-size:.8rem;
-      margin-top:12px;
-      text-align:center;
-      color:#6b7280;
+      font-size: 0.8rem;
+      margin-top: 12px;
+      text-align: center;
+      color: #6b7280;
     }
 
     .footer {
-      font-size:.7rem;
-      text-align:center;
-      margin-top:18px;
-      color:#9ca3af;
+      font-size: 0.7rem;
+      text-align: center;
+      margin-top: 18px;
+      color: #9ca3af;
     }
 
     .creator {
-      font-size:.7rem;
-      text-align:center;
-      margin-top:4px;
-      color:#7f8c9d;
+      font-size: 0.7rem;
+      text-align: center;
+      margin-top: 4px;
+      color: #7f8c9d;
     }
 
-    /* Panel admin */
+    @media (max-width: 600px) {
+      .card {
+        padding: 18px 14px;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+    }
+
+    /* ========= PANEL ADMIN ========= */
+
     .admin-panel {
       position: fixed;
-      top: 10px;
-      right: 10px;
-      background:#020617;
-      color:#e5e7eb;
-      padding:14px;
-      border-radius:16px;
-      z-index:50;
-      box-shadow:0 10px 30px rgba(0,0,0,.6);
-      font-size:13px;
-      width:260px;
-      max-height:90vh;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .admin-panel h2 {
-      margin:0;
-      font-size:14px;
-    }
-    .admin-section-title {
-      font-weight:600;
-      margin:6px 0 4px;
-      font-size:12px;
-    }
-    .admin-list {
-      background:#020617;
-      border-radius:10px;
-      padding:8px;
-      border:1px solid rgba(148,163,184,0.5);
-      max-height:170px;
-      overflow-y:auto;
-      font-size:12px;
-    }
-    .admin-list-item-ok::before {
-      content:"✔ ";
-      color:#22c55e;
-    }
-    .admin-list-item-pend::before {
-      content:"• ";
-      color:#f97316;
-    }
-    .admin-btn {
-      width:100%;
-      padding:8px 10px;
-      border-radius:999px;
-      border:none;
-      cursor:pointer;
-      font-size:12px;
-      font-weight:600;
-      box-shadow:0 6px 16px rgba(15,118,178,0.6);
-      background:linear-gradient(135deg,#0369a1,#0ea5e9);
-      color:white;
-    }
-    .admin-small {
-      font-size:11px;
-      color:#9ca3af;
-      line-height:1.4;
+      top: 16px;
+      right: 16px;
+      z-index: 30;
+      background: #020617;
+      color: #e5e7eb;
+      border-radius: 20px;
+      padding: 14px 16px 14px 16px;
+      width: 260px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+      font-size: 0.8rem;
     }
 
-    @media (max-width:600px) {
-      .card { padding:18px 14px; }
-      h1 { font-size:1.4rem; }
+    .admin-panel h2 {
+      margin: 0 0 4px 0;
+      font-size: 0.95rem;
+      text-align: left;
+    }
+
+    .admin-small {
+      font-size: 0.7rem;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .admin-btn {
+      margin-top: 6px;
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 0.8rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #0369a1, #0ea5e9);
+      box-shadow: 0 4px 12px rgba(15, 118, 178, 0.5);
+      border: none;
+      cursor: pointer;
+      color: #e5e7eb;
+    }
+
+    .admin-section-title {
+      font-weight: 600;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      font-size: 0.78rem;
+      color: #e5e7eb;
+    }
+
+    .admin-list {
+      max-height: 170px;
+      overflow-y: auto;
+      padding: 6px 8px;
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      margin-bottom: 4px;
+    }
+
+    .admin-list div {
+      padding: 2px 0;
+    }
+
+    .admin-list-item-ok {
+      color: #bbf7d0;
+    }
+
+    .admin-list-item-pend {
+      color: #e5e7eb;
+      opacity: 0.7;
     }
   </style>
 </head>
+
 <body>
   <div class="snow" id="snow"></div>
   <div class="reindeer">🦌</div>
 
   <div class="card">
     <div class="santa-mini">🎅</div>
+
     <div class="badge">Intercambio Navideño 2025</div>
 
     <h1>Santa Secreto Familiar</h1>
     <p class="tagline">Familia Villa · Unidos · Tradición · Buenos momentos 🎁</p>
-    <p class="price">💰 Monto del intercambio: <strong>$500 MXN</strong></p>
-
-    <p class="place">
-      📍 <strong>Casa de Sergio Villa</strong><br>
-      Calle Guamúchil #52 · Col. El Tizate · Zapopan, Jalisco<br>
-      👉 <a href="https://maps.app.goo.gl/PkwVp3p2bp2CBwY8A" target="_blank">Ver ubicación en Google Maps</a>
+    <p class="price">
+      💰 Monto del intercambio: <strong>$500 MXN</strong>
     </p>
 
-    <p class="subtitle">Selecciona tu nombre para saber a quién le vas a regalar.</p>
+    <p class="place">
+      📍 <strong>Casa de Sergio Villa</strong><br />
+      Calle Guamúchil #52 · Col. El Tizate · Zapopan, Jalisco<br />
+      👉
+      <a
+        href="https://maps.app.goo.gl/PkwVp3p2bp2CBwY8A"
+        target="_blank"
+        >Ver ubicación en Google Maps</a
+      >
+    </p>
+
+    <p class="subtitle">
+      Selecciona tu nombre para saber a quién le vas a regalar.
+    </p>
 
     <label for="nameSelect">¿Quién eres?</label>
     <select id="nameSelect">
@@ -320,17 +416,22 @@
     <div id="error" class="error"></div>
 
     <p class="note">
-      💡 Solo verás tu propio resultado.<br>
+      💡 Solo verás tu propio resultado.<br />
       No recargues la página para espiar, confía en la magia navideña 😜
     </p>
-    <p id="deviceNote" class="note" style="display:none;"></p>
+    <p id="deviceNote" class="note" style="display: none"></p>
 
     <div class="footer">Intercambio navideño familiar · 2025</div>
-    <div class="creator">Creado por <strong>Paulo Cesar Villa Ibarra</strong></div>
+    <div class="creator">
+      Creado por <strong>Paulo Cesar Villa Ibarra</strong>
+    </div>
   </div>
 
+  <!-- ====================================================== -->
+  <!--  LÓGICA COMPLETA (SORTEO + FIREBASE + PANEL ADMIN)     -->
+  <!-- ====================================================== -->
   <script type="module">
-    // ========= PARTICIPANTES =========
+    /* ========= LISTA DE PARTICIPANTES ========= */
     const PARTICIPANTS = [
       "Paulo Cesar",
       "Naydelin Fernanda",
@@ -355,7 +456,7 @@
       "Irene Salazar"
     ];
 
-    // ========= FUNCIONES RANDOM DETERMINISTAS =========
+    /* ========= RANDOM DETERMINISTA PARA EL SORTEO ========= */
     function xmur3(str) {
       let h = 1779033703 ^ str.length;
       for (let i = 0; i < str.length; i++) {
@@ -372,7 +473,7 @@
 
     function mulberry32(a) {
       return function () {
-        let t = a += 0x6D2B79F5;
+        let t = a += 0x6d2b79f5;
         t = Math.imul(t ^ (t >>> 15), t | 1);
         t = t ^ (t + Math.imul(t ^ (t >>> 7), t | 61));
         return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
@@ -395,7 +496,10 @@
         const shuffled = seededShuffle(names, seedStr + "#" + attempt);
         let valid = true;
         for (let i = 0; i < names.length; i++) {
-          if (names[i] === shuffled[i]) { valid = false; break; }
+          if (names[i] === shuffled[i]) {
+            valid = false;
+            break;
+          }
         }
         if (valid) return shuffled;
       }
@@ -405,11 +509,13 @@
     function buildAssignmentMap(names, seedStr) {
       const derangement = generateDerangement(names, seedStr);
       const map = {};
-      names.forEach((name, idx) => { map[name] = derangement[idx]; });
+      names.forEach((name, idx) => {
+        map[name] = derangement[idx];
+      });
       return map;
     }
 
-    // ========= FIREBASE =========
+    /* ========= FIREBASE ========= */
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import {
       getFirestore,
@@ -438,10 +544,10 @@
     const configRef = doc(db, "config", "general");
 
     async function getCurrentEdition() {
-      // Si en la URL viene ?edicion=, la respetamos (para consultar ediciones viejas)
+      // Si la URL trae ?edicion=, usamos esa (para revisar ediciones viejas)
       if (edicionParam) return edicionParam;
 
-      // Si no viene, usamos la edición actual guardada en Firestore
+      // Si no trae, usamos la edición actual guardada en Firestore
       const snap = await getDoc(configRef);
       if (snap.exists() && snap.data().edicionActual) {
         return String(snap.data().edicionActual);
@@ -468,10 +574,25 @@
       window.location.href = `${base}?admin=paulo2025`;
     }
 
+    function initSnow(container) {
+      const flakes = 60;
+      for (let i = 0; i < flakes; i++) {
+        const span = document.createElement("span");
+        const size = Math.random() * 6 + 3;
+        span.style.left = Math.random() * 100 + "vw";
+        span.style.width = size + "px";
+        span.style.height = size + "px";
+        span.style.animationDuration = Math.random() * 10 + 8 + "s";
+        span.style.animationDelay = Math.random() * -20 + "s";
+        container.appendChild(span);
+      }
+    }
+
     async function main() {
-      const edition = await getCurrentEdition();       // <-- aquí se decide la edición
+      const edition = await getCurrentEdition();
       const SEED = "intercambio-navideno-familiar-2025-edicion-" + edition;
-      const STORAGE_KEY = "intercambio_navideno_2025_nombre_edicion_" + edition;
+      const STORAGE_KEY =
+        "intercambio_navideno_2025_nombre_edicion_" + edition;
 
       const vistasRef = doc(db, "vistas", `edicion-${edition}`);
       const vistasSnap = await getDoc(vistasRef);
@@ -479,18 +600,17 @@
         await setDoc(vistasRef, { vistos: {} }, { merge: true });
       }
 
-      const nameSelect      = document.getElementById("nameSelect");
-      const drawBtn         = document.getElementById("drawBtn");
-      const resultBox       = document.getElementById("result");
-      const errorBox        = document.getElementById("error");
-      const deviceNote      = document.getElementById("deviceNote");
-      const snowContainer   = document.getElementById("snow");
+      const nameSelect = document.getElementById("nameSelect");
+      const drawBtn = document.getElementById("drawBtn");
+      const resultBox = document.getElementById("result");
+      const errorBox = document.getElementById("error");
+      const deviceNote = document.getElementById("deviceNote");
+      const snowContainer = document.getElementById("snow");
 
-      // Nieve
       initSnow(snowContainer);
 
       // Llenar select
-      PARTICIPANTS.forEach(name => {
+      PARTICIPANTS.forEach((name) => {
         const opt = document.createElement("option");
         opt.value = name;
         opt.textContent = name;
@@ -511,7 +631,12 @@
       let storedName = localStorage.getItem(STORAGE_KEY);
       if (storedName && PARTICIPANTS.includes(storedName)) {
         nameSelect.value = storedName;
-        deviceNote.textContent = `📱 Este dispositivo está registrado para: ${storedName} (Edición ${edition}).`;
+        deviceNote.textContent =
+          "📱 Este dispositivo está registrado para: " +
+          storedName +
+          " (Edición " +
+          edition +
+          ").";
         deviceNote.style.display = "block";
       }
 
@@ -520,15 +645,15 @@
           [`vistos.${nombre}`]: true
         });
         alert("Marcado como visto ✔");
+
+        // refrescar panel admin si existe
         if (isAdmin) {
-          // refrescar panel admin
           const oldPanel = document.getElementById("adminPanel");
           if (oldPanel) oldPanel.remove();
           renderAdminPanel();
         }
       }
 
-      // Botón principal
       drawBtn.addEventListener("click", () => {
         errorBox.textContent = "";
         resultBox.classList.remove("show");
@@ -543,14 +668,22 @@
         // Bloquear que se hagan pasar por otra persona (salvo admin)
         if (!isAdmin) {
           if (storedName && selected !== storedName) {
-            errorBox.textContent = `Este dispositivo ya está asociado al nombre: "${storedName}". Solo puedes ver tu propio resultado.`;
+            errorBox.textContent =
+              'Este dispositivo ya está asociado al nombre: "' +
+              storedName +
+              '". Solo puedes ver tu propio resultado.';
             resultBox.style.display = "none";
             return;
           }
           if (!storedName) {
             storedName = selected;
             localStorage.setItem(STORAGE_KEY, storedName);
-            deviceNote.textContent = `📱 Este dispositivo está registrado para: ${storedName} (Edición ${edition}).`;
+            deviceNote.textContent =
+              "📱 Este dispositivo está registrado para: " +
+              storedName +
+              " (Edición " +
+              edition +
+              ").";
             deviceNote.style.display = "block";
           }
         }
@@ -577,7 +710,6 @@
         });
       });
 
-      // Panel admin (solo si ?admin=paulo2025)
       async function renderAdminPanel() {
         if (!isAdmin) return;
 
@@ -586,54 +718,56 @@
         const vistos = data.vistos || {};
 
         const total = PARTICIPANTS.length;
-        const confirmados = PARTICIPANTS.filter(n => vistos[n]).length;
+        const confirmados = PARTICIPANTS.filter((n) => vistos[n]).length;
+
+        // Parejas solo de los que confirmaron
+        const parejasConfirmadas = PARTICIPANTS.filter((n) => vistos[n]).map(
+          (n) => `${n} → ${assignment[n]}`
+        );
 
         const panel = document.createElement("div");
         panel.id = "adminPanel";
         panel.className = "admin-panel";
         panel.innerHTML = `
           <h2>👑 Admin – Edición ${edition}</h2>
-          <div class="admin-small">Paulo Cesar<br>Este panel solo lo ves tú.</div>
+          <div class="admin-small">Paulo Cesar<br />Este panel solo lo ves tú.</div>
 
           <button class="admin-btn" id="btnNuevaEdicion">➕ Crear nueva edición</button>
 
           <div class="admin-section-title">Confirmaciones (${confirmados} de ${total})</div>
           <div class="admin-list">
-            ${PARTICIPANTS.map(n => {
+            ${PARTICIPANTS.map((n) => {
               const ok = !!vistos[n];
               const cls = ok ? "admin-list-item-ok" : "admin-list-item-pend";
               return `<div class="${cls}">${n}</div>`;
             }).join("")}
           </div>
 
-          <div class="admin-small">
-            • El link público <strong>NO cambia</strong>:<br>
-            ${window.location.origin + window.location.pathname}<br><br>
-            • Para entrar como admin usa:<br>
+          <div class="admin-section-title" style="margin-top: 6px;">Parejas confirmadas</div>
+          <div class="admin-list">
+            ${
+              parejasConfirmadas.length
+                ? parejasConfirmadas.map((p) => `<div>${p}</div>`).join("")
+                : "<div class='admin-small'><i>Todavía nadie ha confirmado su resultado.</i></div>"
+            }
+          </div>
+
+          <div class="admin-small" style="margin-top: 6px;">
+            • El link público <strong>NO cambia</strong>:<br />
+            ${window.location.origin + window.location.pathname}<br /><br />
+            • Para entrar como admin usa:<br />
             ${window.location.origin + window.location.pathname}?admin=paulo2025
           </div>
         `;
         document.body.appendChild(panel);
 
         const btnNuevaEdicion = document.getElementById("btnNuevaEdicion");
-        btnNuevaEdicion.addEventListener("click", () => crearNuevaEdicion(edition));
+        btnNuevaEdicion.addEventListener("click", () =>
+          crearNuevaEdicion(edition)
+        );
       }
 
       renderAdminPanel();
-    }
-
-    function initSnow(container) {
-      const flakes = 60;
-      for (let i = 0; i < flakes; i++) {
-        const span = document.createElement("span");
-        const size = Math.random() * 6 + 3;
-        span.style.left = Math.random() * 100 + "vw";
-        span.style.width = size + "px";
-        span.style.height = size + "px";
-        span.style.animationDuration = (Math.random() * 10 + 8) + "s";
-        span.style.animationDelay    = (Math.random() * -20) + "s";
-        container.appendChild(span);
-      }
     }
 
     main();
