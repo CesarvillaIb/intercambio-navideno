@@ -40,7 +40,7 @@
       opacity: .8;
     }
     @keyframes fall {
-      0% { transform: translateY(-10px); }
+      0%   { transform: translateY(-10px); }
       100% { transform: translateY(110vh); }
     }
 
@@ -124,14 +124,12 @@
       margin-bottom: 4px;
       color:#111827;
     }
-
     .tagline {
       font-size: .85rem;
       text-align:center;
       color:#6b7280;
       margin-bottom:4px;
     }
-
     .price {
       font-size: .95rem;
       text-align:center;
@@ -139,7 +137,6 @@
       margin-bottom:10px;
       color:#b91c1c;
     }
-
     .place {
       font-size: .82rem;
       text-align:center;
@@ -152,7 +149,6 @@
       font-weight:600;
       text-decoration:none;
     }
-
     .subtitle {
       font-size:.9rem;
       text-align:center;
@@ -245,6 +241,11 @@
       margin-top:4px;
       color:#7f8c9d;
     }
+
+    @media (max-width:600px){
+      .card{ padding:18px 14px; }
+      h1{ font-size:1.4rem; }
+    }
   </style>
 </head>
 
@@ -254,6 +255,7 @@
 
   <div class="card">
     <div class="santa-mini">🎅</div>
+
     <div class="badge">Intercambio Navideño 2025</div>
 
     <h1>Santa Secreto Familiar</h1>
@@ -288,13 +290,10 @@
     <div class="creator">Creado por <strong>Paulo Cesar Villa Ibarra</strong></div>
   </div>
 
-  <!-- ===================================== -->
-  <!--  LÓGICA COMPLETA + FIREBASE + ADMIN  -->
-  <!-- ===================================== -->
-  <script type="module">
-    // -----------------------------
-    //  PARTICIPANTES
-    // -----------------------------
+  <!-- ==================================================== -->
+  <!-- 🧠 LÓGICA DEL SORTEO + BLOQUEO POR DISPOSITIVO        -->
+  <!-- ==================================================== -->
+  <script>
     const PARTICIPANTS = [
       "Paulo Cesar",
       "Naydelin Fernanda",
@@ -319,38 +318,14 @@
       "Irene Salazar"
     ];
 
-    const params  = new URLSearchParams(window.location.search);
-    const isAdmin = params.get("admin") === "paulo2025";
+    const params   = new URLSearchParams(window.location.search);
+    const edition  = params.get("edicion") || "1";
+    const isAdmin  = params.get("admin") === "paulo2025";
 
-    // -----------------------------
-    //  IMPORTS FIREBASE
-    // -----------------------------
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-    import {
-      getFirestore,
-      doc,
-      getDoc,
-      setDoc,
-      updateDoc,
-      collection,
-      getDocs
-    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+    const SEED        = "intercambio-navideno-familiar-2025-edicion-" + edition;
+    const STORAGE_KEY = "intercambio_navideno_2025_nombre_edicion_" + edition;
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBkln8OvQIhSd2Phnbt0VpUWxwlfiP5upo",
-      authDomain: "intercambio-familiar-2025.firebaseapp.com",
-      projectId: "intercambio-familiar-2025",
-      storageBucket: "intercambio-familiar-2025.firebasestorage.app",
-      messagingSenderId: "782877002512",
-      appId: "1:782877002512:web:fa9e0fc96fa2fe2074f395"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
-
-    // -----------------------------
-    //  UTILIDADES RANDOM
-    // -----------------------------
+    // ---------- funciones para random reproducible ----------
     function xmur3(str){
       let h = 1779033703 ^ str.length;
       for (let i = 0; i < str.length; i++) {
@@ -390,7 +365,10 @@
         const shuffled = seededShuffle(names, seedStr + "#" + attempt);
         let valid = true;
         for (let i = 0; i < names.length; i++) {
-          if (names[i] === shuffled[i]) { valid = false; break; }
+          if (names[i] === shuffled[i]) {
+            valid = false;
+            break;
+          }
         }
         if (valid) return shuffled;
       }
@@ -404,32 +382,35 @@
       return map;
     }
 
-    function idFromName(name){
-      return name.toLowerCase().normalize("NFD")
-        .replace(/[\u0300-\u036f]/g,"")
-        .replace(/[^a-z0-9]+/g,"-");
+    // ---------- sorteo ----------
+    let assignment = {};
+    try {
+      assignment = buildAssignmentMap(PARTICIPANTS, SEED);
+    } catch(err){
+      alert(err.message);
     }
 
-    // -----------------------------
-    //  ELEMENTOS DOM
-    // -----------------------------
-    const nameSelect    = document.getElementById("nameSelect");
-    const drawBtn       = document.getElementById("drawBtn");
-    const resultBox     = document.getElementById("result");
-    const errorBox      = document.getElementById("error");
+    // Exponer para el script de Firebase / panel admin
+    window.__PARTICIPANTS__ = PARTICIPANTS.slice();
+    window.__ASSIGNMENT__   = assignment;
+
+    // ---------- UI ----------
+    const nameSelect = document.getElementById("nameSelect");
+    const drawBtn    = document.getElementById("drawBtn");
+    const resultBox  = document.getElementById("result");
+    const errorBox   = document.getElementById("error");
+    const deviceNote = document.getElementById("deviceNote");
     const snowContainer = document.getElementById("snow");
-    const deviceNote    = document.getElementById("deviceNote");
 
-    let assignment           = null;
-    let storedName           = null;
-    let currentEditionNumber = 1;
-    let SEED                 = "";
-    let STORAGE_KEY          = "";
-    let visadosCollectionRef = null;
+    // Rellenar opciones
+    PARTICIPANTS.forEach(n => {
+      const op = document.createElement("option");
+      op.value = n;
+      op.textContent = n;
+      nameSelect.appendChild(op);
+    });
 
-    // -----------------------------
-    //  NIEVE
-    // -----------------------------
+    // Nieve
     function initSnow(){
       const flakes = 60;
       for (let i = 0; i < flakes; i++) {
@@ -443,295 +424,223 @@
         snowContainer.appendChild(span);
       }
     }
+    initSnow();
 
-    // -----------------------------
-    //  FIRESTORE: EDICIÓN ACTUAL
-    // -----------------------------
-    async function getCurrentEditionFromFirebase() {
-      const cfgRef = doc(db, "config", "actual");
-      const snap = await getDoc(cfgRef);
-      if (snap.exists()) {
-        const data = snap.data();
-        if (typeof data.ultimaEdicion === "number" && data.ultimaEdicion > 0) {
-          return data.ultimaEdicion;
-        }
-      }
-      await setDoc(cfgRef, { ultimaEdicion: 1 });
-      return 1;
-    }
+    // ---------- bloqueo por dispositivo ----------
+    let storedName = null;
 
-    async function setNextEditionInFirebase(nextNumber){
-      const cfgRef = doc(db, "config", "actual");
-      await setDoc(cfgRef, { ultimaEdicion: nextNumber }, { merge: true });
-    }
-
-    // -----------------------------
-    //  FIRESTORE: VISADOS
-    // -----------------------------
-    async function guardarEntendido(nombre){
-      if (!visadosCollectionRef) return;
-      const id = idFromName(nombre);
-      const ref = doc(visadosCollectionRef, id);
-      await setDoc(ref, {
-        nombre,
-        entendido: true,
-        ts: new Date().toISOString()
-      }, { merge: true });
-    }
-
-    async function cargarVisadosParaAdmin(){
-      if (!isAdmin || !visadosCollectionRef) return;
-
-      const snapshot = await getDocs(visadosCollectionRef);
-      const vistos = new Set();
-      snapshot.forEach(d => {
-        const data = d.data();
-        if (data.entendido && data.nombre) {
-          vistos.add(data.nombre);
-        }
-      });
-
-      const adminStatus = document.getElementById("adminStatus");
-      if (!adminStatus) return;
-
-      let html = `<strong>Confirmaciones (edición ${currentEditionNumber})</strong><br>`;
-      html += `<small>${vistos.size} de ${PARTICIPANTS.length} participantes</small><ul style="margin-top:4px;padding-left:16px;font-size:12px;">`;
-      PARTICIPANTS.forEach(n => {
-        const ok = vistos.has(n);
-        html += `<li>${ok ? "✅" : "⏳"} ${n}</li>`;
-      });
-      html += "</ul>";
-      adminStatus.innerHTML = html;
-    }
-
-    // -----------------------------
-    //  PANEL ADMIN
-    // -----------------------------
-  // -----------------------------
-//  PANEL ADMIN
-// -----------------------------
-function crearPanelAdmin(){
-  if (!isAdmin) return;
-
-  const panel = document.createElement("div");
-  panel.id = "adminPanel";
-  panel.style.position = "fixed";
-  panel.style.top = "16px";
-  panel.style.right = "16px";
-  panel.style.background = "rgba(15,23,42,0.95)";
-  panel.style.color = "#e5e7eb";
-  panel.style.padding = "10px 14px";
-  panel.style.borderRadius = "14px";
-  panel.style.fontSize = "12px";
-  panel.style.boxShadow = "0 12px 30px rgba(0,0,0,.6)";
-  panel.style.zIndex = "20";
-  panel.style.maxWidth = "260px";
-
-  panel.innerHTML = `
-    <div style="font-weight:600; margin-bottom:4px;">
-      👑 Admin – Edición <span id="adminEditionLabel">?</span>
-    </div>
-    <div style="font-size:11px; margin-bottom:8px;">
-      Paulo Cesar<br>
-      <span style="color:#9ca3af;">Este panel solo lo ves tú.</span>
-    </div>
-
-    <button id="btnNuevaEdicion"
-      style="width:100%;border:none;border-radius:999px;padding:6px 10px;
-             font-size:12px;font-weight:600;cursor:pointer;
-             background:linear-gradient(135deg,#0369a1,#0ea5e9);
-             color:white;box-shadow:0 4px 12px rgba(15,118,178,0.7);
-             margin-bottom:6px;">
-      🔁 Crear nueva edición
-    </button>
-
-    <button id="btnVerSorteo"
-      style="width:100%;border:none;border-radius:999px;padding:6px 10px;
-             font-size:12px;font-weight:600;cursor:pointer;
-             background:linear-gradient(135deg,#16a34a,#22c55e);
-             color:white;box-shadow:0 4px 12px rgba(22,163,74,0.7);
-             margin-bottom:6px;">
-      👀 Ver sorteo completo
-    </button>
-
-    <div id="adminStatus"
-         style="max-height:180px;overflow:auto;
-                border-top:1px solid rgba(148,163,184,0.4);
-                margin-top:6px;padding-top:6px;"></div>
-
-    <div id="adminPairs"
-         style="max-height:220px;overflow:auto;
-                border-top:1px solid rgba(148,163,184,0.4);
-                margin-top:6px;padding-top:6px;display:none;"></div>
-  `;
-
-  document.body.appendChild(panel);
-
-  // etiqueta edición
-  const lbl = document.getElementById("adminEditionLabel");
-  if (lbl) lbl.textContent = String(currentEditionNumber);
-
-  // botón nueva edición
-  const btnNueva = document.getElementById("btnNuevaEdicion");
-  btnNueva.addEventListener("click", async () => {
-    const siguiente = currentEditionNumber + 1;
-    btnNueva.disabled = true;
-    btnNueva.textContent = "Creando edición " + siguiente + "…";
-    try {
-      await setNextEditionInFirebase(siguiente);
-      // mismo link, solo recarga con admin
-      window.location.href = window.location.pathname + "?admin=paulo2025";
-    } catch (e) {
-      alert("Error al crear nueva edición: " + e.message);
-      btnNueva.disabled = false;
-      btnNueva.textContent = "🔁 Crear nueva edición";
-    }
-  });
-
-  // botón ver sorteo completo
-  const btnVerSorteo = document.getElementById("btnVerSorteo");
-  btnVerSorteo.addEventListener("click", () => {
-    const box = document.getElementById("adminPairs");
-    if (!box) return;
-
-    if (!box.dataset.loaded && assignment) {
-      let html = `<strong>Parejas del sorteo</strong><ul style="margin-top:4px;padding-left:16px;font-size:12px;">`;
-      PARTICIPANTS.forEach(giver => {
-        const receiver = assignment[giver];
-        html += `<li>${giver} → <strong>${receiver}</strong></li>`;
-      });
-      html += "</ul>";
-      box.innerHTML = html;
-      box.dataset.loaded = "1";
-    }
-
-    // toggle mostrar/ocultar
-    box.style.display = (box.style.display === "none" || !box.style.display)
-      ? "block"
-      : "none";
-  });
-}
-
-
-    // -----------------------------
-    //  FLUJO PRINCIPAL
-    // -----------------------------
-    async function init(){
-      // 1) Edición actual desde Firebase
-      currentEditionNumber = await getCurrentEditionFromFirebase();
-      const editionSuffix = String(currentEditionNumber);
-
-      SEED        = "intercambio-navideno-familiar-2025-edicion-" + editionSuffix;
-      STORAGE_KEY = "intercambio_navideno_2025_nombre_edicion_" + editionSuffix;
-
-      const docEdicion = doc(db, "vistas", "edicion-" + editionSuffix);
-      visadosCollectionRef = collection(docEdicion, "visados");
-
-      // 2) Llenar select
-      PARTICIPANTS.forEach(name => {
-        const opt = document.createElement("option");
-        opt.value = name;
-        opt.textContent = name;
-        nameSelect.appendChild(opt);
-      });
-
-      // 3) Nombre guardado en este dispositivo
+    if (!isAdmin) {
       storedName = localStorage.getItem(STORAGE_KEY);
+
       if (storedName && PARTICIPANTS.includes(storedName)) {
         nameSelect.value = storedName;
-        deviceNote.textContent = "📱 Este dispositivo está registrado para: " +
-          storedName + " (Edición " + editionSuffix + ")";
         deviceNote.style.display = "block";
+        deviceNote.textContent =
+          "📱 Este dispositivo está registrado para: " + storedName +
+          " (Edición " + edition + ")";
       }
-
-      // 4) Asignaciones
-      try {
-        assignment = buildAssignmentMap(PARTICIPANTS, SEED);
-      } catch (err) {
-        errorBox.textContent = err.message;
-        drawBtn.disabled = true;
-      }
-
-      // 5) Admin
-      if (isAdmin) {
-        crearPanelAdmin();
-        await cargarVisadosParaAdmin();
-      }
-
-      // 6) Botón principal
-      drawBtn.addEventListener("click", async () => {
-        errorBox.textContent = "";
-        resultBox.classList.remove("show");
-
-        const selected = nameSelect.value;
-        if (!selected) {
-          errorBox.textContent = "Por favor, selecciona tu nombre.";
-          resultBox.style.display = "none";
-          return;
-        }
-
-        // Bloqueo por dispositivo
-        if (!isAdmin) {
-          if (storedName && selected !== storedName) {
-            errorBox.textContent = `Este dispositivo ya está asociado al nombre: "${storedName}". Solo puedes ver tu propio resultado.`;
-            resultBox.style.display = "none";
-            return;
-          }
-          if (!storedName) {
-            storedName = selected;
-            localStorage.setItem(STORAGE_KEY, storedName);
-            deviceNote.textContent =
-              "📱 Este dispositivo está registrado para: " +
-              storedName + " (Edición " + editionSuffix + ")";
-            deviceNote.style.display = "block";
-          }
-        }
-
-        if (!assignment || !assignment[selected]) {
-          errorBox.textContent = "Hubo un problema con el sorteo.";
-          resultBox.style.display = "none";
-          return;
-        }
-
-        const target = assignment[selected];
-
-        resultBox.innerHTML = `
-          👋 Hola, <strong>${selected}</strong><br/>
-          Te toca regalarle a:<br/>
-          🎁 <strong>${target}</strong><br/><br/>
-          <button id="btnOk" style="
-            margin-top:4px;border:none;border-radius:999px;padding:8px 14px;
-            font-size:0.9rem;font-weight:600;cursor:pointer;
-            background:linear-gradient(135deg,#16a34a,#22c55e);color:white;
-            box-shadow:0 6px 16px rgba(22,163,74,0.6);
-          ">Entendido ✓</button>
-        `;
-        resultBox.classList.add("show");
-
-        const btnOk = document.getElementById("btnOk");
-        btnOk.addEventListener("click", async () => {
-          btnOk.disabled = true;
-          btnOk.textContent = "Guardando…";
-          try {
-            await guardarEntendido(selected);
-            btnOk.textContent = "¡Listo! ✅";
-            if (isAdmin) {
-              await cargarVisadosParaAdmin();
-            }
-          } catch (e) {
-            alert("No se pudo guardar la confirmación: " + e.message);
-            btnOk.disabled = false;
-            btnOk.textContent = "Entendido ✓";
-          }
-        });
-      });
-
-      // 7) Nieve
-      initSnow();
     }
 
-    init();
+    // ---------- click en "Ver a quién le regalo" ----------
+    drawBtn.addEventListener("click", () => {
+      errorBox.textContent = "";
+      resultBox.classList.remove("show");
+
+      const selected = nameSelect.value;
+      if (!selected) {
+        errorBox.textContent = "Por favor, selecciona tu nombre.";
+        return;
+      }
+
+      // Bloqueo para que no puedan usar otro nombre
+      if (!isAdmin) {
+        if (!storedName) {
+          storedName = selected;
+          localStorage.setItem(STORAGE_KEY, storedName);
+          deviceNote.style.display = "block";
+          deviceNote.textContent =
+            "📱 Este dispositivo está registrado para: " + storedName +
+            " (Edición " + edition + ")";
+        } else if (selected !== storedName) {
+          errorBox.textContent =
+            "Este dispositivo ya está asociado al nombre: \"" +
+            storedName +
+            "\". Solo puedes ver tu propio resultado.";
+          nameSelect.value = storedName;
+          return;
+        }
+      }
+
+      if (!assignment[selected]) {
+        errorBox.textContent = "Hubo un problema con el sorteo.";
+        return;
+      }
+
+      const target = assignment[selected];
+
+      resultBox.innerHTML = `
+        👋 Hola, <strong>${selected}</strong><br/>
+        Tú le vas a regalar a:<br/>
+        🎁 <strong>${target}</strong>
+        <br/><br/>
+        <button onclick="marcarComoVisto('${selected}')">
+          Entendido ✔
+        </button>
+      `;
+      resultBox.classList.add("show");
+    });
+  </script>
+
+  <!-- ==================================================== -->
+  <!-- 🔥 FIREBASE: GUARDAR CONFIRMACIONES + PANEL ADMIN     -->
+  <!-- ==================================================== -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc,
+      updateDoc
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    // --- Configuración de tu proyecto Firebase ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyBkln8OvQIhSd2Phnbt0VpUWxwlfiP5upo",
+      authDomain: "intercambio-familiar-2025.firebaseapp.com",
+      projectId: "intercambio-familiar-2025",
+      storageBucket: "intercambio-familiar-2025.firebasestorage.app",
+      messagingSenderId: "782877002512",
+      appId: "1:782877002512:web:fa9e0fc96fa2fe2074f395"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    const params  = new URLSearchParams(window.location.search);
+    const edicion = params.get("edicion") || "1";
+    const admin   = params.get("admin");
+
+    const PARTICIPANTS = window.__PARTICIPANTS__ || [];
+    const assignment   = window.__ASSIGNMENT__ || {};
+
+    const docRef = doc(db, "vistas", `edicion-${edicion}`);
+
+    // ---- función para marcar como visto desde el botón ----
+    async function marcarComoVisto(nombre){
+      try {
+        const snap = await getDoc(docRef);
+        if (!snap.exists()) {
+          await setDoc(docRef, { vistos: {} });
+        }
+
+        await updateDoc(docRef, {
+          [`vistos.${nombre}`]: true
+        });
+
+        alert("Marcado como visto ✔");
+      } catch (err) {
+        console.error(err);
+        alert("Hubo un problema al guardar la confirmación, pero tu resultado sí es válido.");
+      }
+    }
+
+    // Exponerla a la ventana para que funcione el onclick
+    window.marcarComoVisto = marcarComoVisto;
+
+    // ---- Panel admin: confirmados + quién le toca a quién ----
+    async function mostrarAdmin(){
+      if (admin !== "paulo2025") return;
+
+      let vistos = {};
+      try {
+        const snap = await getDoc(docRef);
+        if (snap.exists()) {
+          const data = snap.data();
+          vistos = data.vistos || {};
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      // Lista de confirmaciones
+      const confirmaciones = PARTICIPANTS.map(nombre => {
+        const icon = vistos[nombre] ? "✅" : "•";
+        return `${icon} ${nombre}`;
+      }).join("<br>");
+
+      // Lista de asignaciones
+      const asignacionesHtml = PARTICIPANTS.map(nombre => {
+        const destino = assignment[nombre] || "?";
+        return `🎁 <b>${nombre}</b> → ${destino}`;
+      }).join("<br>");
+
+      const panel = document.createElement("div");
+      panel.style.position   = "fixed";
+      panel.style.top        = "10px";
+      panel.style.right      = "10px";
+      panel.style.zIndex     = "9999";
+      panel.style.background = "#020617";
+      panel.style.color      = "#e5e7eb";
+      panel.style.padding    = "14px 16px";
+      panel.style.borderRadius = "14px";
+      panel.style.boxShadow  = "0 10px 30px rgba(0,0,0,.6)";
+      panel.style.fontSize   = "13px";
+      panel.style.maxWidth   = "280px";
+      panel.style.maxHeight  = "80vh";
+      panel.style.overflowY  = "auto";
+
+      panel.innerHTML = `
+        <div style="font-weight:600; margin-bottom:4px;">
+          👑 Admin – Edición ${edicion}
+        </div>
+        <div style="font-size:11px; color:#9ca3af; margin-bottom:8px;">
+          Este panel solo lo ves tú.
+        </div>
+
+        <button id="btnNuevaEdicion" style="
+          width:100%; margin-bottom:10px; padding:8px 10px; border-radius:999px;
+          border:none; cursor:pointer; background:linear-gradient(135deg,#0369a1,#0ea5e9);
+          color:white; font-size:12px; font-weight:600;
+          box-shadow:0 6px 18px rgba(15,118,178,.7);
+        ">
+          ➕ Crear nueva edición
+        </button>
+
+        <div style="font-weight:600; margin-bottom:4px;">Confirmaciones (edición ${edicion})</div>
+        <div style="font-size:12px; margin-bottom:8px;">
+          ${confirmaciones || "<i>Aún no hay participantes registrados</i>"}
+        </div>
+
+        <hr style="border:none; border-top:1px solid rgba(148,163,184,.4); margin:8px 0;" />
+
+        <div style="font-weight:600; margin-bottom:4px;">Resultados del sorteo</div>
+        <div style="font-size:12px;">
+          ${asignacionesHtml}
+        </div>
+      `;
+
+      document.body.appendChild(panel);
+
+      // botón crear nueva edición (solo te da los links)
+      document.getElementById("btnNuevaEdicion").addEventListener("click", () => {
+        const baseUrl  = window.location.origin + window.location.pathname;
+        const actual   = parseInt(edicion, 10) || 1;
+        const siguiente = String(actual + 1);
+
+        const publicUrl = `${baseUrl}?edicion=${siguiente}`;
+        const adminUrl  = `${baseUrl}?admin=paulo2025&edicion=${siguiente}`;
+
+        alert(
+          "Nueva edición sugerida (Edición " + siguiente + "):\n\n" +
+          "🔗 Público:\n" + publicUrl + "\n\n" +
+          "🛡️ Admin:\n" + adminUrl + "\n\n" +
+          "Solo copia el link que necesites."
+        );
+      });
+    }
+
+    mostrarAdmin();
   </script>
 </body>
 </html>
-
